@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="Layout.xhtml" >
+        <ui:define name="corpo">
+            <h:head>
+                <title>SCEA WEB  - Simulações</title>
+            </h:head>
+            <h:body onload="#{simulacaoBean.pegarIdeLoginUsuarioAtual()}">
+                <h:form id="form">
+                    <br/><br/><br/>
+                    <p:outputLabel rendered="false" title="#{simulacaoBean.id_usuario}" />
+                    <p:fieldset legend="Informações de Acesso">
+                        <p:panelGrid columns="2">
+                            Usuário Conectado: <p:outputLabel value="#{simulacaoBean.login_usuario}" />
+                            Quantidade: <p:inputText value="#{simulacaoBean.quantidade}" />
+                            Produto: <p:inputText value="#{simulacaoBean.id_produto}" >
+                            <f:ajax event="keyup" render="table" listener="#{simulacaoBean.consultar()}"></f:ajax>
+                            </p:inputText>
+                            Tipo de Transação: <p:selectOneMenu value="#{simulacaoBean.transacao}">
+                                <f:selectItem itemValue="ENTRADA" itemLabel="Entrada" />
+                                <f:selectItem itemValue="SAIDA" itemLabel="Saida" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:fieldset>
+                    
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Consultar" action="#{simulacaoBean.consultar()}" update="table"/>
+                            <p:commandButton value="Salvar" action="#{simulacaoBean.Salvar}" update="mensagens,avisos"/>
+                            <p:commandButton value="Simular Estoque" action="#{simulacaoBean.simularEstoque()}" update="mensagens,avisos"/>
+                        </f:facet>
+                    </p:toolbar>
+                    
+                    <p:messages id="mensagens" showDetail="true" />
+                    <p:growl id="avisos" showDetail="true" life="3000" />
+                    
+                    <p:dataTable id="table" value = "#{simulacaoBean.simulacoes}"  selectionMode="single" selection="#{simulacaoBean.simulacaoSelecionada}" rowKey="#{s.id}" var="s">
+                        <p:ajax event="rowSelect" listener="#{simulacaoBean.pegar}"  />
+                        <p:column headerText="ID"> #{s.id} </p:column>
+                        <p:column headerText="Transação"> #{s.tipoDeTransacao} </p:column>
+                        <p:column headerText="Quantidade"> #{s.qtdeItens} </p:column>
+                        <p:column headerText="Produto"> #{s.produto.id} </p:column>
+                        <p:column headerText="Nome do Produto">  #{s.produto.nome}</p:column>
+                    </p:dataTable>
+                    <center>
+                        <br/>
+                        <br/>
+                        <p:commandButton style="width: 200px; height: 30px" action="#{simulacaoBean.salvarTransacao()}" value="Realizar Transação" update=":form:avisos, :form:mensagens"/>
+                    </center>
+                </h:form>
+            </h:body>
+        </ui:define>
+    </ui:composition>
+</html>
+

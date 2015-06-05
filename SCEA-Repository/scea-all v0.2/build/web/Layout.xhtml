@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" type="text/css" href="CSS/estilo.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="form2">
+            <div id="imgInicial">
+                <img src="images/IMGSCEA.png" />
+            </div>
+            <p:menubar id="menubar">
+                <p:menuitem value="Fornecedor" action="Fornecedor?faces-redirect=true" icon="ui-icon-contact" />
+                <p:menuitem value="Acesso" action="Acesso?faces-redirect=true" icon="ui-icon-gear" />
+                <p:menuitem value="Produto" action="Produto?faces-redirect=true" icon=" ui-icon-scissors" />
+                <p:menuitem value="Entrada Estoque" action="Entrada?faces-redirect=true" icon="ui-icon-arrowreturnthick-1-e" />
+                <p:menuitem value="Saída Estoque" action="Saida?faces-redirect=true" icon="ui-icon-arrowreturnthick-1-w" />
+                <p:menuitem value="Simulações" action="Simulacao?faces-redirect=true"  icon="ui-icon-shuffle" />
+                <p:submenu label="Gráficos" icon="ui-icon-image">
+                    <p:menuitem value="Entradas e Saídas" action="GraficoEntradaSaida?faces-redirect=true" icon="ui-icon-image" />
+                    <p:menuitem value="Estoque"  action="GraficoEstoque?faces-redirect=true" icon="ui-icon-image" />
+                    <p:menuitem value="Gráfico Transações"  action="GraficoTransacoes?faces-redirect=true" icon="ui-icon-image" />
+                    <p:menuitem value="Gráfico Dinâmico"  action="GraficoDinamico?faces-redirect=true" icon="ui-icon-image" />
+                 </p:submenu>
+                <p:menuitem value="Sair" icon="ui-icon-close" />
+            </p:menubar>
+        </h:form>
+        <div id="conteudo">
+            <ui:insert name="corpo" />
+        </div>
+    </h:body>
+</html>
+

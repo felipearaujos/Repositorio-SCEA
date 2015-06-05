@@ -1,0 +1,50 @@
+package scea.dominio.modelo;
+
+public class Produto extends EntidadeDominio{
+	int quantidade;
+	double valor;
+	int idFornecedor;
+	String nome;
+	TipoDeProduto tipoDeProduto;
+	
+	
+	public Produto() {
+		tipoDeProduto = new TipoDeProduto();
+		tipoDeProduto.setTipo("");
+	}
+	
+	
+	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	
+	public int getQuantidade() {
+		return quantidade;
+	}
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+	public double getValor() {
+		return valor;
+	}
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+	public int getIdFornecedor() {
+		return idFornecedor;
+	}
+	public void setIdFornecedor(int fornecedor) {
+		this.idFornecedor = fornecedor;
+	}
+	public TipoDeProduto getTipoDeProduto() {
+		return tipoDeProduto;
+	}
+	public void setTipoDeProduto(TipoDeProduto tipoDeProduto) {
+		this.tipoDeProduto = tipoDeProduto;
+	}
+}

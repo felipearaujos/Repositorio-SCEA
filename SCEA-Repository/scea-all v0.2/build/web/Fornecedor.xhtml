@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="Layout.xhtml" >
+        <ui:define name="corpo">
+            <h:head>
+                <title>SCEA WEB - Fornecedores</title>
+            </h:head>
+            <h:body onload="#{fornecedorBean.consultar()}">
+                <h:form>
+                    <br/>
+                    <p:fieldset legend="Informações do Fornecedor">
+                        <p:panelGrid columns="4">
+                            Nome: <p:inputText value="#{fornecedorBean.nome}" />
+                            Nome Fantasia: <p:inputText value="#{fornecedorBean.nomeFantasia}" />
+                            CNPJ <p:inputMask mask="99.999.999/9999-99" value="#{fornecedorBean.CNPJ}" >
+                                <f:ajax event="keyup" render="table" listener="#{fornecedorBean.consultar()}"></f:ajax>
+                            </p:inputMask>
+                            Razão Social: <p:inputText value="#{fornecedorBean.rzSocial}" />
+                            Email: <p:inputText value="#{fornecedorBean.email}" />
+                            Telefone: <p:inputText value="#{fornecedorBean.telefoneNumero}" />
+                        </p:panelGrid>
+                    </p:fieldset>
+                    <br />
+                    <p:fieldset legend="Informações de Endereço">
+                        <p:panelGrid columns="4">
+                            Rua: <p:inputText value="#{fornecedorBean.rua}" />
+                            Número: <p:inputText value="#{fornecedorBean.numero}" />
+                            Complemento: <p:inputText value="#{fornecedorBean.complemento}" />
+                            CEP: <p:inputMask mask="99.999-999" value="#{fornecedorBean.CEP}" />
+                            Bairro: <p:inputText value="#{fornecedorBean.bairro}" />
+                            Cidade: <p:inputText value="#{fornecedorBean.cidade}" />
+                            Estado: <p:selectOneMenu value="#{fornecedorBean.estado}">
+                                <f:selectItem itemValue="SP" itemLabel="SP" />
+                                <f:selectItem itemValue="RJ" itemLabel="RJ" />
+                                <f:selectItem itemValue="MG" itemLabel="MG"/>
+                                <f:selectItem itemValue="MA" itemLabel="MA" />
+                                <f:selectItem itemValue="CE" itemLabel="CE" />
+                                <f:selectItem itemValue="PE" itemLabel="PE" />
+                                <f:selectItem itemValue="AC" itemLabel="AC" />
+                                <f:selectItem itemValue="RS" itemLabel="RS" />
+                                <f:selectItem itemValue="RN" itemLabel="RN" />
+                                <f:selectItem itemValue="AM" itemLabel="AM" />
+                            </p:selectOneMenu>  
+                        </p:panelGrid>
+                    </p:fieldset>
+                    <br/>
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="SALVAR"   action="#{fornecedorBean.Salvar()}" update ="avisos,msgs"/>
+                            <p:commandButton value="ALTERAR"   action="#{fornecedorBean.Alterar()}" update ="avisos,msgs"/>
+                            <p:commandButton value="EXCLUIR"  action="#{fornecedorBean.Excluir()}" update ="avisos,msgs"/>
+                        </f:facet>
+                        <f:facet name="right">
+                            Pesquisar por CNPJ: <p:inputMask mask="99.999.999/9999-99" value="#{fornecedorBean.CNPJ}" >
+                                <f:ajax event="keyup" render="table" listener="#{fornecedorBean.consultar()}"></f:ajax>
+                            </p:inputMask>
+                        </f:facet>
+                    </p:toolbar>
+                    <br/>
+                    <p:messages id="msgs" showDetail="true" />
+                    <p:growl id="avisos" showDetail="true" life="3000" />
+                    <p:dataTable value="#{fornecedorBean.todosFornecedores}" id="table" var="f" rows="10">
+                        <p:column>
+                            <f:facet name="header">CNPJ</f:facet>
+                            #{f.CNPJ}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Nome</f:facet>   
+                            #{f.nome}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Nome Fantasia</f:facet>
+                            #{f.nomeFantasia}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Razão Social</f:facet>
+                            #{f.razaoSocial}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Email</f:facet>
+                            #{f.email}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Telefone</f:facet>
+                            #{f.telefone.numero}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Rua</f:facet>
+                            #{f.endereco.rua}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Número</f:facet>
+                            #{f.endereco.numero}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Complemento</f:facet>
+                            #{f.endereco.complemento}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">CEP</f:facet>
+                            #{f.endereco.cep}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Bairro</f:facet>
+                            #{f.endereco.bairro}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Cidade</f:facet>
+                            #{f.endereco.cidade.nome}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Estado</f:facet>
+                            #{f.endereco.estado.nome}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </h:body>
+        </ui:define>
+    </ui:composition>
+</html>
+

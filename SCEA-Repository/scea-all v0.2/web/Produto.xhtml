@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="Layout.xhtml" >
+        <ui:define name="corpo">
+            <h:head>
+                <title>SCEA WEB - Gerenciar Produtos</title>
+            </h:head>
+            <style>
+                .zerado{
+                    background-color: #eecdd1
+                }
+                .critico{
+                    background-color: #feff68
+                }
+                .disponivel{
+                    background-color: #dbe4ad
+                }
+            </style>
+            <h:body onload="#{produtoBean.consultar()}">
+                <h:form id="form">
+                    <br></br><br></br>
+                    <div>
+                        <p:fieldset legend="Informações do Produto">
+                            <h:panelGrid columns="6">
+
+                                Nome do Produto: <p:inputText value="#{produtoBean.nome}"/>
+
+                                ID Fornecedor:  <p:inputText value="#{produtoBean.idFornecedor}"/>
+
+                                ID Tipo: <p:inputText value="#{produtoBean.idTipo}"/>
+                                Quantidade: <p:inputText value="#{produtoBean.quantidade}"/>
+                                Valor:  <p:inputText value="#{produtoBean.valor}"/>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </div>
+                    <div>
+                        <p:toolbar>
+                            <f:facet name="left">
+                                <p:commandButton value="Salvar" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table"/>
+                                <p:commandButton value="Alterar" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table"/>
+                                <p:commandButton value="Excluir" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table"/>
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                            </f:facet> 
+                            <f:facet name="right">
+                                <p:outputLabel value="Pesquisar por ID: " ></p:outputLabel>
+                                <p:inputText value="#{produtoBean.id}" placeholder="Pesquisar ID">
+                                    <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
+                                </p:inputText>
+                            </f:facet>
+                        </p:toolbar>
+                    </div>
+                    <p:messages id="msgs" showDetail="true" />
+                    <p:growl id="avisos" showDetail="true" life="3000" />
+                    <div>
+                        <p:dataTable value="#{produtoBean.todosProdutos}" id="table" var="f" rows="10" 
+                                     rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 
+                                                                                    (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}">
+                            <p:column>
+                                <f:facet name="header">ID</f:facet>
+                                #{f.id}
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Nome</f:facet>   
+                                #{f.nome}
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Descrição do Tipo</f:facet>
+                                #{f.tipoDeProduto.descricao}
+                            </p:column>                        
+                            <p:column>
+                                <f:facet name="header">Quantidade</f:facet>
+                                #{f.quantidade}
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Quantidade Mínima</f:facet>
+                                #{f.tipoDeProduto.qtdeMin}
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Quantidade Máxima</f:facet>
+                                #{f.tipoDeProduto.qtdeMax}
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Fornecedor</f:facet>
+                                #{f.fornecedor.nomeFantasia}
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Telefone</f:facet>
+                                #{f.fornecedor.telefone.numero}
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Email</f:facet>
+                                #{f.fornecedor.email}
+                            </p:column>  
+                            <f:facet name="footer">
+                                <p:commandButton process="table" value="Enviar Email" update=":form:EmailDialog" oncomplete="PF('EmailModal').show()">
+                                    <f:setPropertyActionListener value="#{f}" target="#{produtoBean.produtoSelecionado}" />
+                                </p:commandButton>
+                            </f:facet>
+                        </p:dataTable>
+                    </div>
+                    <div>
+                        <p:dialog id="idDialogEmail" widgetVar="EmailModal" modal="true">
+                            <p:outputPanel id="EmailDialog">
+                                <p:panelGrid  columns="2" columnClasses="label,value">
+                                    <h:outputText value="Destinatário:" /> <p:inputText value="#{emailBean.destinatario}" />
+                                    <h:outputText value="Assunto:" /> <p:inputText value="#{emailBean.assunto}" />
+                                    <h:outputText value="Mensagem:" /> <p:inputTextarea value="#{emailBean.mensagem}" />
+                                    <p:commandButton value="Enviar Email"  action="#{emailBean.enviarEmail()}" update="msgs,avisos,idDialogEmail"/>
+                                    <p:commandButton value="Cancelar"  onclick="EmailModal.hide()"/>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </div>
+                </h:form>
+            </h:body>
+        </ui:define>
+    </ui:composition>
+</html>

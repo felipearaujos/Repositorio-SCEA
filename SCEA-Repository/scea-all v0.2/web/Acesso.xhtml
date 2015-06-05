@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="Layout.xhtml" >
+        <ui:define name="corpo">
+            <h:head>
+                <title>SCEA WEB - Gerenciar Acessos</title>
+            </h:head>
+            <h:body>
+                <h:form>
+                    <div id="divCampos">
+                        <p:fieldset legend="Informações de Acesso">
+                            <h:panelGrid>
+                                Login: <p:inputText value="#{loginBean.login}" >
+                                    <f:ajax event="keyup" render="table" listener="#{loginBean.consultar()}" />  
+                                </p:inputText>
+                                Senha: <p:password value="#{loginBean.senha}" />
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </div>
+                    <div id="divBotoes">
+                        <p:toolbar>
+                            <f:facet name="left">
+                                <p:commandButton value="Salvar" action="#{loginBean.Salvar()}" update="avisos,mensagens" />
+                                <p:commandButton value="Excluir" action="#{loginBean.Excluir()}" update="avisos,mensagens" />
+                                <p:commandButton value="Alterar" action="#{loginBean.Alterar()}" update="avisos,mensagens"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                Login: <p:inputText value="#{loginBean.login}" >
+                                    <f:ajax event="keyup" render="table" listener="#{loginBean.consultar()}" />  
+                                </p:inputText>
+                            </f:facet>
+                       </p:toolbar>
+                    </div>
+                    <div id="divMensagens">
+                        <p:messages id="mensagens" showDetail="true" />
+                        <p:growl id="avisos" showDetail="true" life="3000" />
+                    </div>
+                    <div id="divDataTable">
+                        <p:dataTable id="table" value="#{loginBean.todosAcessos}" var="logins" paginator="true" rows="15"> 
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="LOGIN"/></f:facet> 
+                                #{logins.login}</p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="SENHA"/></f:facet>  
+                                #{logins.senha}</p:column>
+                        </p:dataTable>
+                    </div>
+                </h:form>
+            </h:body>
+        </ui:define>
+    </ui:composition>
+</html>
+

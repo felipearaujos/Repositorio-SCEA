@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="Layout.xhtml" >
+        <ui:define name="corpo">
+            <h:head>
+                <title>SCEA WEB - Gerenciar Produtos</title>
+            </h:head>
+             <h:body>
+                <h:form>
+                    <p:outputLabel rendered="false" title="#{transacaoBean.idAcesso}" />
+                    <p:fieldset legend="Informações de Entrada">
+                        <h:panelGrid columns="6">
+                            ID Produto:  <p:inputText value="#{transacaoBean.id}">
+                               <f:ajax event="keyup" render="table" listener="#{transacaoBean.consultar()}"/>
+                             </p:inputText>
+                            Quantidade: <p:inputText value="#{transacaoBean.quantidade}"/>
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="ENTRADA" action="#{transacaoBean.entrada()}"  update ="msgs,avisos"/>
+                        </f:facet>
+                    
+                    </p:toolbar>
+                    <p:messages id="msgs" showDetail="true" />
+                    <p:growl id="avisos" showDetail="true" life="10000" />
+
+                    <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10">
+                        <p:column>
+                            <f:facet name="header">ID</f:facet>
+                            #{f.id}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Nome</f:facet>   
+                            #{f.nome}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Quantidade</f:facet>
+                            #{f.quantidade}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Fornecedor</f:facet>
+                            #{f.fornecedor.nomeFantasia}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Descrição do Tipo</f:facet>
+                            #{f.tipoDeProduto.descricao}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </h:body>
+        </ui:define>
+    </ui:composition>
+  </html>
