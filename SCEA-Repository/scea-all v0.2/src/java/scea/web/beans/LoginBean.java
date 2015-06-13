@@ -28,6 +28,7 @@ import scea.dominio.modelo.EntidadeDominio;
 public class LoginBean extends EntidadeDominioBean{
     
     private int id;
+    private String usuarioLogado;
     private String login;
     private String senha;
     private List<Acesso> todosAcessos = new ArrayList<Acesso>();
@@ -35,7 +36,7 @@ public class LoginBean extends EntidadeDominioBean{
     public String verificarLogin() 
     {
         Acesso usuario = new Acesso();
-        usuario.setLogin(getLogin());
+        usuario.setLogin(getUsuarioLogado());
         usuario.setSenha(getSenha());
         Resultado re = fachada.acessar(usuario);
         Acesso UsuarioRetornado = (Acesso)re.getEntidades().get(0);
@@ -62,8 +63,9 @@ public class LoginBean extends EntidadeDominioBean{
     public String redirecionar(boolean admin)
     {
         HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true ); 
-        session.setAttribute("login_user", this.login);
+        session.setAttribute("login_user", this.getUsuarioLogado());
         session.setAttribute("id_user", this.id);
+        setLogin("");
         if(admin)
             return "Inicial?faces-redirect=true";
         else
@@ -124,7 +126,7 @@ public class LoginBean extends EntidadeDominioBean{
     public List<Acesso> consultar()
     {
         Acesso usuario = new Acesso();
-        usuario.setLogin(login);
+        usuario.setLogin(getUsuarioLogado());
         Resultado r = fachada.consultar(usuario);
         List<EntidadeDominio> entidades = r.getEntidades();
         List<Acesso> usuariosBuscados = new ArrayList<Acesso>();
@@ -138,11 +140,11 @@ public class LoginBean extends EntidadeDominioBean{
     }
 
     public String getLogin() {
-        return login;
+        return getUsuarioLogado();
     }
 
     public void setLogin(String login) {
-        this.login = login;
+        this.setUsuarioLogado(login);
     }
 
     public String getSenha() {
@@ -173,5 +175,19 @@ public class LoginBean extends EntidadeDominioBean{
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * @return the usuarioLogado
+     */
+    public String getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    /**
+     * @param usuarioLogado the usuarioLogado to set
+     */
+    public void setUsuarioLogado(String usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
     }
 }

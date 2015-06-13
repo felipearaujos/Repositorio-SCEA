@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
+import scea.core.factories.dominio.TransacaoFactory;
 import scea.dominio.modelo.Acesso;
 import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.Transacao;
@@ -31,7 +32,8 @@ public class TransacaoBean extends ProdutoBean{
     {
         HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
         setIdAcesso (Integer.parseInt(session.getAttribute("id_user").toString()));
-        Transacao transacao = new Transacao();
+        entidadeFactory = new TransacaoFactory();
+        Transacao transacao = (Transacao)entidadeFactory.createEntidade();
         transacao.setQtdeDoTipo(getQuantidade());
         transacao.setProduto(new Produto());
         transacao.getProduto().setId(getId());

@@ -11,21 +11,25 @@
                 <title>SCEA WEB - Gerenciar Acessos</title>
             </h:head>
             <h:body>
-                <h:form>
+                <h:form id="form">
                     <div id="divCampos">
-                        <p:fieldset legend="Informações de Acesso">
-                            <h:panelGrid>
-                                Login: <p:inputText value="#{loginBean.login}" >
-                                    <f:ajax event="keyup" render="table" listener="#{loginBean.consultar()}" />  
-                                </p:inputText>
-                                Senha: <p:password value="#{loginBean.senha}" />
-                            </h:panelGrid>
-                        </p:fieldset>
+                        <p:outputPanel id="info">
+                            <p:fieldset legend="Informações de Acesso" >
+                                <h:panelGrid id="infoAcesso">
+                                    Login: <p:inputText value="#{loginBean.login}" >
+                                        <f:ajax event="keyup" render="table" listener="#{loginBean.consultar()}" />  
+                                    </p:inputText>
+                                    Senha: <p:password value="#{loginBean.senha}" />
+                                </h:panelGrid>
+                            </p:fieldset>
+                        </p:outputPanel>
                     </div>
                     <div id="divBotoes">
                         <p:toolbar>
                             <f:facet name="left">
-                                <p:commandButton value="Salvar" action="#{loginBean.Salvar()}" update="avisos,mensagens" />
+                                <p:commandButton value="Salvar" process="@this" action="#{loginBean.Salvar()}" update="avisos,mensagens,infoAcesso" >
+                                    <p:resetInput target="infoAcesso" />
+                                </p:commandButton>
                                 <p:commandButton value="Excluir" action="#{loginBean.Excluir()}" update="avisos,mensagens" />
                                 <p:commandButton value="Alterar" action="#{loginBean.Alterar()}" update="avisos,mensagens"/>
                             </f:facet>

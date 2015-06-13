@@ -98,4 +98,10 @@ public class EmailBean extends EntidadeDominioBean{
         this.Mensagem = Mensagem;
     }
 
+    public void limparCampos()
+    {
+        setAssunto("");
+        setDestinatario("");
+        setMensagem("");
+    }
 }

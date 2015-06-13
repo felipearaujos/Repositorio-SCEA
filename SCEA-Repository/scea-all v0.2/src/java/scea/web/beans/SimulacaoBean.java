@@ -18,6 +18,9 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.event.SelectEvent;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
+import scea.core.factories.dominio.ProdutoFactory;
+import scea.core.factories.dominio.SimulacaoFactory;
+import scea.core.factories.dominio.TransacaoFactory;
 import scea.dominio.modelo.Acesso;
 import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Fornecedor;
@@ -50,8 +53,10 @@ public class SimulacaoBean extends EntidadeDominioBean{
     }
 
     public void simularEstoque(){
-        Transacao t = new Transacao();
-        Produto produto = new Produto();
+        entidadeFactory = new TransacaoFactory();
+        Transacao t = (Transacao)entidadeFactory.createEntidade();
+        entidadeFactory = new ProdutoFactory();
+        Produto produto = (Produto)entidadeFactory.createEntidade();
         produto.setId(getId_produto());
         produto.setQuantidade(getQuantidade());
         t.setProduto(produto);
@@ -92,7 +97,8 @@ public class SimulacaoBean extends EntidadeDominioBean{
     
     public Simulacao createSimulacaoModel()
     {
-        Simulacao s = new Simulacao();
+        entidadeFactory = new SimulacaoFactory();
+        Simulacao s = (Simulacao)entidadeFactory.createEntidade();
         s.setQtdeItens(getQuantidade());
         s.setTipoDeTransacao(getTransacao());
         Produto p = new Produto();
