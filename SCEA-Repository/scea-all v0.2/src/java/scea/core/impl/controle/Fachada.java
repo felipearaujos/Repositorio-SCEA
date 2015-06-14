@@ -29,13 +29,13 @@ import scea.core.impl.dao.SimulacaoDAO;
 import scea.core.impl.dao.TransacaoDAO;
 import scea.core.impl.negocio.EnviarEmail;
 import scea.core.impl.negocio.SimularEstoque;
-import scea.core.impl.negocio.ValidaCampos;
-import scea.core.impl.negocio.ValidarAcesso;
-import scea.core.impl.negocio.ValidarDadosProduto;
-import scea.core.impl.negocio.ValidarExistenciaFornecedor;
-import scea.core.impl.negocio.ValidarExistenciaTipoDeProduto;
-import scea.core.impl.negocio.ValidarLimiteEntrada;
-import scea.core.impl.negocio.ValidarLimiteSaida;
+import scea.core.impl.negocio.validadores.ValidaCampos;
+import scea.core.impl.negocio.validadores.ValidarAcesso;
+import scea.core.impl.negocio.validadores.ValidarDadosProduto;
+import scea.core.impl.negocio.validadores.ValidarExistenciaFornecedor;
+import scea.core.impl.negocio.validadores.ValidarExistenciaTipoDeProduto;
+import scea.core.impl.negocio.validadores.ValidarLimiteEntrada;
+import scea.core.impl.negocio.validadores.ValidarLimiteSaida;
 import scea.core.interfaces.Factories.IEntidadeDAOFactory;
 import scea.core.interfaces.Factories.IEntidadeFactory;
 import scea.core.interfaces.IDAO;
@@ -131,24 +131,7 @@ private Map<String, IDAO> daos;
 		rns.put("CONSULTAR", rnsConsultarAcesso);
                 rns.put("SALVAR", rnsSalvarAcesso);
 
-                /* ALTERA��O 
-                List<IStrategy> regrasProduto = new ArrayList<IStrategy>();
-		regrasProduto.add(new ValidarDadosProduto());
-		//regrasProduto.add(new ValidadorCurso());
-		//regrasProduto.add(new ValidarEndereco());
-		
-		
-		Map<String, List<IStrategy>> rnsSalvarProduto = new HashMap<String, List<IStrategy>>();		
-		rnsSalvarProduto.put(Produto.class.getName(), regrasProduto);				
-		rns.put("SALVAR", rnsSalvarProduto);
-		
-		
-		Map<String, List<IStrategy>> rnsProduto = new HashMap<String, List<IStrategy>>();
-		//rnsAltAluno.put(Aluno.class.getName(), regrasAltAlunos);				
-		rns.put("ALTERAR", rnsProduto);
-		rns.put("CONSULTAR", rnsProduto);
-		rns.put("EXCLUIR", rnsProduto);
-		*/
+
 			
 	}//Fachada
 	

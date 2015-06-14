@@ -1,4 +1,4 @@
-package scea.core.impl.negocio;
+package scea.core.impl.negocio.validadores;
 
 import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Produto;

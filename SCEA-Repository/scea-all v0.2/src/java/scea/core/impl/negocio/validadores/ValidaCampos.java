@@ -1,4 +1,4 @@
-package scea.core.impl.negocio;
+package scea.core.impl.negocio.validadores;
 
 import scea.core.aplicacao.Resultado;
 import scea.core.interfaces.IStrategy;

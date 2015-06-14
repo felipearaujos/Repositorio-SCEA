@@ -1,4 +1,4 @@
-package scea.core.impl.negocio;
+package scea.core.impl.negocio.validadores;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,15 +6,18 @@ import java.util.List;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
 import scea.core.impl.dao.ProdutoDAO;
+import scea.core.impl.negocio.RealizarSaida;
+import scea.core.interfaces.IStrategy;
 import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.TipoDeProduto;
 import scea.dominio.modelo.Transacao;
 
-public class ValidarLimiteSaida{
+public class ValidarLimiteSaida implements IStrategy{
 	public Resultado processar(EntidadeDominio entidade)
 	{
 			Resultado resultado = new Resultado();
+                        Resultado resultado2 = new Resultado();
 			Estoque entEntrada = new Estoque();
 			Transacao transacao = (Transacao)entidade;
 			ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -56,15 +59,22 @@ public class ValidarLimiteSaida{
                                 else if(produtoBuscado.getQuantidade() == transacao.getQtdeDoTipo()){
                                     entEntrada.setObs("ESTOQUE DE PRODUTO ZERADO");
                                     resultado.setMsg(null);
+                                   
                                 }
                                 else if(((produtoBuscado.getQuantidade() - transacao.getQtdeDoTipo()) <= produtoBuscado.getTipoDeProduto().getQtdeMin())){
                                     entEntrada.setObs("PRODUTO EM ESTADO CRITICO");
                                     resultado.setMsg(null);
+                                    
                                 }
                                 else{
+                                    
                                     resultado.setMsg(null);
                                 }
                             }
+                        }
+                        if(resultado.getMsg() == null){
+                            RealizarSaida rel = new RealizarSaida();
+                            resultado2 = rel.processar(transacao);
                         }
                         ArrayList<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
 			entidades.add(0, entEntrada);

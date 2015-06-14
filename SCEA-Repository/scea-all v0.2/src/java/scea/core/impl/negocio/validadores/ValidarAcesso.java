@@ -1,4 +1,4 @@
-package scea.core.impl.negocio;
+package scea.core.impl.negocio.validadores;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

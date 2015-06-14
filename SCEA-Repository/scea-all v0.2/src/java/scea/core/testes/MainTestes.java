@@ -18,12 +18,13 @@ import scea.core.impl.controle.Fachada;
 import scea.core.impl.controle.FachadaTransacao;
 import scea.core.impl.dao.RelatoriosDAO;
 import scea.core.impl.dao.SimulacaoDAO;
+import scea.core.impl.dao.TransacaoDAO;
 import scea.core.impl.negocio.SimularEstoque;
-import scea.core.impl.negocio.ValidarAcesso;
-import scea.core.impl.negocio.ValidarDadosProduto;
-import scea.core.impl.negocio.ValidarExistenciaFornecedor;
-import scea.core.impl.negocio.ValidarExistenciaTipoDeProduto;
-import scea.core.impl.negocio.ValidarLimiteEntrada;
+import scea.core.impl.negocio.validadores.ValidarAcesso;
+import scea.core.impl.negocio.validadores.ValidarDadosProduto;
+import scea.core.impl.negocio.validadores.ValidarExistenciaFornecedor;
+import scea.core.impl.negocio.validadores.ValidarExistenciaTipoDeProduto;
+import scea.core.impl.negocio.validadores.ValidarLimiteEntrada;
 import scea.core.testes.testesDAO.testaDAOAcesso;
 import scea.core.testes.testesDAO.testeDAODFornecedor;
 import scea.core.testes.testesDAO.testeDAOProduto;
@@ -62,11 +63,11 @@ public class MainTestes {
         //testeRelatorioProdPeriodoDAO();
         //testeRelatorioTransacaoProdPeriodoFachada();
         //testeRelatorioEstoqueDAO();
-        testeRelatorioEstoqueFachada();
+        //testeRelatorioEstoqueFachada();
+        testeNewTransacao();
         //testedia();
     }//MAIN
 
-    
     public static void testeRelatorioEstoqueFachada() {
         fachada = new Fachada();
         EntidadeRelatorio rel = new EntidadeRelatorio();
@@ -79,24 +80,100 @@ public class MainTestes {
         for (EntidadeDominio e : resultado.getEntidades()) {
             RelatorioEstoque s = (RelatorioEstoque) e;
             System.out.print(
-                    "Quantidade Ocupada"+s.getQtdeEstoque()+" "
-                    +"Quantidade Disponivel"+s.getQtdeDiponivel() + " "
-                    +"Pct ocp"+ Math.floor(s.getPorcentagemOcupada())+ " "
-                   );
+                    "Quantidade Ocupada" + s.getQtdeEstoque() + " "
+                    + "Quantidade Disponivel" + s.getQtdeDiponivel() + " "
+                    + "Pct ocp" + Math.floor(s.getPorcentagemOcupada()) + " "
+            );
             System.out.println();
         }
     }//testeRelatorioEstoqueFachada
-    
-    
-    
-    
-    public static void testedia(){
-        Calendar c = Calendar.getInstance();    
-        //DateFormat df  = new SimpleDateFormat("dd/MM/yyyy");  
-        System. out.println("m dia:" + c.getActualMaximum(Calendar.DAY_OF_MONTH));
-        System. out.println("Maior dia:" + c.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+    public static void testeDAOTransacao() {
+        FachadaTransacao f = new FachadaTransacao();
+        Produto p = new Produto();
+
+        p.setId(5);
+        p.setQuantidade(666);
+        p.setTipoDeProduto(new TipoDeProduto());
+        p.getTipoDeProduto().setTipo("");
+
+        Transacao ts = new Transacao();
+        ts.setAcesso(new Acesso());
+        ts.getAcesso().setId(1);
+        ts.setTipoDeTransacao("ENTRADA");
+        ts.setProduto(p);
+        ts.setQtdeDoTipo(p.getQuantidade());
+        TransacaoDAO d = new TransacaoDAO();
+        try {
+            d.salvar(ts);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainTestes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println();
+
+        /* if (r.getMsg() != null) {
+         System.out.println(r.getMsg());
+         } else {
+         System.out.println(((Estoque) r.getEntidades().get(0)).getObs());
+         System.out.println("ID: " + ((Estoque) r.getEntidades().get(0)).getProduto().getId());
+         System.out.println("NOME: " + ((Estoque) r.getEntidades().get(0)).getProduto().getNome().toUpperCase());
+         System.out.println("QUANTIDADE: " + ((Estoque) r.getEntidades().get(0)).getProduto().getQuantidade());
+         System.out.println("MAX: " + ((Estoque) r.getEntidades().get(0)).getProduto().getTipoDeProduto().getQtdeMax());
+         System.out.println("DESCRICAO: " + ((Estoque) r.getEntidades().get(0)).getProduto().getTipoDeProduto().getDescricao().toUpperCase());
+         System.out.println("DISPONIVEL: " + ((Estoque) r.getEntidades().get(0)).getQtdeDisponivel());
+         System.out.println("FUTURA: " + ((Estoque) r.getEntidades().get(0)).getQtdeFutura());
+         System.out.println("TENTATIVA: " + ((Estoque) r.getEntidades().get(0)).getQtdeTentativa());
+        
+         System.out.println("ekse");
+         }*/
     }
-    
+
+    public static void testeNewTransacao() {
+        FachadaTransacao f = new FachadaTransacao();
+        Produto p = new Produto();
+
+        p.setId(2);
+        p.setQuantidade(10);
+        p.setTipoDeProduto(new TipoDeProduto());
+        p.getTipoDeProduto().setTipo("");
+
+        Transacao ts = new Transacao();
+        ts.setAcesso(new Acesso());
+        ts.getAcesso().setId(1);
+        ts.setTipoDeTransacao("SAIDA");
+        ts.setProduto(p);
+        ts.setQtdeDoTipo(p.getQuantidade());
+        Resultado r = f.salvar(ts);
+
+        System.out.println();
+
+        if (r.getMsg() != null) {
+            System.out.println(r.getMsg());
+            if(r.getEntidades() != null){
+            if(((Estoque)r.getEntidades().get(0)).getObs() != null ){
+                System.out.println( ((Estoque)r.getEntidades().get(0)).getObs());
+            }
+        }
+            
+        } else {
+            System.out.println("tudo ok");
+             if(r.getEntidades() != null){
+            if(((Estoque)r.getEntidades().get(0)).getObs() != null ){
+                System.out.println( ((Estoque)r.getEntidades().get(0)).getObs());
+            }
+        }
+            
+        }
+    }//testeTransacao
+
+    public static void testedia() {
+        Calendar c = Calendar.getInstance();
+        //DateFormat df  = new SimpleDateFormat("dd/MM/yyyy");  
+        System.out.println("m dia:" + c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        System.out.println("Maior dia:" + c.getActualMaximum(Calendar.DAY_OF_MONTH));
+    }
+
     public static void testeRelatorioEstoqueDAO() {
         RelatoriosDAO dao = new RelatoriosDAO();
         EntidadeRelatorio r = new EntidadeRelatorio();
@@ -108,16 +185,14 @@ public class MainTestes {
         for (EntidadeDominio e : resultado.getEntidades()) {
             RelatorioEstoque s = (RelatorioEstoque) e;
             System.out.print(
-                    "Quantidade Ocupada"+s.getQtdeEstoque()+" "
-                    +"Quantidade Disponivel"+s.getQtdeDiponivel() + " "
-                    +"Pct ocp"+ Math.floor(s.getPorcentagemOcupada())+ " "
-                   );
+                    "Quantidade Ocupada" + s.getQtdeEstoque() + " "
+                    + "Quantidade Disponivel" + s.getQtdeDiponivel() + " "
+                    + "Pct ocp" + Math.floor(s.getPorcentagemOcupada()) + " "
+            );
             System.out.println();
         }
     }//testeRelatorioProdPeriodoDAO
-        
-  
-    
+
     public static void testeRelatorioTransacaoProdPeriodoFachada() {
         fachada = new Fachada();
         EntidadeRelatorio rel = new EntidadeRelatorio();
@@ -139,8 +214,6 @@ public class MainTestes {
         }
     }//testeRelatorioTransacaoProdPeriodoFachada
 
-
-    
     public static void testeRelatorioProdPeriodoDAO() {
         RelatoriosDAO dao = new RelatoriosDAO();
         EntidadeRelatorio r = new EntidadeRelatorio();
@@ -162,8 +235,6 @@ public class MainTestes {
         }
     }//testeRelatorioProdPeriodoDAO
 
-    
-    
     public static void testeRelatorioTransacaoPeriodoFachada() {
         fachada = new Fachada();
         EntidadeRelatorio rel = new EntidadeRelatorio();
@@ -183,8 +254,6 @@ public class MainTestes {
         }
     }//testeRelatorioTransacaoPeriodoFachada
 
-    
-    
     public static void testeRelatorioTransaPeriodoDAO() {
         RelatoriosDAO dao = new RelatoriosDAO();
         EntidadeRelatorio r = new EntidadeRelatorio();
@@ -204,8 +273,6 @@ public class MainTestes {
         }
     }//testeRelatorioTransaPeriodoDAO
 
-    
-    
     public static void testeDeveEnviarEmail() {
         EmailAplicacao emailEnviado = new EmailAplicacao();
         emailEnviado.setAssunto("Teste Email");
@@ -217,8 +284,6 @@ public class MainTestes {
         System.out.println(r.getMsg());
     }//testeDeveEnviarEmail
 
-    
-    
     public static void testeValidarExistenciaTipo() {
         Resultado r; //= new Resultado();
         ValidarExistenciaTipoDeProduto validador = new ValidarExistenciaTipoDeProduto();
@@ -228,8 +293,6 @@ public class MainTestes {
         System.out.println(r.getMsg());
     }//testeValidarExistenciaTipo
 
-    
-    
     public static void testeValidarExistenciaFornecedor() {
         Resultado r;
         ValidarExistenciaFornecedor validador = new ValidarExistenciaFornecedor();
@@ -241,8 +304,6 @@ public class MainTestes {
         System.out.println(r.getMsg());
     }//testeValidarExistenciaTipo
 
-    
-    
     public static void testeRelatorioInicialFachada() {
         Fachada f = new Fachada();
         Resultado r = new Resultado();
@@ -252,8 +313,6 @@ public class MainTestes {
         }
     }//testeRelatorioInicialFachada
 
-    
-    
     public static void testeAcesso() {
         Fachada f = new Fachada();
         Acesso ac = new Acesso();
@@ -264,8 +323,6 @@ public class MainTestes {
         System.out.println(r.getMsg());
     }//testeAcesso
 
-    
-    
     public static void testVerificaFachadaParaSimulacao() {
         Fachada f = new Fachada();
 
@@ -288,8 +345,6 @@ public class MainTestes {
         }
     }//testVerificaFachadaParaSimulacao
 
-    
-    
     public static void testeValidarDadosProduto() {
         ValidarDadosProduto validador = new ValidarDadosProduto();
         Produto p = new Produto();
@@ -304,8 +359,6 @@ public class MainTestes {
         System.out.println(r.getMsg());
     }//testeValidarDadosProduto
 
-    
-    
     public static void testeSalvarFachada() {
         Fachada f = new Fachada();
         Produto p = new Produto();
@@ -321,8 +374,6 @@ public class MainTestes {
         System.out.println(r.getMsg());
     }//testeSalvarFachada
 
-    
-    
     public static void testeTransacao() {
         FachadaTransacao f = new FachadaTransacao();
         Produto p = new Produto();
@@ -357,8 +408,6 @@ public class MainTestes {
         }
     }//testeTransacao
 
-    
-    
     public static void testeConexao() {
         TesteConexao st = new TesteConexao();
         try {
@@ -374,8 +423,6 @@ public class MainTestes {
         }
     }//testeConexao
 
-    
-    
     public static void testeSimulacao() throws SQLException {
         Simulacao s = new Simulacao();
         SimulacaoDAO sdao = new SimulacaoDAO();
@@ -397,8 +444,6 @@ public class MainTestes {
         }
     }//testeSimulacao
 
-    
-    
     public static void testeconvercaodata() {
         Calendar c = Calendar.getInstance();
         Date data = c.getTime();

@@ -1,4 +1,4 @@
-package scea.core.impl.negocio;
+package scea.core.impl.negocio.validadores;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,14 @@ import java.util.List;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
 import scea.core.impl.dao.ProdutoDAO;
+import scea.core.impl.negocio.RealizarEntrada;
+import scea.core.interfaces.IStrategy;
 import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.TipoDeProduto;
 import scea.dominio.modelo.Transacao;
 
-public class ValidarLimiteEntrada {
+public class ValidarLimiteEntrada implements IStrategy{
 
 	public Resultado processar(EntidadeDominio entidade)
 	{
@@ -45,7 +47,7 @@ public class ValidarLimiteEntrada {
                     entEntrada.setQtdeTentativa(transacao.getProduto().getQuantidade());
                     entEntrada.setQtdeDisponivel(produtoBuscado.getTipoDeProduto().getQtdeMax() - produtoBuscado.getQuantidade());
                     entEntrada.setQtdeFutura(produtoBuscado.getQuantidade() + transacao.getProduto().getQuantidade());
-
+                    
 
                     if((transacao.getQtdeDoTipo() + produtoBuscado.getQuantidade()) > produtoBuscado.getTipoDeProduto().getQtdeMax())
                     {
@@ -54,6 +56,8 @@ public class ValidarLimiteEntrada {
                     }
                     else{
                             entEntrada.setFlgValida(true);
+                            RealizarEntrada rel = new RealizarEntrada();
+                            resultado = rel.processar(transacao);
                             resultado.setMsg(null);
                     }
                 }

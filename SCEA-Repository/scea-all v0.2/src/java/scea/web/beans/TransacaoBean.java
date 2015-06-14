@@ -53,7 +53,8 @@ public class TransacaoBean extends ProdutoBean{
         setOperacao("ENTRADA");
         Transacao transacao = this.createTransacao();
         
-        Resultado resultado = fachadaTransacao.entrada(transacao);
+        Resultado resultado = fachadaTransacao.salvar(transacao);
+        //Resultado resultado = fachadaTransacao.entrada(transacao);
         if(resultado.getMsg() == null){
             resultado.setMsg("Entrada realizada COM SUCESSO");
         }
@@ -72,17 +73,18 @@ public class TransacaoBean extends ProdutoBean{
         setOperacao("SAIDA");
         Transacao transacao = this.createTransacao();
         
-        Resultado resultado = fachadaTransacao.saida(transacao);
+        //Resultado resultado = fachadaTransacao.saida(transacao);
+        Resultado resultado = fachadaTransacao.salvar(transacao);
         if(resultado.getMsg() == null){
             resultado.setMsg("SAIDA REALIZADA COM SUCESSO \n\n");
         }
         
-        if(resultado.getEntidades() != null){
+/*        if(resultado.getEntidades() != null){
             if(((Estoque)resultado.getEntidades().get(0)).getObs() != null ){
               obs = ((Estoque)resultado.getEntidades().get(0)).getObs();
             }
         }
-        
+  */      
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage mensagem = new FacesMessage(
             FacesMessage.SEVERITY_INFO, "", resultado.getMsg()+"\n"+ obs);

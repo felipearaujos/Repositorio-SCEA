@@ -9,7 +9,7 @@ import scea.dominio.modelo.TipoDeProduto;
 import scea.dominio.modelo.Transacao;
 import scea.core.aplicacao.Resultado;
 import scea.core.impl.controle.Fachada;
-import scea.core.impl.negocio.ValidarLimiteEntrada;
+import scea.core.impl.negocio.validadores.ValidarLimiteEntrada;
 
 public class testeFachada {
 

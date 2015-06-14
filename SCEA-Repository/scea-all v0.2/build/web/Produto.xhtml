@@ -25,23 +25,27 @@
                 <h:form id="form">
                     <br></br><br></br>
                     <div>
-                        <p:fieldset legend="Informações do Produto">
-                            <h:panelGrid columns="6">
+                        <p:outputPanel id="info">
+                            <p:fieldset legend="Informações do Produto">
+                                <h:panelGrid columns="6" >
 
-                                Nome do Produto: <p:inputText value="#{produtoBean.nome}"/>
+                                    Nome do Produto: <p:inputText value="#{produtoBean.nome}"/>
 
-                                ID Fornecedor:  <p:inputText value="#{produtoBean.idFornecedor}"/>
+                                    ID Fornecedor:  <p:inputText value="#{produtoBean.idFornecedor}"/>
 
-                                ID Tipo: <p:inputText value="#{produtoBean.idTipo}"/>
-                                Quantidade: <p:inputText value="#{produtoBean.quantidade}"/>
-                                Valor:  <p:inputText value="#{produtoBean.valor}"/>
-                            </h:panelGrid>
-                        </p:fieldset>
+                                    ID Tipo: <p:inputText value="#{produtoBean.idTipo}"/>
+                                    Quantidade: <p:inputText value="#{produtoBean.quantidade}"/>
+                                    Valor:  <p:inputText value="#{produtoBean.valor}"/>
+                                </h:panelGrid>
+                            </p:fieldset>
+                        </p:outputPanel>
                     </div>
                     <div>
                         <p:toolbar>
                             <f:facet name="left">
-                                <p:commandButton value="Salvar" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table"/>
+                                <p:commandButton value="Salvar" action="#{produtoBean.Salvar()}" process="@this" update ="avisos,msgs,table,info">
+                                    <p:resetInput target="info"/>
+                                </p:commandButton>
                                 <p:commandButton value="Alterar" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table"/>
                                 <p:commandButton value="Excluir" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table"/>
                                 <span class="ui-separator">

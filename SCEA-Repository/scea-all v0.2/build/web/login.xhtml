@@ -11,7 +11,7 @@
             <h:form>
 
                 <p:panelGrid columns="2">
-                    Login <h:inputText value="#{loginBean.login}"/>
+                    Login <h:inputText value="#{loginBean.usuarioLogado}"/>
                     Senha <h:inputSecret value="#{loginBean.senha}"/>
                 </p:panelGrid>
                 <p:commandButton value="Realizar Login" action="#{loginBean.verificarLogin()}" update="avisos,mensagens"/>

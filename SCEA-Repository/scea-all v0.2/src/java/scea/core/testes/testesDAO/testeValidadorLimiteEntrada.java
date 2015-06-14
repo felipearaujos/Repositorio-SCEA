@@ -1,6 +1,6 @@
 package scea.core.testes.testesDAO;
 
-import scea.core.impl.negocio.ValidarLimiteEntrada;
+import scea.core.impl.negocio.validadores.ValidarLimiteEntrada;
 import scea.dominio.modelo.*;
 
 public class testeValidadorLimiteEntrada {
