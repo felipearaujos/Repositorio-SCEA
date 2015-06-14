@@ -55,6 +55,10 @@ public class ValidarLimiteEntrada implements IStrategy{
                             return resultado;
                     }
                     else{
+                            ArrayList<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+                            entidades.add(0, entEntrada);
+                            resultado.setEntidades(entidades);
+                            
                             entEntrada.setFlgValida(true);
                             RealizarEntrada rel = new RealizarEntrada();
                             resultado = rel.processar(transacao);

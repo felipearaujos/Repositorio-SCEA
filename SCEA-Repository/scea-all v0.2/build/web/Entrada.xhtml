@@ -9,6 +9,17 @@
         <ui:define name="corpo">
             <h:head>
                 <title>SCEA WEB - Gerenciar Produtos</title>
+                <style>
+                .zerado{
+                    background-color: #eecdd1
+                }
+                .critico{
+                    background-color: #feff68
+                }
+                .disponivel{
+                    background-color: #dbe4ad
+                }
+                </style>
             </h:head>
              <h:body>
                 <h:form>
@@ -25,12 +36,14 @@
                         <f:facet name="left">
                             <p:commandButton value="ENTRADA" action="#{transacaoBean.entrada()}"  update ="msgs,avisos"/>
                         </f:facet>
-                    
                     </p:toolbar>
+                    
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="10000" />
 
-                    <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10">
+                    <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10"
+                        rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 
+                                                                       (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}">
                         <p:column>
                             <f:facet name="header">ID</f:facet>
                             #{f.id}

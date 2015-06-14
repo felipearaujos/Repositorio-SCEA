@@ -54,15 +54,19 @@ public class ValidarLimiteSaida implements IStrategy{
                                 if(produtoBuscado.getQuantidade() < transacao.getQtdeDoTipo())
                                 {//Se qtd Solicitada for menor que a quantidade Existente
                                     resultado.setMsg("QUANTIDADE SOLICITADA MAIOR QUE QUANTIDADE EXISTENTE! ");
-                                    entEntrada.setObs(null);
+                                    //entEntrada.setObs(null);
+                                    resultado.setRetorno(null);
+                                    
                                 }
                                 else if(produtoBuscado.getQuantidade() == transacao.getQtdeDoTipo()){
-                                    entEntrada.setObs("ESTOQUE DE PRODUTO ZERADO");
+                                    //entEntrada.setObs("ESTOQUE DE PRODUTO ZERADO");
+                                    resultado.setRetorno("ESTOQUE DE PRODUTO ZERADO");
                                     resultado.setMsg(null);
                                    
                                 }
                                 else if(((produtoBuscado.getQuantidade() - transacao.getQtdeDoTipo()) <= produtoBuscado.getTipoDeProduto().getQtdeMin())){
-                                    entEntrada.setObs("PRODUTO EM ESTADO CRITICO");
+                                    //entEntrada.setObs("PRODUTO EM ESTADO CRITICO");
+                                    resultado.setRetorno("PRODUTO EM ESTADO CRITICO");
                                     resultado.setMsg(null);
                                     
                                 }
@@ -73,12 +77,16 @@ public class ValidarLimiteSaida implements IStrategy{
                             }
                         }
                         if(resultado.getMsg() == null){
+                            ArrayList<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+                            entidades.add(0, entEntrada);
+                            resultado.setEntidades(entidades);
+                            
                             RealizarSaida rel = new RealizarSaida();
                             resultado2 = rel.processar(transacao);
                         }
-                        ArrayList<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
-			entidades.add(0, entEntrada);
-			resultado.setEntidades(entidades);
+                        //ArrayList<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+			//entidades.add(0, entEntrada);
+			//resultado.setEntidades(entidades);
                         
 			return resultado;
 	}//Processar

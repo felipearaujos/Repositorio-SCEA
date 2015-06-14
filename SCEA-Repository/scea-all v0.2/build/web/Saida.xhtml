@@ -11,6 +11,17 @@
             <h:head>
                 <title>SCEA WEB - Gerenciar Produtos</title>
             </h:head>
+                        <style>
+                .zerado{
+                    background-color: #eecdd1
+                }
+                .critico{
+                    background-color: #feff68
+                }
+                .disponivel{
+                    background-color: #dbe4ad
+                }
+            </style>
             <h:body>
                 <h:form>
                     <p:fieldset legend="Dados da Saída">
@@ -29,7 +40,9 @@
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
 
-                    <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10">
+                    <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10"
+                                 rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 
+                                                                               (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}">
                         <p:column>
                             <f:facet name="header">ID</f:facet>
                             #{f.id}

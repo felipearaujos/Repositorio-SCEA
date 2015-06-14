@@ -116,6 +116,41 @@ public class FachadaTransacao extends Fachada {
         return null;
 
     }
+    
+    // ---
+    
+    private Resultado executarRegrasTeste(EntidadeDominio entidade, String operacao) {
+        String nmClasse = entidade.getClass().getName();
+        StringBuilder msg = new StringBuilder();
+        Resultado retorno = new Resultado();
+
+        Map<String, List<IStrategy>> regrasOperacao = rns.get(operacao);
+
+        if (regrasOperacao != null) {
+            List<IStrategy> regras = regrasOperacao.get(nmClasse);
+            Resultado r = new Resultado();
+            if (regras != null) {
+                for (IStrategy s : regras) {
+                    Resultado re = s.processar(entidade);
+
+                    if (re.getMsg() != null) {
+                        msg.append(re.getMsg());
+                        msg.append("\n");
+                        r.setMsg(r.getMsg() + re.getMsg());
+                    }
+                }
+            }
+
+            if (msg.length() > 0) {
+                r.setMsg(msg.toString());
+                return r;
+            } else {
+                return null;
+            }
+        }
+        return null;
+
+    }
 
     public Resultado salvar(EntidadeDominio entidade) {
         resultado = new Resultado();

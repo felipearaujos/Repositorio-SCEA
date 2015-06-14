@@ -29,10 +29,18 @@
                             <p:fieldset legend="Informações do Produto">
                                 <h:panelGrid columns="6" >
 
-                                    Nome do Produto: <p:inputText value="#{produtoBean.nome}"/>
-
-                                    ID Fornecedor:  <p:inputText value="#{produtoBean.idFornecedor}"/>
-
+                                    Nome do Produto: 
+                                <p:inputText value="#{produtoBean.nome}"> 
+                                          <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
+                                </p:inputText>   
+                                             
+                                             
+                                    
+                                    ID Fornecedor: 
+                                    <p:inputText value="#{produtoBean.idFornecedor}"> 
+                                          <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
+                                </p:inputText>   
+                                    
                                     ID Tipo: <p:inputText value="#{produtoBean.idTipo}"/>
                                     Quantidade: <p:inputText value="#{produtoBean.quantidade}"/>
                                     Valor:  <p:inputText value="#{produtoBean.valor}"/>
@@ -63,7 +71,7 @@
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
                     <div>
-                        <p:dataTable value="#{produtoBean.todosProdutos}" id="table" var="f" rows="10" 
+                        <p:dataTable value="#{produtoBean.todosProdutos}" id="table"  var="f" rows="10" 
                                      rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 
                                                                                     (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}">
                             <p:column>

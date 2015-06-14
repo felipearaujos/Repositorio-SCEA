@@ -25,6 +25,8 @@ import scea.core.impl.negocio.validadores.ValidarDadosProduto;
 import scea.core.impl.negocio.validadores.ValidarExistenciaFornecedor;
 import scea.core.impl.negocio.validadores.ValidarExistenciaTipoDeProduto;
 import scea.core.impl.negocio.validadores.ValidarLimiteEntrada;
+import scea.core.impl.negocio.validadores.ValidarLimiteSaida;
+import scea.core.impl.negocio.validadores.ValidarTransacao;
 import scea.core.testes.testesDAO.testaDAOAcesso;
 import scea.core.testes.testesDAO.testeDAODFornecedor;
 import scea.core.testes.testesDAO.testeDAOProduto;
@@ -67,6 +69,7 @@ public class MainTestes {
         testeNewTransacao();
         //testedia();
     }//MAIN
+    
 
     public static void testeRelatorioEstoqueFachada() {
         fachada = new Fachada();
@@ -129,12 +132,15 @@ public class MainTestes {
          }*/
     }
 
+    
+    
+    
     public static void testeNewTransacao() {
         FachadaTransacao f = new FachadaTransacao();
         Produto p = new Produto();
 
-        p.setId(2);
-        p.setQuantidade(10);
+        p.setId(3);
+        p.setQuantidade(8);
         p.setTipoDeProduto(new TipoDeProduto());
         p.getTipoDeProduto().setTipo("");
 
@@ -144,27 +150,26 @@ public class MainTestes {
         ts.setTipoDeTransacao("SAIDA");
         ts.setProduto(p);
         ts.setQtdeDoTipo(p.getQuantidade());
+        //ValidarTransacao v = new ValidarTransacao();
+        
         Resultado r = f.salvar(ts);
 
         System.out.println();
 
         if (r.getMsg() != null) {
             System.out.println(r.getMsg());
-            if(r.getEntidades() != null){
-            if(((Estoque)r.getEntidades().get(0)).getObs() != null ){
-                System.out.println( ((Estoque)r.getEntidades().get(0)).getObs());
-            }
-        }
+            
+            System.out.println(r.getRetorno());
+            
             
         } else {
             System.out.println("tudo ok");
-             if(r.getEntidades() != null){
-            if(((Estoque)r.getEntidades().get(0)).getObs() != null ){
-                System.out.println( ((Estoque)r.getEntidades().get(0)).getObs());
-            }
-        }
+          
+            System.out.println(r.getRetorno());
             
         }
+            
+        
     }//testeTransacao
 
     public static void testedia() {

@@ -139,49 +139,45 @@ public class ProdutoDAO extends AbstractJdbcDAO{
 		
 		Produto produto = (Produto)entidade;
 		String sql=null;
-		         // System.out.println("--------- -------\n\n  ---------\n \n\n\n " + produto.getId());
-		//if(produto.getId() ==  null && produto.getNome() == null){
-                
-               // if(produto.getId() ==  null || produto.getId() == 0){
-		//	sql = "SELECT * FROM tb_produto JOIN tb_tipodeproduto USING(id_tipodeproduto) JOIN tb_fornecedor USING(id_fornecedor) ORDER BY id_produto";
-		//}
-                if(produto.getId() ==  null){
-			sql = "SELECT * FROM tb_produto JOIN tb_tipodeproduto USING(id_tipodeproduto) JOIN tb_fornecedor USING(id_fornecedor) ORDER BY id_produto";
+	
+		 if(produto.getId() == 0 && produto.getNome() == null && produto.getFornecedor().getId() == 0){
+                    sql = "SELECT * FROM tb_produto JOIN tb_tipodeproduto USING(id_tipodeproduto) JOIN tb_fornecedor USING(id_fornecedor) ORDER BY id_produto";
 		}
-                
-		//else if(produto.getId() != null && produto.getNome() == null){
-		else if(produto.getId() != null){
+               
+		else if(produto.getId() != 0 && produto.getNome() == null && produto.getFornecedor().getId() == 0){
                     sql = "SELECT * FROM tb_produto JOIN tb_tipodeproduto USING(id_tipodeproduto) JOIN tb_fornecedor USING(id_fornecedor) WHERE id_produto=?   ORDER BY id_produto";
 		}
-		
-		
-	//	else if(produto.getId() == null && produto.getNome() != null ){
-			//System.out.println("\n\n\n\n\n\n\n\n\n\n terceiro  \n\n\n\n\n\n\n\n");
-			//sql = "SELECT * FROM tb_produto   JOIN tb_tipodeproduto    USING(id_tipodeproduto) JOIN tb_fornecedor   USING(id_fornecedor) WHERE   nome like '"+produto.getNome()+"%' ORDER BY id_produto";
-          //                sql = "SELECT * FROM tb_produto p JOIN tb_tipodeproduto  t USING(id_tipodeproduto) JOIN tb_fornecedor f USING(id_fornecedor) WHERE p.nome like '"+produto.getNome()+"%' ORDER BY p.id_produto"; 
-           //     }
-		
+                
+                else if(produto.getId() == 0 && produto.getNome() != null && produto.getFornecedor().getId() == 0){
+                   
+		    sql = "SELECT * FROM tb_produto p JOIN tb_tipodeproduto  t USING(id_tipodeproduto) JOIN tb_fornecedor f USING(id_fornecedor) WHERE p.nome like ?  ORDER BY p.id_produto"; 
+                } 
+                 
+                else if(produto.getId() == 0 && produto.getNome() == null && produto.getFornecedor().getId() != 0){
+                    sql = "SELECT * FROM tb_produto JOIN tb_tipodeproduto USING(id_tipodeproduto) JOIN tb_fornecedor USING(id_fornecedor) WHERE id_fornecedor=?   ORDER BY id_produto";
+		} 
+                 
+
 	try {
 		openConnection();
 		pst = connection.prepareStatement(sql);
 		
-		if(produto.getId() != null){
-			pst.setInt(1, produto.getId());
-			
+		if(produto.getId() != 0 && produto.getNome() == null && produto.getFornecedor().getId() == 0 ){
+			pst.setInt(1, produto.getId());	
 		}
-		/*else if(!produto.getTipoDeProduto().getTipo().equals("") && produto.getId() == null){
-			System.out.println("\n\n\n\n\n\n\n\n\n\n set  \n\n\n\n\n\n\n\n");
-			pst.setString(1,"'C%'");	
-			System.out.println(sql);
-		}
-		*/
+                else if( produto.getId() == 0 && produto.getNome() != null && produto.getFornecedor().getId() == 0){
+                    pst.setString(1, produto.getNome()+"%");
+                }
+		
+                else if( produto.getId() == 0 && produto.getNome() == null && produto.getFornecedor().getId() != 0){
+                    pst.setInt(1,produto.getFornecedor().getId());
+                }
 		
 		ResultSet rs = pst.executeQuery();
 		List<EntidadeDominio> produtos = new ArrayList<EntidadeDominio>();
 		while (rs.next()) {
                 Produto p = new Produto();
-			//p.setFornecedor(new Fornecedor());
-			//p.setTipoDeProduto(new TipoDeProduto());
+			
 			
 			p.setId(rs.getInt("id_produto"));
 			p.setNome(rs.getString("nome"));

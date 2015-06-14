@@ -22,7 +22,7 @@ import scea.dominio.modelo.TipoDeProduto;
 public class ProdutoBean extends EntidadeDominioBean{
     private int quantidade;
     private double valor;
-    private String nome;
+    private String nome = null;
     private int idTipo;
     private List<Produto> todosProdutos;
     private List<Produto> produtosCriticos;

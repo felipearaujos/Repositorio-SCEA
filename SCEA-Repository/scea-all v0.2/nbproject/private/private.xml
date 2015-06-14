@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/LoginBean.java</file>
-            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/Fornecedor.xhtml</file>
-            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/GraficoEstoquePizzaBean.java</file>
-            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/GraficoEstoque.xhtml</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/negocio/validadores/ValidarLimiteSaida.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/testes/MainTestes.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/negocio/validadores/ValidarTransacao.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/negocio/validadores/ValidarLimiteEntrada.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/negocio/RealizarSaida.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/negocio/RealizarEntrada.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/TransacaoBean.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/Acesso.xhtml</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/controle/FachadaTransacao.java</file>
         </group>
     </open-files>
 </project-private>

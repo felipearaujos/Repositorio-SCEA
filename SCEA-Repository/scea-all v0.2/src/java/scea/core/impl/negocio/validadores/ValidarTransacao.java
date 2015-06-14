@@ -26,11 +26,9 @@ public class ValidarTransacao implements IStrategy{
             
             
         }else if(t.getTipoDeTransacao().equals("SAIDA")){
-            ValidarLimiteSaida v = new ValidarLimiteSaida();
-            return(v.processar(t));
+            ValidarLimiteSaida q = new ValidarLimiteSaida();
+            return(q.processar(t));
         }
-        
-        
         return null;
         
         
