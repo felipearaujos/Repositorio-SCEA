@@ -20,6 +20,7 @@ import scea.core.factories.dominio.AcessoFactory;
 import scea.core.factories.dominio.FornecedorFactory;
 import scea.core.factories.dominio.ProdutoFactory;
 import scea.core.factories.dominio.SimulacaoFactory;
+import scea.core.factories.dominio.TipoDeProdutoFactory;
 import scea.core.factories.dominio.TransacaoFactory;
 import scea.core.impl.dao.AcessoDAO;
 import scea.core.impl.dao.FornecedorDAO;
@@ -36,6 +37,7 @@ import scea.core.impl.negocio.validadores.ValidarExistenciaFornecedor;
 import scea.core.impl.negocio.validadores.ValidarExistenciaTipoDeProduto;
 import scea.core.impl.negocio.validadores.ValidarLimiteEntrada;
 import scea.core.impl.negocio.validadores.ValidarLimiteSaida;
+import scea.core.impl.negocio.validadores.ValidarTipoDeProduto;
 import scea.core.interfaces.Factories.IEntidadeDAOFactory;
 import scea.core.interfaces.Factories.IEntidadeFactory;
 import scea.core.interfaces.IDAO;
@@ -70,10 +72,12 @@ private Map<String, IDAO> daos;
                 
                 
                 
-                
+                //PRODUTO
                 entidadeFactory = new ProdutoFactory();
                 entidadeDAOFactory = new ProdutoDAOFactory();
 		daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
+                
+                
                 regrasProduto.add(new ValidarDadosProduto());	
                 regrasProduto.add(new ValidarExistenciaFornecedor());
                 regrasProduto.add(new ValidarExistenciaTipoDeProduto());
@@ -87,14 +91,14 @@ private Map<String, IDAO> daos;
                 
                 
                 
-                
+                //SIMULACAO
                 entidadeFactory = new SimulacaoFactory();
                 entidadeDAOFactory = new SimulacaoDAOFactory();
                 daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
                 
                 
                 
-                
+                //TRANSACAO
                 entidadeFactory = new TransacaoFactory();
                 entidadeDAOFactory = new TransacaoDAOFactory();
 		daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
@@ -104,7 +108,7 @@ private Map<String, IDAO> daos;
 		rnsSalvarSimulacao.put(entidadeFactory.createEntidade().getClass().getName(), regrasSimulacao);
                 
                 
-                
+                // FORNECEDOR
                 entidadeFactory = new FornecedorFactory();
                 entidadeDAOFactory = new FornecedorDAOFactory();
 		daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
@@ -115,7 +119,15 @@ private Map<String, IDAO> daos;
                 rns.put("SALVAR", rnsSalvarFornecedor);
                 
                 
-                
+                /*TIPO DE PRODUTO*/
+                entidadeFactory = new TipoDeProdutoFactory();
+                entidadeDAOFactory = new FornecedorDAOFactory();
+		daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
+                List<IStrategy> regrasTipoDeProduto = new ArrayList<IStrategy>();
+		regrasTipoDeProduto.add(new ValidarTipoDeProduto());
+                Map<String, List<IStrategy>> rnsSalvarTipoDeProduto = new HashMap<String, List<IStrategy>>();
+		rnsSalvarFornecedor.put(entidadeFactory.createEntidade().getClass().getName(), regrasTipoDeProduto);
+                rns.put("SALVAR", rnsSalvarTipoDeProduto);
                 
                 
                 entidadeFactory = new AcessoFactory();

@@ -141,20 +141,38 @@ public class ProdutoDAO extends AbstractJdbcDAO{
 		String sql=null;
 	
 		 if(produto.getId() == 0 && produto.getNome() == null && produto.getFornecedor().getId() == 0){
-                    sql = "SELECT * FROM tb_produto JOIN tb_tipodeproduto USING(id_tipodeproduto) JOIN tb_fornecedor USING(id_fornecedor) ORDER BY id_produto";
+                    sql = "SELECT * FROM "
+                            + "tb_produto "
+                            + "JOIN tb_tipodeproduto USING(id_tipodeproduto) "
+                            + "JOIN tb_fornecedor USING(id_fornecedor) "
+                            + "ORDER BY id_produto";
 		}
                
 		else if(produto.getId() != 0 && produto.getNome() == null && produto.getFornecedor().getId() == 0){
-                    sql = "SELECT * FROM tb_produto JOIN tb_tipodeproduto USING(id_tipodeproduto) JOIN tb_fornecedor USING(id_fornecedor) WHERE id_produto=?   ORDER BY id_produto";
+                    sql = "SELECT * "
+                            + "FROM tb_produto "
+                            + "JOIN tb_tipodeproduto USING(id_tipodeproduto) "
+                            + "JOIN tb_fornecedor USING(id_fornecedor) "
+                            + "WHERE id_produto=?   ORDER BY id_produto";
 		}
                 
                 else if(produto.getId() == 0 && produto.getNome() != null && produto.getFornecedor().getId() == 0){
                    
-		    sql = "SELECT * FROM tb_produto p JOIN tb_tipodeproduto  t USING(id_tipodeproduto) JOIN tb_fornecedor f USING(id_fornecedor) WHERE p.nome like ?  ORDER BY p.id_produto"; 
+		    sql = "SELECT * "
+                            + "FROM tb_produto p "
+                            + "JOIN tb_tipodeproduto  t USING(id_tipodeproduto) "
+                            + "JOIN tb_fornecedor f USING(id_fornecedor) "
+                            + "WHERE p.nome like ?  "
+                            + "ORDER BY p.id_produto"; 
                 } 
                  
                 else if(produto.getId() == 0 && produto.getNome() == null && produto.getFornecedor().getId() != 0){
-                    sql = "SELECT * FROM tb_produto JOIN tb_tipodeproduto USING(id_tipodeproduto) JOIN tb_fornecedor USING(id_fornecedor) WHERE id_fornecedor=?   ORDER BY id_produto";
+                    sql = "SELECT * "
+                            + "FROM tb_produto "
+                            + "JOIN tb_tipodeproduto USING(id_tipodeproduto) "
+                            + "JOIN tb_fornecedor USING(id_fornecedor) "
+                            + "WHERE id_fornecedor=?   "
+                            + "ORDER BY id_produto";
 		} 
                  
 
@@ -166,7 +184,7 @@ public class ProdutoDAO extends AbstractJdbcDAO{
 			pst.setInt(1, produto.getId());	
 		}
                 else if( produto.getId() == 0 && produto.getNome() != null && produto.getFornecedor().getId() == 0){
-                    pst.setString(1, produto.getNome()+"%");
+                    pst.setString(1,"%"+produto.getNome()+"%");
                 }
 		
                 else if( produto.getId() == 0 && produto.getNome() == null && produto.getFornecedor().getId() != 0){
