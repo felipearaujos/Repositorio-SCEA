@@ -12,7 +12,7 @@ import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.Transacao;
 
 
-public class TransacaoDAO extends AbstractJdbcDAO implements ITransacao{
+public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 
 	public TransacaoDAO() {
 		super("tb_transacao", "id_transacao");		
@@ -101,44 +101,10 @@ public class TransacaoDAO extends AbstractJdbcDAO implements ITransacao{
 		return null;
 	}
 
-
+/*
 	public void entrar(EntidadeDominio entidade) throws SQLException
 	{
-		/*try{
-				
-			openConnection();
-			PreparedStatement pst=null;
-			Transacao t = (Transacao)entidade;
-			Produto p = t.getProduto();
-			
-					
-			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO tb_transacao(transacao, dt_transacao, id_acesso");
-			sql.append(", id_produto, quantidade) VALUES (?,?,?,?,?)");		
-					
-			pst = connection.prepareStatement(sql.toString());
-			pst.setString(1, "ENTRADA");
-			pst.setString(2, t.getData());
-			pst.setInt(3, 1); //ATTENTION : POIS AINDA SERA IMPLEMENTADO
-			pst.setInt(4, 1); // INSERIDO APENAS P TESTE
-			pst.setInt(5, t.getQtdeDoTipo());
-			pst.executeUpdate();
-			
-			sql = new StringBuilder();
-			p.setQuantidade(p.getQuantidade() + t.getQtdeDoTipo());
-			sql.append("UPDATE tb_produto SET quantidade = ?");
-			sql.append(" WHERE id_produto = ?");
-			pst = connection.prepareStatement(sql.toString());
-			pst.setInt(1, t.getProduto().getQuantidade());
-			pst.setInt(2, 1); 	// APENAS PARA TESTE
-			pst.executeUpdate();
-		}
-		catch(SQLException ex)
-		{
-			
-		}
-			
-		*/
+		
 		if(entidade instanceof Transacao)
 		{
 			TransacaoDAO transacaoDAO = new TransacaoDAO();
@@ -158,47 +124,13 @@ public class TransacaoDAO extends AbstractJdbcDAO implements ITransacao{
 			produtoDAO.alterar(produtoBanco);
 		}
 	}
-
+*/
 		
 	
-	
+/*	
 	public void sair(EntidadeDominio entidade)throws SQLException
 	{
-		/*try
-		{
-			openConnection();
-			PreparedStatement pst=null;
-			Transacao t = (Transacao)entidade;
-			Produto p = t.getProduto();
-			
-					
-			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO tb_transacao(transacao, dt_transacao, id_acesso");
-			sql.append(", id_produto, quantidade) VALUES (?,?,?,?,?)");		
-					
-			pst = connection.prepareStatement(sql.toString());
-			pst.setString(1, "SAIDA");
-			pst.setString(2, t.getData());
-			pst.setInt(3, 1); //ATTENTION : POIS AINDA SERA IMPLEMENTADO
-			pst.setInt(4, 1); // INSERIDO APENAS P TESTE
-			pst.setInt(5, t.getQtdeDoTipo());
-			pst.executeUpdate();	
 	
-			
-			sql = new StringBuilder();
-			p.setQuantidade(t.getQtdeDoTipo() - p.getQuantidade());
-			sql.append("UPDATE tb_produto SET quantidade = ?");
-			sql.append(" WHERE id_produto = ?");
-			pst = connection.prepareStatement(sql.toString());
-			pst.setInt(1, t.getProduto().getQuantidade());
-			pst.setInt(2, 1); 	// APENAS PARA TESTE
-			pst.executeUpdate();	
-		}
-		catch(SQLException ex)
-		{
-		
-		}
-		*/
 		if(entidade instanceof Transacao)
 		{
 			TransacaoDAO transacaoDAO = new TransacaoDAO();
@@ -220,5 +152,6 @@ public class TransacaoDAO extends AbstractJdbcDAO implements ITransacao{
 		}
 
 	}
+        */
 	
 }

@@ -394,7 +394,7 @@ public class MainTestes {
         ts.setTipoDeTransacao("ENTRADA");
         ts.setProduto(p);
         ts.setQtdeDoTipo(p.getQuantidade());
-        Resultado r = f.entrada(ts);
+        Resultado r = f.salvar(ts);
 
         System.out.println();
 

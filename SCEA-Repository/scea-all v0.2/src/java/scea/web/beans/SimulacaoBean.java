@@ -128,20 +128,26 @@ public class SimulacaoBean extends EntidadeDominioBean{
         Produto p = new Produto();
         p.setId(getId_produto());
         transaction.setProduto(p);
+        transaction.getProduto().setFornecedor(new Fornecedor());
+        transaction.getProduto().getFornecedor().setId(0);
+        transaction.getProduto().setNome(null);
+        
+        
+        
         Acesso acesso = new Acesso();
         acesso.setId(Integer.parseInt(getId_usuario()));
         transaction.setAcesso(acesso);
         
-        if(transaction.getTipoDeTransacao().equals("ENTRADA"))
-        {
-            r = fachadaTransacao.entrada(transaction);
-        }
-        else
-        {
-            r = fachadaTransacao.saida(transaction);
-        }
+        //if(transaction.getTipoDeTransacao().equals("ENTRADA"))
+        //{
+            r = fachadaTransacao.salvar(transaction);
+        //}
+        //else
+        //{
+        //    r = fachadaTransacao.saida(transaction);
+        //}
         FacesContext context = FacesContext.getCurrentInstance();
-        if(r.getMsg().equals("")){
+        if(r.getMsg() == null){
             FacesMessage mensagem = new FacesMessage(
                 FacesMessage.SEVERITY_INFO, "", ("Transação de " + simulacaoSelecionada.getTipoDeTransacao() + " realizada com sucesso!").toString() );
             context.addMessage(null, mensagem);

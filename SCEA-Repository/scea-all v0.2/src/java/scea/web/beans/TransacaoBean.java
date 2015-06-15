@@ -15,6 +15,7 @@ import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
 import scea.core.factories.dominio.TransacaoFactory;
 import scea.dominio.modelo.Acesso;
+import scea.dominio.modelo.Fornecedor;
 import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.Transacao;
 
@@ -37,6 +38,9 @@ public class TransacaoBean extends ProdutoBean{
         transacao.setQtdeDoTipo(getQuantidade());
         transacao.setProduto(new Produto());
         transacao.getProduto().setId(getId());
+        transacao.getProduto().setFornecedor(new Fornecedor());
+        transacao.getProduto().getFornecedor().setId(0);
+        transacao.getProduto().setNome(null);
         
         transacao.setAcesso(new Acesso());
         transacao.getAcesso().setId(getIdAcesso());

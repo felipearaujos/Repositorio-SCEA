@@ -18,8 +18,8 @@ public interface IFachada {
         public Resultado acessar(EntidadeDominio entidade);
 	
 	//Estoque
-	public Resultado entrada(EntidadeDominio entidade); 
-	public Resultado saida(EntidadeDominio entidade); 
+	//public Resultado entrada(EntidadeDominio entidade); 
+	//public Resultado saida(EntidadeDominio entidade); 
 	
 	//Simulações
 	public Resultado simular(EntidadeDominio entidade); 

@@ -36,7 +36,7 @@ public class FachadaTransacao extends Fachada {
 
     }//Fachada
 
-    public Resultado entrada(EntidadeDominio entidade) {
+   /* public Resultado entrada(EntidadeDominio entidade) {
         Resultado resultado = new Resultado();
         Transacao t = (Transacao) entidade;
 
@@ -60,7 +60,9 @@ public class FachadaTransacao extends Fachada {
         return resultado;
 
     }
-
+*/
+    
+    /*
     @Override
     public Resultado saida(EntidadeDominio entidade) {
         Resultado resultado = new Resultado();
@@ -85,7 +87,7 @@ public class FachadaTransacao extends Fachada {
 
         return resultado;
     }
-
+*/
     private String executarRegras(EntidadeDominio entidade, String operacao) {
         String nmClasse = entidade.getClass().getName();
         StringBuilder msg = new StringBuilder();
