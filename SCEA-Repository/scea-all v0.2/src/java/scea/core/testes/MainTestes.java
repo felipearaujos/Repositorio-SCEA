@@ -66,8 +66,9 @@ public class MainTestes {
         //testeRelatorioTransacaoProdPeriodoFachada();
         //testeRelatorioEstoqueDAO();
         //testeRelatorioEstoqueFachada();
-        testeNewTransacao();
+        //testeNewTransacao();
         //testedia();
+        testeSalvarFachada();
     }//MAIN
     
 
@@ -369,9 +370,9 @@ public class MainTestes {
         Produto p = new Produto();
         Resultado r = new Resultado();
 
-        p.setNome("Lapis com tabuada");
-        p.getTipoDeProduto().setId(2);
-        p.setQuantidade(10);
+        p.setNome("banan");
+        p.getTipoDeProduto().setId(1);
+        p.setQuantidade(-1);
         p.setValor(0.50);
         p.getFornecedor().setId(1);
         r = f.salvar(p);
