@@ -56,7 +56,7 @@ private Map<String, IDAO> daos;
         IEntidadeFactory entidadeFactory;
         IEntidadeDAOFactory entidadeDAOFactory;
 	
-	public Fachada(){
+	/*public Fachada(){
             
 		daos = new HashMap<String, IDAO>();
                 rns = new HashMap<String, Map<String, List<IStrategy>>>();
@@ -125,27 +125,89 @@ private Map<String, IDAO> daos;
 		rns.put("CONSULTAR", rnsConsultarAcesso);
                 rns.put("SALVAR", rnsSalvarAcesso);
 
-                /* ALTERA��O 
-                List<IStrategy> regrasProduto = new ArrayList<IStrategy>();
-		regrasProduto.add(new ValidarDadosProduto());
-		//regrasProduto.add(new ValidadorCurso());
-		//regrasProduto.add(new ValidarEndereco());
+       
+			
+	}//Fachada
+	*/
+        public Fachada(){
+		daos = new HashMap<String, IDAO>();
+		/*
+                daos.put(Produto.class.getName(), new ProdutoDAO());
+                daos.put(Simulacao.class.getName(), new SimulacaoDAO());
+		daos.put(Transacao.class.getName(), new TransacaoDAO());
+		daos.put(Fornecedor.class.getName(), new FornecedorDAO());
+		daos.put(Acesso.class.getName(), new AcessoDAO());
+		*/
+                entidadeDAOFactory = new ProdutoDAOFactory();
+		daos.put(Produto.class.getName(), new ProdutoDAO());
+                
+                entidadeDAOFactory = new SimulacaoDAOFactory();
+                daos.put(Simulacao.class.getName(), new SimulacaoDAO());
 		
+                entidadeDAOFactory = new TransacaoDAOFactory();
+                daos.put(Transacao.class.getName(), new TransacaoDAO());
 		
-		Map<String, List<IStrategy>> rnsSalvarProduto = new HashMap<String, List<IStrategy>>();		
-		rnsSalvarProduto.put(Produto.class.getName(), regrasProduto);				
-		rns.put("SALVAR", rnsSalvarProduto);
+                entidadeDAOFactory = new FornecedorDAOFactory();
+                daos.put(Fornecedor.class.getName(), new FornecedorDAO());
 		
+                entidadeDAOFactory = new AcessoDAOFactory();
+                daos.put(Acesso.class.getName(), new AcessoDAO());
+
+
+                rns = new HashMap<String, Map<String, List<IStrategy>>>();
+                
+                // Produto
+		List<IStrategy> regrasProduto = new ArrayList<IStrategy>();
+		regrasProduto.add(new ValidarDadosProduto());	
+                regrasProduto.add(new ValidarExistenciaFornecedor());
+                regrasProduto.add(new ValidarExistenciaTipoDeProduto());
+                
+                //Fornecedor
+		List<IStrategy> regrasFornecedor = new ArrayList<IStrategy>();
+		regrasFornecedor.add(new ValidaCampos());
+                
+                // Simulacao
+		List<IStrategy> regrasSimulacao = new ArrayList<IStrategy>();
+		regrasSimulacao.add(new ValidaCampos());
+                
+		//Acesso
+                List<IStrategy> regrasAcesso = new ArrayList<IStrategy>();
+                regrasAcesso.add(new ValidaCampos());
+                regrasAcesso.add(new ValidarAcesso());
+		
+		Map<String, List<IStrategy>> rnsSalvarAcesso = new HashMap<String, List<IStrategy>>();
+		rnsSalvarAcesso.put(Acesso.class.getName(), regrasAcesso);
+                
+                //Simulacao
+		Map<String, List<IStrategy>> rnsSalvarSimulacao = new HashMap<String, List<IStrategy>>();
+		rnsSalvarSimulacao.put(Simulacao.class.getName(), regrasSimulacao);
+                
+                
+		Map<String, List<IStrategy>> rnsConsultarAcesso = new HashMap<String, List<IStrategy>>();
+		rnsConsultarAcesso.put(Acesso.class.getName(), regrasAcesso);
+                
+		rns.put("CONSULTAR", rnsConsultarAcesso);
+                rns.put("SALVAR", rnsSalvarAcesso);
+		
+                Map<String, List<IStrategy>> rnsSalvarFornecedor = new HashMap<String, List<IStrategy>>();
+		rnsSalvarFornecedor.put(Fornecedor.class.getName(), regrasFornecedor);
+                rns.put("SALVAR", rnsSalvarFornecedor);
+                
+                
+                Map<String, List<IStrategy>> rnsSalvarProduto = new HashMap<String, List<IStrategy>>();
+		rnsSalvarProduto.put(Produto.class.getName(), regrasProduto);
+                rns.put("SALVAR", rnsSalvarProduto);
 		
 		Map<String, List<IStrategy>> rnsProduto = new HashMap<String, List<IStrategy>>();
 		//rnsAltAluno.put(Aluno.class.getName(), regrasAltAlunos);				
 		rns.put("ALTERAR", rnsProduto);
 		rns.put("CONSULTAR", rnsProduto);
 		rns.put("EXCLUIR", rnsProduto);
-		*/
+                
+                
+      
 			
 	}//Fachada
-	
 	
 	public Resultado salvar(EntidadeDominio entidade) {
             resultado = new Resultado();
@@ -180,8 +242,7 @@ private Map<String, IDAO> daos;
 		String nmClasse = entidade.getClass().getName();	
 		
 		String msg = executarRegras(entidade, "ALTERAR");
-		
-		
+
 		if(msg == null){
 			IDAO dao = daos.get(nmClasse);
 			try {

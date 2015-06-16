@@ -59,6 +59,9 @@ public class SimulacaoBean extends EntidadeDominioBean{
         Produto produto = (Produto)entidadeFactory.createEntidade();
         produto.setId(getId_produto());
         produto.setQuantidade(getQuantidade());
+        produto.setFornecedor(new Fornecedor());
+        produto.getFornecedor().setId(0);
+        produto.setNome(null);
         t.setProduto(produto);
         r = fachada.simular(t);
          StringBuilder sb = new StringBuilder();
