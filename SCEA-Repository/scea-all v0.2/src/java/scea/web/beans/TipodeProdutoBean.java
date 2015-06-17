@@ -21,7 +21,8 @@ import scea.dominio.modelo.TipoDeProduto;
 @ManagedBean(name = "tipoDeprodutoBean")
 public class TipodeProdutoBean extends EntidadeDominioBean{
     private TipoDeProduto tipoDeProduto = new TipoDeProduto();
-    private List<Produto> todosTiposDeProdutos;
+    private List<TipoDeProduto> todosTiposDeProdutos;
+    private int idtp;
     
     /**
      * @return the nomeTipo
@@ -29,10 +30,11 @@ public class TipodeProdutoBean extends EntidadeDominioBean{
     public TipoDeProduto createTipoDeProduto()
     {
         TipoDeProduto ntp = new TipoDeProduto();
-        ntp.setTipo(tipoDeProduto.getTipo());
-        ntp.setQtdeMax(tipoDeProduto.getQtdeMax());
-        ntp.setQtdeMin(tipoDeProduto.getQtdeMin());
-        ntp.setDescricao(tipoDeProduto.getDescricao());
+        ntp.setTipo(getTipoDeProduto().getTipo());
+        ntp.setQtdeMax(getTipoDeProduto().getQtdeMax());
+        ntp.setQtdeMin(getTipoDeProduto().getQtdeMin());
+        ntp.setDescricao(getTipoDeProduto().getDescricao());
+        ntp.setId(idtp);
         
         return ntp;
     }
@@ -54,23 +56,23 @@ public class TipodeProdutoBean extends EntidadeDominioBean{
         
     }
 */
-   /* public List<Produto> consultar()
+    public List<TipoDeProduto> consultar()
     {
-        Resultado r = new Resultado();
+        r = new Resultado();
         List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
         r = fachada.consultar(this.createTipoDeProduto());
         entidades = r.getEntidades();
-        List<Produto> produtos = new ArrayList<Produto>();
+        List<TipoDeProduto> produtos = new ArrayList<TipoDeProduto>();
         for(EntidadeDominio e: entidades)
         {
-            Produto f = (Produto)e;
+            TipoDeProduto f = (TipoDeProduto)e;
             produtos.add(f);
         }
         setTodosTiposDeProdutos(produtos);
         return getTodosTiposDeProdutos();
     }
     
-   */
+   
     
   
         
@@ -88,14 +90,14 @@ public class TipodeProdutoBean extends EntidadeDominioBean{
     }
     
 
-    public List<Produto> getTodosTiposDeProdutos() {
+    public List<TipoDeProduto> getTodosTiposDeProdutos() {
         return todosTiposDeProdutos;
     }
 
     /**
      * @param todosProdutos the todosProdutos to set
      */
-    public void setTodosTiposDeProdutos(List<Produto> todosProdutos) {
+    public void setTodosTiposDeProdutos(List<TipoDeProduto> todosProdutos) {
         this.todosTiposDeProdutos = todosProdutos;
     }
 
@@ -111,6 +113,20 @@ public class TipodeProdutoBean extends EntidadeDominioBean{
      */
     public void setTipoDeProduto(TipoDeProduto tipoDeProduto) {
         this.tipoDeProduto = tipoDeProduto;
+    }
+
+    /**
+     * @return the idtp
+     */
+    public int getIdtp() {
+        return idtp;
+    }
+
+    /**
+     * @param idtp the idtp to set
+     */
+    public void setIdtp(int idtp) {
+        this.idtp = idtp;
     }
 
    

@@ -88,9 +88,9 @@ public class TipoDeProdutoDAO extends AbstractJdbcDAO {
         PreparedStatement pst = null;
 
         TipoDeProduto TipoDeProduto = (TipoDeProduto) entidade;
-        String sql = null;
+        String sql = "SELECT * FROM  tb_tipodeproduto  ORDER BY id_tipodeproduto";
 
-        if (TipoDeProduto.getId() == null) {
+        if (TipoDeProduto.getId() == null || TipoDeProduto.getId() == 0 ) {
             sql = "SELECT * FROM  tb_tipodeproduto  ORDER BY id_tipodeproduto";
         } else {
             sql = "SELECT * FROM tb_tipodeproduto  WHERE id_tipodeproduto= " + TipoDeProduto.getId() + " ORDER BY id_tipodeproduto";

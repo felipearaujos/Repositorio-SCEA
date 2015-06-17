@@ -13,7 +13,7 @@
             <style>
                 .zerado{
                     background-color: #eecdd1 
-               }
+                }
                 .critico{
                     background-color: #feff68
                 }
@@ -34,37 +34,52 @@
 
                                     Descrição 
                                     <p:inputText value="#{tipoDeprodutoBean.tipoDeProduto.descricao}"/> 
-                                         
+
                                     Quantidade Máxima de Armazenamento
                                     <p:inputText value="#{tipoDeprodutoBean.tipoDeProduto.qtdeMax}"/> 
-                                    
+
                                     Quantidade Minima Recomendavel
                                     <p:inputText value="#{tipoDeprodutoBean.tipoDeProduto.qtdeMin}"/> 
-                                    
-                                    
+
+
                                 </h:panelGrid>
                             </p:fieldset>
                         </p:outputPanel>
                     </div>
-                    <div>
-                        <p:toolbar>
-                            <f:facet name="left">
-                                <p:commandButton value="Salvar" action="#{tipoDeprodutoBean.Salvar()}"  update ="avisos,msgs,info">
-                                    <p:resetInput target="info"/>
-                                </p:commandButton>
-                                <p:commandButton value="Alterar" action="#{tipoDeprodutoBean.Salvar()}"  update ="avisos,msgs"/>
-                                <p:commandButton value="Excluir" action="#{tipoDeprodutoBean.Salvar()}"  update ="avisos,msgs"/>
-                                <span class="ui-separator">
-                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                                </span>
-                            </f:facet> 
-                            
-                        </p:toolbar>
-                    </div>
+
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Salvar" action="#{tipoDeprodutoBean.Salvar()}"  update ="avisos,msgs,info">
+                                <p:resetInput target="info"/>
+                            </p:commandButton>
+                            <p:commandButton value="Alterar" action="#{tipoDeprodutoBean.Salvar()}"  update ="avisos,msgs"/>
+                            <p:commandButton value="Excluir" action="#{tipoDeprodutoBean.Salvar()}"  update ="avisos,msgs"/>
+                            <span class="ui-separator">
+                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                            </span>
+                        </f:facet> 
+                        <f:facet name="right">
+                            <p:outputLabel value="Pesquisar por ID: " ></p:outputLabel>
+                            <p:inputText value="#{tipoDeprodutoBean.idtp}" placeholder="Pesquisar ID">
+                                <f:ajax event="keyup" render="table" listener="#{tipoDeprodutoBean.consultar()}"/>
+                            </p:inputText>
+                        </f:facet>
+                    </p:toolbar>
+
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
-                    
-          
+
+                    <p:dataTable value="#{tipoDeprodutoBean.todosTiposDeProdutos}" id="table"  var="tp" rows="10">                                            
+
+                        <p:column headerText="ID">   #{tp.id}   </p:column>
+                        <p:column headerText="Tipo"> #{tp.tipo} </p:column>
+                        <p:column headerText="Descrição do Tipo"> #{tp.descricao} </p:column>                        
+                        <p:column headerText="Quantidade Mínima"> #{tp.qtdeMin}   </p:column>
+                        <p:column headerText="Quantidade Máxima"> #{tp.qtdeMax}   </p:column>
+
+                    </p:dataTable>
+
+
                 </h:form>
             </h:body>
         </ui:define>
