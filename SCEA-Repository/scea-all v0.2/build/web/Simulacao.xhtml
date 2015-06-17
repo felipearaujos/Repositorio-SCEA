@@ -31,14 +31,14 @@
                     <p:toolbar>
                         <f:facet name="left">
                             <p:commandButton value="Consultar" action="#{simulacaoBean.consultar()}" update="table"/>
-                            <p:commandButton value="Salvar" action="#{simulacaoBean.Salvar}" update="avisos"/>
+                            <p:commandButton value="Salvar" action="#{simulacaoBean.Salvar}" update="mensagens,avisos"/>
                             <p:commandButton value="Simular Estoque" action="#{simulacaoBean.simularEstoque()}" 
-                                             update="mensagens,avisos,:form:Dialog" oncomplete="PF('dModal').show()"/>
+                                             update="avisos,:form:Dialog" oncomplete="PF('dModal').show()"/>
                         </f:facet>
                     </p:toolbar>
                     
                     <p:messages id="mensagens" showDetail="true" />
-                    <p:growl id="avisos" showDetail="true" life="3000" />
+                    <p:growl id="avisos" showDetail="true" life="9000" />
                     
                     <p:dataTable id="table" value = "#{simulacaoBean.simulacoes}"  selectionMode="single" selection="#{simulacaoBean.simulacaoSelecionada}" rowKey="#{s.id}" var="s">
                         <p:ajax event="rowSelect" listener="#{simulacaoBean.pegar}"  />

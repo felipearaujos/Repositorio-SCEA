@@ -9,6 +9,7 @@ package scea.web.beans;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
@@ -17,7 +18,7 @@ import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Fornecedor;
 import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.TipoDeProduto;
-
+@ApplicationScoped
 @ManagedBean(name = "produtoBean")
 public class ProdutoBean extends EntidadeDominioBean{
     private int quantidade;
@@ -43,24 +44,7 @@ public class ProdutoBean extends EntidadeDominioBean{
         
         return p;
     }
-  /*  
-    public void Salvar()
-    {
-        Produto p = createProduto();
-        Resultado re = f.salvar(p);
-        if(re.getMsg() == null)
-        {
-            re.setMsg("Produto Salvo com sucesso!");
-        }
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage mensagem = new FacesMessage(
-        FacesMessage.SEVERITY_INFO, "", re.getMsg());
-        context.addMessage(null, mensagem);
-        
-        
-    }
-*/
+
     public List<Produto> consultar()
     {
         Resultado r = new Resultado();
@@ -93,9 +77,9 @@ public class ProdutoBean extends EntidadeDominioBean{
         return getProdutosCriticos();
     }
     
-    public void pegar(SelectEvent event)
+     public void pegar(SelectEvent event)
     {
-        
+       
     }
         
     public void Salvar()

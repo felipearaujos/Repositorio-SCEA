@@ -15,6 +15,7 @@ import scea.core.factories.dao.AcessoDAOFactory;
 import scea.core.factories.dao.FornecedorDAOFactory;
 import scea.core.factories.dao.ProdutoDAOFactory;
 import scea.core.factories.dao.SimulacaoDAOFactory;
+import scea.core.factories.dao.TipoDeProdutoDAOFactory;
 import scea.core.factories.dao.TransacaoDAOFactory;
 import scea.core.factories.dominio.AcessoFactory;
 import scea.core.factories.dominio.FornecedorFactory;
@@ -26,6 +27,7 @@ import scea.core.impl.dao.FornecedorDAO;
 import scea.core.impl.dao.ProdutoDAO;
 import scea.core.impl.dao.RelatoriosDAO;
 import scea.core.impl.dao.SimulacaoDAO;
+import scea.core.impl.dao.TipoDeProdutoDAO;
 import scea.core.impl.dao.TransacaoDAO;
 import scea.core.impl.negocio.EnviarEmail;
 import scea.core.impl.negocio.SimularEstoque;
@@ -139,7 +141,7 @@ private Map<String, IDAO> daos;
 		daos.put(Acesso.class.getName(), new AcessoDAO());
 		*/
                 entidadeDAOFactory = new ProdutoDAOFactory();
-		daos.put(Produto.class.getName(), new ProdutoDAO());
+		daos.put(Produto.class.getName(), entidadeDAOFactory.createDAO() );
                 
                 entidadeDAOFactory = new SimulacaoDAOFactory();
                 daos.put(Simulacao.class.getName(), new SimulacaoDAO());
@@ -152,7 +154,9 @@ private Map<String, IDAO> daos;
 		
                 entidadeDAOFactory = new AcessoDAOFactory();
                 daos.put(Acesso.class.getName(), new AcessoDAO());
-
+                
+                entidadeDAOFactory = new TipoDeProdutoDAOFactory();
+                daos.put(TipoDeProduto.class.getName(), entidadeDAOFactory.createDAO());
 
                 rns = new HashMap<String, Map<String, List<IStrategy>>>();
                 
@@ -165,6 +169,11 @@ private Map<String, IDAO> daos;
                 //Fornecedor
 		List<IStrategy> regrasFornecedor = new ArrayList<IStrategy>();
 		regrasFornecedor.add(new ValidaCampos());
+                
+                //TipoDeProduto
+		List<IStrategy> regrasTipoDeProduto = new ArrayList<IStrategy>();
+		regrasFornecedor.add(new ValidarTipoDeProduto());
+                
                 
                 // Simulacao
 		List<IStrategy> regrasSimulacao = new ArrayList<IStrategy>();
@@ -203,6 +212,11 @@ private Map<String, IDAO> daos;
 		rns.put("ALTERAR", rnsProduto);
 		rns.put("CONSULTAR", rnsProduto);
 		rns.put("EXCLUIR", rnsProduto);
+                
+                
+                Map<String, List<IStrategy>> rnsSalvarTipoDeProduto = new HashMap<String, List<IStrategy>>();
+		rnsSalvarTipoDeProduto.put(TipoDeProduto.class.getName(), regrasTipoDeProduto);
+                rns.put("SALVAR", rnsSalvarTipoDeProduto);
                 
                 
       

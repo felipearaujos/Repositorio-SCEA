@@ -70,54 +70,44 @@
                     </div>
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
-                    <div>
+                    
                         <p:dataTable value="#{produtoBean.todosProdutos}" id="table"  var="f" rows="10" 
-                                     rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 
-                                                                                    (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}">
-                            <p:column>
-                                <f:facet name="header">ID</f:facet>
+                                     rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}"
+                                     selectionMode="single" selection="#{produtoBean.produtoSelecionado}" rowKey="#{f.id}">                                            
+                            <p:ajax event="rowSelect" listener="#{produtoBean.pegar}"  />                                                        
+                            <p:column headerText="ID">
                                 #{f.id}
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">Nome</f:facet>   
+                            <p:column headerText="Nome"> 
                                 #{f.nome}
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">Descrição do Tipo</f:facet>
+                            <p:column headerText="Descrição do Tipo">
                                 #{f.tipoDeProduto.descricao}
                             </p:column>                        
-                            <p:column>
-                                <f:facet name="header">Quantidade</f:facet>
+                            <p:column headerText="Quantidade">
                                 #{f.quantidade}
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">Quantidade Mínima</f:facet>
+                            <p:column headerText="Quantidade Mínima">
                                 #{f.tipoDeProduto.qtdeMin}
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">Quantidade Máxima</f:facet>
+                            <p:column headerText="Quantidade Máxima">
                                 #{f.tipoDeProduto.qtdeMax}
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">Fornecedor</f:facet>
+                            <p:column headerText="Fornecedor">
                                 #{f.fornecedor.nomeFantasia}
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">Telefone</f:facet>
+                            <p:column headerText="Telefone">
                                 #{f.fornecedor.telefone.numero}
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">Email</f:facet>
+                            <p:column headerText="Email">
                                 #{f.fornecedor.email}
                             </p:column>  
-                            <f:facet name="footer">
-                                <p:commandButton process="table" value="Enviar Email" update=":form:EmailDialog" oncomplete="PF('EmailModal').show()">
-                                    <f:setPropertyActionListener value="#{f}" target="#{produtoBean.produtoSelecionado}" />
-                                </p:commandButton>
-                            </f:facet>
                         </p:dataTable>
-                    </div>
-                    <div>
+                    
+                    <p:commandButton process="table" value="Enviar Email" update=":form:EmailDialog" oncomplete="PF('EmailModal').show()">
+                       <f:setPropertyActionListener value="#{f}" target="#{produtoBean.produtoSelecionado}" />
+                    </p:commandButton>
+                    
                         <p:dialog id="idDialogEmail" widgetVar="EmailModal" modal="true">
                             <p:outputPanel id="EmailDialog">
                                 <p:panelGrid  columns="2" columnClasses="label,value">
@@ -129,7 +119,7 @@
                                 </p:panelGrid>
                             </p:outputPanel>
                         </p:dialog>
-                    </div>
+                    
                 </h:form>
             </h:body>
         </ui:define>

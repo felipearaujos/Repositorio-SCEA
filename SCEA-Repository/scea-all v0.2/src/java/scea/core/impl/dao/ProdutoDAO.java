@@ -139,6 +139,11 @@ public class ProdutoDAO extends AbstractJdbcDAO{
 		
 		Produto produto = (Produto)entidade;
 		String sql=null;
+                sql = "SELECT * FROM "
+                            + "tb_produto "
+                            + "JOIN tb_tipodeproduto USING(id_tipodeproduto) "
+                            + "JOIN tb_fornecedor USING(id_fornecedor) "
+                            + "ORDER BY id_produto";
 	
 		 if(produto.getId() == 0 && produto.getNome() == null && produto.getFornecedor().getId() == 0){
                     sql = "SELECT * FROM "
