@@ -66,7 +66,7 @@
                              </f:facet>
                         </p:dataTable>
 
-                    <p:dialog id="idDialogEmail" widgetVar="EmailModal" modal="true">
+                    <p:dialog id="idDialogEmail" header="Enviar Email" minHeight="40"widgetVar="EmailModal" modal="true">
                         <p:outputPanel id="EmailDialog">
                             <p:panelGrid  columns="2" columnClasses="label,value">
                                 <h:outputText value="Destinatário:" /> <p:inputText value="#{emailBean.destinatario}" />

@@ -25,16 +25,18 @@ public class SimularEstoque {
 			
 			
 			entSimulacao.setProduto(produtoBuscado);
-			//entSimulacao.setQtdeAtual(produtoBuscado.getQuantidade());
+			entSimulacao.setQtdeAtual(produtoBuscado.getQuantidade());
 			entSimulacao.setQtdeTentativa(produto.getQuantidade());
-
+                        
 			if((produtoBuscado.getQuantidade() + produto.getQuantidade()) <= produtoBuscado.getTipoDeProduto().getQtdeMax()){
 				entSimulacao.setFlgValida(true);
-				entSimulacao.setQtdeFutura((produtoBuscado.getQuantidade() + produto.getQuantidade()));
+				entSimulacao.setStatus("Valida");
+                                entSimulacao.setQtdeFutura((produtoBuscado.getQuantidade() + produto.getQuantidade()));
 				entSimulacao.setQtdeDisponivel((produtoBuscado.getTipoDeProduto().getQtdeMax() - (produtoBuscado.getQuantidade() + produto.getQuantidade())));
                                 
                         }
 			else{
+                                entSimulacao.setStatus("Invalida");
 				entSimulacao.setFlgValida(false);
 				entSimulacao.setQtdeDisponivel((produtoBuscado.getTipoDeProduto().getQtdeMax() - produtoBuscado.getQuantidade()));
 			}

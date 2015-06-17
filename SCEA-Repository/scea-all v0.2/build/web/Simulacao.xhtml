@@ -31,8 +31,9 @@
                     <p:toolbar>
                         <f:facet name="left">
                             <p:commandButton value="Consultar" action="#{simulacaoBean.consultar()}" update="table"/>
-                            <p:commandButton value="Salvar" action="#{simulacaoBean.Salvar}" update="mensagens,avisos"/>
-                            <p:commandButton value="Simular Estoque" action="#{simulacaoBean.simularEstoque()}" update="mensagens,avisos"/>
+                            <p:commandButton value="Salvar" action="#{simulacaoBean.Salvar}" update="avisos"/>
+                            <p:commandButton value="Simular Estoque" action="#{simulacaoBean.simularEstoque()}" 
+                                             update="mensagens,avisos,:form:Dialog" oncomplete="PF('dModal').show()"/>
                         </f:facet>
                     </p:toolbar>
                     
@@ -52,7 +53,28 @@
                         <br/>
                         <p:commandButton style="width: 200px; height: 30px" action="#{simulacaoBean.salvarTransacao()}" value="Realizar Transação" update=":form:avisos, :form:mensagens"/>
                     </center>
-                </h:form>
+                
+                
+                    <p:dialog id="idDialog" header="Resultado Simulação" minHeight="40" widgetVar="dModal" modal="true">
+                        <p:outputPanel id="Dialog">
+                            <p:panelGrid  columns="2" columnClasses="label,value">
+                                <h:outputText value="Situacao" /> 
+                                <h:outputText value="#{simulacaoBean.estoque.status}" />
+                                <h:outputText value="Quantidade Simulacao" /> 
+                                <h:outputText value="#{simulacaoBean.estoque.qtdeTentativa}" />
+                                <h:outputText value="Quantidade Atual" />
+                                <h:outputText value="#{simulacaoBean.estoque.qtdeAtual}" />
+                                <h:outputText value="Quantidade Futura" />
+                                <h:outputText value="#{simulacaoBean.estoque.qtdeFutura}" />
+                                <h:outputText value="Quantidade Disponivel" />
+                                <h:outputText value="#{simulacaoBean.estoque.qtdeDisponivel}" />
+
+                            </p:panelGrid>
+                            <p:commandButton value="Cancelar"  onclick="dModal.hide()"/>
+                        </p:outputPanel>
+                    </p:dialog>
+                
+               </h:form> 
             </h:body>
         </ui:define>
     </ui:composition>

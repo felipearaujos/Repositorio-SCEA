@@ -36,7 +36,7 @@ import scea.dominio.modelo.Transacao;
 @ManagedBean (name = "simulacaoBean")
 public class SimulacaoBean extends EntidadeDominioBean{
     private String transacao;
-    private Date dt_futura;
+    //private Date dt_futura;
     private int quantidade;
     private Produto produto;
     private String id_usuario;
@@ -45,6 +45,9 @@ public class SimulacaoBean extends EntidadeDominioBean{
     private String login_usuario;
     private List<Simulacao> simulacoes;
     private Simulacao simulacaoSelecionada;
+    private Estoque estoque;
+
+    
     public void pegarIdeLoginUsuarioAtual()
     {
         HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
@@ -67,7 +70,7 @@ public class SimulacaoBean extends EntidadeDominioBean{
          StringBuilder sb = new StringBuilder();
         if(r.getEntidades() != null){
            
-            Estoque estoque = (Estoque)r.getEntidades().get(0);
+            estoque = (Estoque)r.getEntidades().get(0);
             sb.append("");
             
             if(estoque.isFlgValida()){
@@ -83,14 +86,19 @@ public class SimulacaoBean extends EntidadeDominioBean{
                 sb.append("OBSERVAÇÃO: ");
                 sb.append(estoque.getObs());
             }
-            sb.append("QUANTIDADE TENTATIVA: ").append(estoque.getQtdeTentativa()).append("   \n");
+            //sb.append("QUANTIDADE TENTATIVA: ").append(estoque.getQtdeTentativa()).append("   \n");
         }
         
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage mensagem = new FacesMessage(
         FacesMessage.SEVERITY_INFO, "", sb.toString());
         context.addMessage(null, mensagem);
-
+        
+        
+        
+        //estoque.setQtdeDisponivel(0);
+        //estoque.setQtdeTentativa(0);
+        //estoque.setQtdeFutura(0);
     }
     
     public void pegar(SelectEvent event)
@@ -134,21 +142,13 @@ public class SimulacaoBean extends EntidadeDominioBean{
         transaction.getProduto().setFornecedor(new Fornecedor());
         transaction.getProduto().getFornecedor().setId(0);
         transaction.getProduto().setNome(null);
-        
-        
-        
+          
         Acesso acesso = new Acesso();
         acesso.setId(Integer.parseInt(getId_usuario()));
         transaction.setAcesso(acesso);
-        
-        //if(transaction.getTipoDeTransacao().equals("ENTRADA"))
-        //{
-            r = fachadaTransacao.salvar(transaction);
-        //}
-        //else
-        //{
-        //    r = fachadaTransacao.saida(transaction);
-        //}
+      
+        r = fachadaTransacao.salvar(transaction);
+
         FacesContext context = FacesContext.getCurrentInstance();
         if(r.getMsg() == null){
             FacesMessage mensagem = new FacesMessage(
@@ -194,18 +194,17 @@ public class SimulacaoBean extends EntidadeDominioBean{
     }
 
     /**
-     * @return the dt_futura
-     */
+     
     public Date getDt_futura() {
         return dt_futura;
     }
 
-    /**
-     * @param dt_futura the dt_futura to set
-     */
-    public void setDt_futura(Date dt_futura) {
+    
+         public void setDt_futura(Date dt_futura) {
         this.dt_futura = dt_futura;
     }
+    */
+
 
     /**
      * @return the quantidade
@@ -317,5 +316,19 @@ public class SimulacaoBean extends EntidadeDominioBean{
      */
     public void setNomeProduto(String nomeProduto) {
         this.nomeProduto = nomeProduto;
+    }
+
+    /**
+     * @return the estoque
+     */
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    /**
+     * @param estoque the estoque to set
+     */
+    public void setEstoque(Estoque estoque) {
+        this.estoque = estoque;
     }
 }
