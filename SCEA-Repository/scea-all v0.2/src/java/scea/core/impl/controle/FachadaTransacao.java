@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import scea.core.aplicacao.Resultado;
+import scea.core.factories.dao.TransacaoDAOFactory;
 import scea.core.impl.dao.*;
 
 import scea.core.impl.negocio.ComplementarDtTransacao;
@@ -13,6 +14,8 @@ import scea.core.impl.negocio.RealizarEntrada;
 import scea.core.impl.negocio.SimularEstoque;
 import scea.core.impl.negocio.validadores.*;
 import scea.core.interfaces.*;
+import scea.core.interfaces.Factories.IEntidadeDAOFactory;
+import scea.core.interfaces.Factories.IEntidadeFactory;
 import scea.dominio.modelo.*;
 
 public class FachadaTransacao extends Fachada {
@@ -22,12 +25,24 @@ public class FachadaTransacao extends Fachada {
     //private Map<String, List<IStrategy>> rns;
     private Map<String, Map<String, List<IStrategy>>> rns;
     private Resultado resultado = new Resultado();
-
+    private IEntidadeFactory entidadeFactory;
+    private IEntidadeDAOFactory entidadeDAOFactory;
+    
     public FachadaTransacao() {
         daos = new HashMap<String, IDAO>();
+        
+        //entidadeDAOFactory = new TipoDeProdutoDAOFactory();
+        //daos.put(TipoDeProduto.class.getName(), entidadeDAOFactory.createDAO());
+        
+        //daos.put(Transacao.class.getName(), new TransacaoDAO());
+        //rns = new HashMap<String, Map<String, List<IStrategy>>>();
+        entidadeDAOFactory = new TransacaoDAOFactory();
         daos.put(Transacao.class.getName(), new TransacaoDAO());
+        
+        
         rns = new HashMap<String, Map<String, List<IStrategy>>>();
 
+        
         List<IStrategy> RegrasTransacao = new ArrayList<IStrategy>();
         RegrasTransacao.add(new ValidarTransacao());
         Map<String, List<IStrategy>> rnsSalvarTransacao = new HashMap<String, List<IStrategy>>();

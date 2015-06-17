@@ -21,7 +21,7 @@
                     background-color: #dbe4ad
                 }
             </style>
-            <h:body onload="#{produtoBean.consultar()}">
+            <h:body onload="#{produtoBean.init()}">
                 <h:form id="form">
                     <br></br><br></br>
                     <div>
@@ -30,19 +30,22 @@
                                 <h:panelGrid columns="6" >
 
                                     Nome do Produto: 
-                                <p:inputText value="#{produtoBean.nome}"> 
-                                          <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
-                                </p:inputText>   
+                                    <p:inputText value="#{produtoBean.nome}"> 
+                                        <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
+                                    </p:inputText>   
                                              
-                                             
-                                    
                                     ID Fornecedor: 
                                     <p:inputText value="#{produtoBean.idFornecedor}"> 
-                                          <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
-                                </p:inputText>   
+                                        <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
+                                    </p:inputText>   
+                                               
+                                    Tipo:        
+                                    <p:selectOneMenu id="tipo" value="#{produtoBean.idTipo}" onchange="#{produtoBean.consultar()}" >
+                                        <f:selectItems value="#{produtoBean.itens}" />
+                                    </p:selectOneMenu>
                                     
-                                    ID Tipo: <p:inputText value="#{produtoBean.idTipo}"/>
                                     Quantidade: <p:inputText value="#{produtoBean.quantidade}"/>
+                                    
                                     Valor:  <p:inputText value="#{produtoBean.valor}"/>
                                 </h:panelGrid>
                             </p:fieldset>

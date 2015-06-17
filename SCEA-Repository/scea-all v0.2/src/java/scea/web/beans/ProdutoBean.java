@@ -8,10 +8,12 @@ package scea.web.beans;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import org.primefaces.event.SelectEvent;
 import scea.core.aplicacao.Resultado;
 import scea.dominio.modelo.EntidadeDominio;
@@ -29,6 +31,10 @@ public class ProdutoBean extends EntidadeDominioBean{
     private List<Produto> produtosCriticos;
     private int idFornecedor;
     private Produto produtoSelecionado;
+    private List<TipoDeProduto> tipos;
+        private TipoDeProduto tipo = new TipoDeProduto();
+        private List<SelectItem> itens;
+    
     /**
      * @return the nomeTipo
      */
@@ -42,8 +48,39 @@ public class ProdutoBean extends EntidadeDominioBean{
         p.getTipoDeProduto().setId(getIdTipo());
         p.getFornecedor().setId(getIdFornecedor());
         
+        //idTipo = tipo.getId();
         return p;
     }
+    
+    
+    
+    public void init() {  
+        // coloque a sua inicialização aqui.  
+        
+        r = new Resultado();
+        List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+        TipoDeProduto tipodproduto = new TipoDeProduto();
+        tipodproduto.setId(0);
+        r = fachada.consultar(tipodproduto);
+        entidades = r.getEntidades();
+        List<TipoDeProduto> produtos = new ArrayList<TipoDeProduto>();
+        for(EntidadeDominio e: entidades)
+        {
+            TipoDeProduto f = (TipoDeProduto)e;
+            produtos.add(f);
+        }
+        setTipos(produtos);
+        //return getTipos();
+        
+        setItens(new ArrayList<SelectItem>(produtos.size()));
+        
+         for(TipoDeProduto p : produtos){
+            getItens().add(new SelectItem(p.getId(), p.getTipo()));
+        }
+         
+        
+         
+    }  
 
     public List<Produto> consultar()
     {
@@ -221,6 +258,48 @@ public class ProdutoBean extends EntidadeDominioBean{
      */
     public void setProdutoSelecionado(Produto produtoSelecionado) {
         this.produtoSelecionado = produtoSelecionado;
+    }
+
+    /**
+     * @return the tipos
+     */
+    public List<TipoDeProduto> getTipos() {
+        return tipos;
+    }
+
+    /**
+     * @param tipos the tipos to set
+     */
+    public void setTipos(List<TipoDeProduto> tipos) {
+        this.tipos = tipos;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public TipoDeProduto getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(TipoDeProduto tipo) {
+        this.tipo = tipo;
+    }
+
+    /**
+     * @return the itens
+     */
+    public List<SelectItem> getItens() {
+        return itens;
+    }
+
+    /**
+     * @param itens the itens to set
+     */
+    public void setItens(List<SelectItem> itens) {
+        this.itens = itens;
     }
 
 
