@@ -5,10 +5,10 @@
         <group>
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/GraficoEntradaBean.java</file>
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/dao/RelatoriosDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/Builder/GraficoLinhaBuilder.java</file>
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/controle/Fachada.java</file>
-            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/Fornecedor.xhtml</file>
-            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/aplicacao/Resultado.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/GraficoTransacoesBean.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/GraficoDinamico.xhtml</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/Builder/GraficoTransacaoBuilder.java</file>
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/GraficoEntradaSaida.xhtml</file>
         </group>
     </open-files>

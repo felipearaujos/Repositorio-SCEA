@@ -10,22 +10,23 @@
             <h:head>
                 <title>Facelet Title</title>
             </h:head>
-            <h:body onload="#{graficoTransacoesBean.atribuiDatas()}">
-                <p:fieldset legend="Periodo" >
-                    <p:panelGrid columns="2" >
-                        <p:outputLabel for="inicial" value="Inicial:" />
-                        <p:calendar id="inicial" value="#{graficoTransacoesBean.relatorio.dtInicial}" />
-                        <p:outputLabel for="final" value="Final:" />
-                        <p:calendar id="final" value="#{graficoTransacoesBean.relatorio.dtFinal}" />     
-                    </p:panelGrid>
-                    <p:commandButton value="Submit"  action="#{graficoTransacoesBean.initGrafico()}" icon="ui-icon-check" />
-                </p:fieldset>
-                <br/><br/><br/><br/><br/><br/>
-                
-                    <p:chart type="line" model="#{graficoTransacoesBean.initGrafico()}" style="height:300px; "/>  
-                
+            <h:body onload="#{graficoTransacoesBean.initGrafico()}">
+                <h:form id="form">
+                            <p:fieldset legend="Período a ser Selecionado" id="fieldsetG">
+                                           Data Inicial:  
+                                           <p:calendar  value="#{graficoTransacoesBean.dtInicial}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
+                                            Data Final: 
+                                            <p:calendar  value="#{graficoTransacoesBean.dtFinal}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
+
+                            </p:fieldset>
+                            <p:commandButton action="#{graficoTransacoesBean.teste()}" 
+                                                       update=":form:grafico"       value="Criar Gráfico" />
+                            <p:outputPanel id="grafico">
+                                <p:chart type="line" model="#{graficoTransacoesBean.graficoRetornado}" rendered="#{graficoTransacoesBean.initGrafico()}"
+                                                  style="height:500px;width: 900px;" />
+                            </p:outputPanel>
+                </h:form>
             </h:body>
         </ui:define>
     </ui:composition>
 </html>
-

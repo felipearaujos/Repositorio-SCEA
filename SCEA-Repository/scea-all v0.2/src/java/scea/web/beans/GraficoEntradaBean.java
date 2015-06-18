@@ -52,15 +52,18 @@ public class GraficoEntradaBean {
         fachada = new Fachada();
         resultado = fachada.transacoesPeriodo(rel);
         
+        if(resultado.getEntidades() != null){
         GraficoLinhaBuilder grafico = new GraficoLinhaBuilder()
                 .initModelo(resultado.getEntidades())
                 .informacoesGrafico(resultado.getEntidades(), formatar(dtInicial), formatar(dtFinal))
                 .alocarEixos(resultado.getEntidades());
         setGraficoRetornado(grafico.getGraficoLinha());
         setRenderizar(true);
+        }
         return true;
     }
     public void teste(){
+        setRenderizar(false);
         initGrafico();
         
     }

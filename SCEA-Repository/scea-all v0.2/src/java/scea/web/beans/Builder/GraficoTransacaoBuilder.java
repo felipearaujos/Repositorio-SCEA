@@ -7,6 +7,9 @@
 package scea.web.beans.Builder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.model.chart.Axis;
@@ -17,75 +20,111 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
-import scea.core.aplicacao.Resultado;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
+import scea.core.aplicacao.relatorio.RelatorioESEstoque;
 import scea.dominio.modelo.EntidadeDominio;
 import scea.web.beans.Builder.*;
 
 public class GraficoTransacaoBuilder implements Serializable{
     
-    private LineChartModel graficoLinha = new LineChartModel();
-    private Resultado resultado;
-    private EntidadeRelatorio rel;
+    private LineChartModel graficoLinha;
     
-    
-    
-    public GraficoTransacaoBuilder(Resultado r){
-        resultado = r;
+    public GraficoTransacaoBuilder()
+    {
+        graficoLinha = new LineChartModel();
     }
     
-     public GraficoTransacaoBuilder  initModelo() {
-         
-         
+     public GraficoTransacaoBuilder  initModelo(List<EntidadeDominio> entidades) {
         
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Entrada");
-        graficoLinha.setLegendPosition("e");
-        
-         for (EntidadeDominio e : resultado.getEntidades()) {
-             rel = (EntidadeRelatorio)e;
-             series1.set(rel.getMes(), rel.getTransacao().getQtdeDoTipo());
+         List<EntidadeRelatorio> listRelatorios = new ArrayList<EntidadeRelatorio>();
+         
+         for(EntidadeDominio e: entidades)
+         {
+             EntidadeRelatorio relatorio = (EntidadeRelatorio)e;
+             listRelatorios.add(relatorio);
          }
-         
         
-        series1.set("2014-01-01", 51);
-        //series1.set("2014-01-06", 22);
-        //series1.set("2014-01-12", 65);
-        //series1.set("2014-01-18", 74);
-        //series1.set("2014-01-24", 24);
-        //series1.set("2014-01-30", 51);
- 
-       /* LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Saída: Caneta Azul");
- 
-        series2.set("2014-01-01", 1);
-        series2.set("2014-01-06", 73);
-        series2.set("2014-01-12", 24);
-        series2.set("2014-01-18", 12);
-        series2.set("2014-01-24", 74);
-        series2.set("2014-01-30", 62);
- */
-        graficoLinha.addSeries(series1);
-   //     graficoLinha.addSeries(series2);
+        if(listRelatorios.size() != 0)
+        {
+            ChartSeries entradas = new ChartSeries();
+            ChartSeries saidas = new ChartSeries();
+            
+            ArrayList<ChartSeries> series = new ArrayList<ChartSeries>();
+            
+            entradas.setLabel("Total de Entradas");
+            saidas.setLabel("Total de Saídas");    
+            graficoLinha.setLegendPosition("se");
+            for(int i=0; i < listRelatorios.size(); i++)
+            {
+                
+               /* if(listRelatorios.get(i).getTransacao().getTipoDeTransacao().equals("ENTRADA"))
+                {
+                    entradas.set(listRelatorios.get(i).getMes(), listRelatorios.get(i).getTransacao().getQtdeDoTipo());
+                   
+                }else
+                {
+                    saidas.set(listRelatorios.get(i).getMes(), listRelatorios.get(i).getTransacao().getQtdeDoTipo());
+                    
+                }*/
+                
+                series.get(i).set(listRelatorios.get(i).getMes(),listRelatorios.get(i).getTransacao().getQtdeDoTipo());
+                graficoLinha.addSeries(series.get(i));
+            }
+            
+            
+            /*for(int i=0; i < listRelatorios.size(); i++)
+            {
+                
+                 graficoLinha.addSeries(series.get(i));
+            }
+            */
+            
+             //graficoLinha.addSeries(entradas);
+             //graficoLinha.addSeries(saidas);
+        }
         return this;
      }
          
-    public GraficoTransacaoBuilder informacoesGrafico()
+    public GraficoTransacaoBuilder informacoesGrafico(List<EntidadeDominio> entidades, String dtInicial, String dtFinal)
     {
-    graficoLinha.setTitle("Entrada e Saída por Periodo ");
-    graficoLinha.setZoom(true);
-    graficoLinha.getAxis(AxisType.Y).setLabel("Número Total de Entradas e Saídas");
-    return this;
+        List<EntidadeRelatorio> listRelatorios = new ArrayList<EntidadeRelatorio>();
+         
+         for(EntidadeDominio e: entidades)
+         {
+             EntidadeRelatorio relatorio = (EntidadeRelatorio)e;
+             listRelatorios.add(relatorio);
+         }
+        
+        if(listRelatorios.size() != 0)
+        {
+            graficoLinha.setTitle(listRelatorios.get(0).getTituloRelatorio());
+            graficoLinha.setAnimate(true);
+            graficoLinha.setTitle("Total de Entradas e Saídas entre " + dtInicial
+            + " á " + dtFinal);
+        }
+        return this;
     }
 
-    public GraficoTransacaoBuilder alocarEixos()
+    public GraficoTransacaoBuilder alocarEixos(List<EntidadeDominio> entidades)
     {
-        DateAxis axis = new DateAxis("Período Selecionado");
-        axis.setTickAngle(-50);
-        axis.setMax("2014-02-01");
-        axis.setTickFormat("%b %#d, %y");    
-        graficoLinha.getAxes().put(AxisType.X, axis);
-        return this;
+        List<EntidadeRelatorio> listRelatorios = new ArrayList<EntidadeRelatorio>();
+         
+         for(EntidadeDominio e: entidades)
+         {
+             EntidadeRelatorio relatorio = (EntidadeRelatorio)e;
+             listRelatorios.add(relatorio);
+         }
+        
+        if(listRelatorios.size() != 0)
+        {
+            DateAxis axis = new DateAxis("Meses entre o período");
+            DateAxis axis2 = new DateAxis("Quantidade de Entradas e Saídas");
+            axis.setTickAngle(-50);
+            axis.setTickFormat("%B");
+            graficoLinha.getAxes().put(AxisType.X, axis);
+            graficoLinha.getAxis(AxisType.Y).setLabel("Meses entre o período");
+        }
+            return this;
     }
      
     
@@ -101,20 +140,6 @@ public class GraficoTransacaoBuilder implements Serializable{
      */
     public void setGraficoLinha(LineChartModel graficoLinha) {
         this.graficoLinha = graficoLinha;
-    }
-
-    /**
-     * @return the resultado
-     */
-    public Resultado getResultado() {
-        return resultado;
-    }
-
-    /**
-     * @param resultado the resultado to set
-     */
-    public void setResultado(Resultado resultado) {
-        this.resultado = resultado;
     }
     
     
