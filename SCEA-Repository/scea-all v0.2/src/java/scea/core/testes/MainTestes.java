@@ -63,12 +63,12 @@ public class MainTestes {
         //testeRelatorioTransaPeriodoDAO();
         //testeRelatorioTransacaoPeriodoFachada();
         //testeRelatorioProdPeriodoDAO();
-        //testeRelatorioTransacaoProdPeriodoFachada();
+        testeRelatorioTransacaoProdPeriodoFachada();
         //testeRelatorioEstoqueDAO();
         //testeRelatorioEstoqueFachada();
         //testeNewTransacao();
         //testedia();
-        testeSalvarFachada();
+        //testeSalvarFachada();
     }//MAIN
     
 
@@ -246,8 +246,8 @@ public class MainTestes {
         EntidadeRelatorio rel = new EntidadeRelatorio();
         resultado = new Resultado();
 
-        rel.setDtInicial(("01/03/2015"));
-        rel.setDtFinal(("31/04/2015"));
+        rel.setDtInicial(("01/01/2015"));
+        rel.setDtFinal(("17/06/2015"));
         resultado = fachada.transacoesPeriodo(rel);
 
         for (EntidadeDominio e : resultado.getEntidades()) {

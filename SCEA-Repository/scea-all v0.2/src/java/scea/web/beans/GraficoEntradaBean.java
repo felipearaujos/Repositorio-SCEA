@@ -6,7 +6,9 @@
 
 package scea.web.beans;
 
+import java.text.DateFormat;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
@@ -36,9 +38,13 @@ public class GraficoEntradaBean {
     {
         EntidadeRelatorio rel = new EntidadeRelatorio();
         resultado = new Resultado();
-
         //rel.setDtInicial("01/01/2015");
-       // rel.setDtFinal(("31/06/2016"));
+        //rel.setDtFinal(("31/07/2015"));
+        
+        //setDtInicial("01/01/2015");
+        //setDtFinal(("31/07/2015"));
+        //rel.setDtInicial("01/01/2015");
+        //rel.setDtFinal(("31/06/2016"));
         if(getDtInicial() == null)
             return false;
         rel.setDtInicial(getDtInicial());
@@ -140,5 +146,31 @@ public class GraficoEntradaBean {
      * @return the grafico
      */
 
+    
+        public void setDtInicial(String dtInicial) {
+        //this.dtInicial = dtInicial;
+        Date dt;
+        try {
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            dt = df.parse(dtInicial);
+            //return dt;
+            this.dtInicial = dt;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+        
+        
+            public void setDtFinal(String dtFinal){
+     Date dt;
+        try {
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            dt = df.parse(dtFinal);
+            //return dt;
+            this.dtFinal = dt;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

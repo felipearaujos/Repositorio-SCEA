@@ -14,9 +14,9 @@
                 <h:form id="form">
                             <p:fieldset legend="Período a ser Selecionado" id="fieldsetG">
                                            Data Inicial:  
-                                           <p:calendar  value="#{graficoEntradaSaidaBean.dtInicial}"  navigator="true" pattern="dd/mm/yyyy" />
+                                           <p:calendar  value="#{graficoEntradaSaidaBean.dtInicial}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
                                             Data Final: 
-                                            <p:calendar  value="#{graficoEntradaSaidaBean.dtFinal}"  navigator="true" pattern="dd/mm/yyyy" />
+                                            <p:calendar  value="#{graficoEntradaSaidaBean.dtFinal}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
 
                             </p:fieldset>
                             <p:commandButton action="#{graficoEntradaSaidaBean.teste()}" 
