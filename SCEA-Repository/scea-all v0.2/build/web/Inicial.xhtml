@@ -18,14 +18,14 @@
                     background-color: #dbe4ad
                 }
             </style>
-            <h:body onload="#{produtoBean.relatorioInicial()}">
+            <h:body onload="#{relatorioInicialBean.relatorioInicial()}">
                 <h:form id="form">
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
                     <p:outputLabel>Todos os Produtos em estado Crítico ou zerados</p:outputLabel>
-                    <p:dataTable value="#{produtoBean.produtosCriticos}" id="table" var="f" rows="10" 
+                    <p:dataTable value="#{relatorioInicialBean.produtosCriticos}" id="table" var="f" rows="10" 
                                  rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 'naozerado'}"
-                                 selectionMode="single" selection="#{produtoBean.produtoSelecionado}" rowKey="#{f.id}">
+                                 selectionMode="single" selection="#{relatorioInicialBean.produtoSelecionado}" rowKey="#{f.id}">
 
                             <p:column>
                                 <f:facet name="header">ID</f:facet>
@@ -61,7 +61,7 @@
                             </p:column>
                              <f:facet name="footer">
                                  <p:commandButton process="table" value="Enviar Email" update=":form:EmailDialog" oncomplete="PF('EmailModal').show()">
-                                     <f:setPropertyActionListener value="#{f}" target="#{produtoBean.produtoSelecionado}" />
+                                     <f:setPropertyActionListener value="#{f}" target="#{relatorioInicialBean.produtoSelecionado}" />
                                  </p:commandButton>
                              </f:facet>
                         </p:dataTable>

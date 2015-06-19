@@ -237,52 +237,7 @@ public class ProdutoDAO extends AbstractJdbcDAO{
         
         // ---------- 
         
-        public List<EntidadeDominio> consultarRelatorioInicial(EntidadeDominio entidade) {
-		PreparedStatement pst = null;
-		
-		Produto produto = (Produto)entidade;
-		String sql=null;
-		
-                sql = "SELECT * FROM tb_produto p JOIN tb_tipodeproduto tp USING(id_tipodeproduto) JOIN tb_fornecedor  f USING(id_fornecedor) WHERE p.quantidade <= tp.qtdeMin OR p.quantidade = 0  ORDER BY p.id_produto";
-			
-		
-	try {
-		openConnection();
-		pst = connection.prepareStatement(sql);
-		
-		
-		ResultSet rs = pst.executeQuery();
-		List<EntidadeDominio> produtos = new ArrayList<EntidadeDominio>();
-		while (rs.next()) {
-                        Produto p = new Produto();
-			
-			p.setId(rs.getInt("id_produto"));
-			p.setNome(rs.getString("nome"));
-			p.setQuantidade(rs.getInt("quantidade"));
-			p.setValor(rs.getDouble("vlr"));
-			p.getFornecedor().setId((rs.getInt("id_fornecedor")));
-			p.getTipoDeProduto().setId(rs.getInt("id_tipodeproduto"));
-			p.getTipoDeProduto().setDescricao(rs.getString("descricao"));
-			p.getTipoDeProduto().setQtdeMax(rs.getInt("qtdeMax"));
-			p.getTipoDeProduto().setQtdeMin(rs.getInt("qtdeMin"));
-			p.getTipoDeProduto().setTipo((rs.getString("tipo")));
-			
-			p.getFornecedor().setId(rs.getInt("id_fornecedor"));
-			p.getFornecedor().setNome(rs.getString("nome"));
-			p.getFornecedor().setEmail(rs.getString("email"));
-			p.getFornecedor().setNomeFantasia(rs.getString("nome_fantasia"));
-			p.getFornecedor().setRazaoSocial(rs.getString("rzsocial"));
-			p.getFornecedor().setCNPJ(rs.getString("cnpj"));
-						
-			produtos.add(p);
-		}
-		return produtos;
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	return null;
 
-	}
 
 	
 }

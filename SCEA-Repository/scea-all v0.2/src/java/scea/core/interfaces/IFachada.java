@@ -29,10 +29,10 @@ public interface IFachada {
         public Resultado enviarEmail(EntidadeDominio entidade);
         
         //Relatorio
-        public Resultado RelatorioInicial(EntidadeDominio entidade);
-        public Resultado transacoesPeriodo(EntidadeDominio entidade);
-        public Resultado transacoesProdPeriodo(EntidadeDominio entidade);
-        public Resultado relatorioEstoque(EntidadeDominio entidade);
+        //public Resultado RelatorioInicial(EntidadeDominio entidade);
+        //public Resultado transacoesPeriodo(EntidadeDominio entidade);
+        //public Resultado transacoesProdPeriodo(EntidadeDominio entidade);
+        //public Resultado relatorioEstoque(EntidadeDominio entidade);
         
 	
 }

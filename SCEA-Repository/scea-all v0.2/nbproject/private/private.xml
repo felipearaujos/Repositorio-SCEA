@@ -9,7 +9,10 @@
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/GraficoTransacoesBean.java</file>
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/GraficoDinamico.xhtml</file>
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/Builder/GraficoTransacaoBuilder.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/GraficoEstoquePizzaBean.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/GraficoEstoque.xhtml</file>
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/GraficoEntradaSaida.xhtml</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/Builder/GraficoPizzaEstoqueProdutoBuilder.java</file>
         </group>
     </open-files>
 </project-private>

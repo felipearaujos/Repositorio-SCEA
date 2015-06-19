@@ -28,7 +28,7 @@ public class ProdutoBean extends EntidadeDominioBean{
     private String nome = null;
     private int idTipo;
     private List<Produto> todosProdutos;
-    private List<Produto> produtosCriticos;
+    //private List<Produto> produtosCriticos;
     private int idFornecedor;
     private Produto produtoSelecionado;
     private List<TipoDeProduto> tipos;
@@ -97,7 +97,7 @@ public class ProdutoBean extends EntidadeDominioBean{
         setTodosProdutos(produtos);
         return getTodosProdutos();
     }
-    
+   /* 
     public List<Produto> relatorioInicial()
     {
         Resultado r = new Resultado();
@@ -113,7 +113,7 @@ public class ProdutoBean extends EntidadeDominioBean{
         setProdutosCriticos(produtos);
         return getProdutosCriticos();
     }
-    
+    */
      public void pegar(SelectEvent event)
     {
        
@@ -232,20 +232,14 @@ public class ProdutoBean extends EntidadeDominioBean{
         this.idTipo = idTipo;
     }
 
-    /**
-     * @return the produtosCriticos
-     */
+    /*
     public List<Produto> getProdutosCriticos() {
         return produtosCriticos;
     }
-
-    /**
-     * @param produtosCriticos the produtosCriticos to set
-     */
     public void setProdutosCriticos(List<Produto> produtosCriticos) {
         this.produtosCriticos = produtosCriticos;
     }
-
+    */
     /**
      * @return the produtoSelecionado
      */

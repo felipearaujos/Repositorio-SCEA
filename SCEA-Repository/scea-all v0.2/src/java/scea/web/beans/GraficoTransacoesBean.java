@@ -51,7 +51,8 @@ public class GraficoTransacoesBean extends EntidadeDominioBean{
         rel.setDtInicial(getDtInicial());
         rel.setDtFinal((getDtFinal()));
         fachada = new Fachada();
-        resultado = fachada.transacoesProdPeriodo(rel);
+        rel.setNome("RELATORIOTRANSACOESPRODUTO");
+        resultado = fachada.consultar(rel);
         
         //if(resultado.getEntidades() != null){
         GraficoTransacaoBuilder grafico = new GraficoTransacaoBuilder()

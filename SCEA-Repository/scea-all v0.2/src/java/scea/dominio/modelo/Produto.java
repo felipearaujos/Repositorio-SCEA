@@ -10,9 +10,12 @@ public class Produto extends EntidadeDominio{
 	
 	public Produto() {
 		tipoDeProduto = new TipoDeProduto();
+                tipoDeProduto.setTipo("");
+                tipoDeProduto.setId(0);
                 fornecedor = new Fornecedor();
-		tipoDeProduto.setTipo("");
-                //this.nome = "";
+		fornecedor.setNome(null);
+                fornecedor.setId(0);
+                
 	}
 	
 	

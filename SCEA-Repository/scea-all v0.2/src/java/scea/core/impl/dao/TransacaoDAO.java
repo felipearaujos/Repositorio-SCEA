@@ -21,9 +21,9 @@ public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 
 	@Override
 	public void salvar(EntidadeDominio entidade) throws SQLException {		
-		if(connection == null){
-			openConnection();
-		}
+		
+		openConnection();
+		
 		PreparedStatement pst = null;
 		Transacao transacao = (Transacao)entidade;
 		StringBuilder sql = new StringBuilder();
@@ -35,11 +35,10 @@ public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 		
 		try {
 			connection.setAutoCommit(false);
-			
-			//System.out.println("---------------" + transacao.getProduto().getId());		
+					
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, transacao.getTipoDeTransacao());
-			pst.setString(2, " sysdate() ");//pst.setString(2, transacao.transacao.getData());
+			//pst.setString(2, " sysdate() ");//pst.setString(2, transacao.transacao.getData());
 			
 			Date data = new Date();		
 			Timestamp time = new Timestamp(data.getTime());
@@ -50,15 +49,9 @@ public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 			pst.setInt(5, transacao.getQtdeDoTipo());
 				
 			
-			pst.execute();//pst.executeUpdate(); ????
+			pst.execute();
 					
-			/*ResultSet rs = pst.getGeneratedKeys();
 			
-			int idEnd=0;
-			if(rs.next())
-				idEnd = rs.getInt(1);
-			end.setId(idEnd);
-			*/
 			connection.commit();					
 		} catch (SQLException e) {
 			try {

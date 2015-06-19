@@ -50,7 +50,10 @@ public class GraficoEntradaBean {
         rel.setDtInicial(getDtInicial());
         rel.setDtFinal((getDtFinal()));
         fachada = new Fachada();
-        resultado = fachada.transacoesPeriodo(rel);
+        //resultado = fachada.transacoesPeriodo(rel);
+        
+        rel.setNome("RELATORIOTRANSACOES");
+        resultado = fachada.consultar(rel);
         
         if(resultado.getEntidades() != null){
         GraficoLinhaBuilder grafico = new GraficoLinhaBuilder()

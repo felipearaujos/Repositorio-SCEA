@@ -26,8 +26,11 @@ public class EntidadeRelatorio extends EntidadeDominio{
     private String TituloEixoY;
     private String TituloRelatorio;
     private Date dataRetornada;
+    private String nome;
     
-
+    public EntidadeRelatorio(){
+        transacao = new Transacao();
+    }
 
     /**
      * @return the mes
@@ -64,7 +67,7 @@ public class EntidadeRelatorio extends EntidadeDominio{
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             dt = df.parse(dtInicial);
             //return dt;
-            this.dtInicial = dt;
+            this.setDtInicial(dt);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -90,7 +93,7 @@ public class EntidadeRelatorio extends EntidadeDominio{
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             dt = df.parse(dtFinal);
             //return dt;
-            this.dtFinal = dt;
+            this.setDtFinal(dt);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -164,6 +167,20 @@ public class EntidadeRelatorio extends EntidadeDominio{
      */
     public void setDataRetornada(Date dataRetornada) {
         this.dataRetornada = dataRetornada;
+    }
+
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     
     

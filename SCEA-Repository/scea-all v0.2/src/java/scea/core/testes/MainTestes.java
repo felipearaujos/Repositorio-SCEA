@@ -55,6 +55,8 @@ public class MainTestes {
         //testeAcesso();
         //testVerificaFachadaParaSimulacao();
         //testeRelatorioInicialFachada();
+        //testeRelatorioInicialDAO();
+
         //ValidarExistenciaFornece();
         //testeValidarDadosProduto();
         //testeValidarExistenciaTipo();
@@ -73,14 +75,19 @@ public class MainTestes {
     
 
     public static void testeRelatorioEstoqueFachada() {
+        
+        System.out.println("testeRelatorioEstoqueFachada");
         fachada = new Fachada();
         EntidadeRelatorio rel = new EntidadeRelatorio();
         resultado = new Resultado();
 
         rel.setDtInicial("01/03/2015");
         rel.setDtFinal(("31/04/2015"));
-        resultado = fachada.relatorioEstoque(rel);
-
+        //resultado = fachada.relatorioEstoque(rel);
+        rel.setNome("RELATORIOSITUACAOESTOQUE");
+        resultado = fachada.consultar(rel);
+        
+        
         for (EntidadeDominio e : resultado.getEntidades()) {
             RelatorioEstoque s = (RelatorioEstoque) e;
             System.out.print(
@@ -186,7 +193,12 @@ public class MainTestes {
         resultado = new Resultado();
         r.setDtInicial("01/03/2015");
         r.setDtFinal("31/12/2015");
-        resultado.setEntidades(dao.consultarRelArmazenamentoEstoque(r));
+        r.setNome("RELATORIOSITUACAOESTOQUE");
+        try {
+            resultado.setEntidades(dao.consultar(r));
+        } catch (SQLException ex) {
+            Logger.getLogger(MainTestes.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         for (EntidadeDominio e : resultado.getEntidades()) {
             RelatorioEstoque s = (RelatorioEstoque) e;
@@ -197,8 +209,7 @@ public class MainTestes {
             );
             System.out.println();
         }
-    }//testeRelatorioProdPeriodoDAO
-
+    }
     public static void testeRelatorioTransacaoProdPeriodoFachada() {
         fachada = new Fachada();
         EntidadeRelatorio rel = new EntidadeRelatorio();
@@ -206,8 +217,9 @@ public class MainTestes {
 
         rel.setDtInicial("01/03/2015");
         rel.setDtFinal(("31/04/2015"));
-        resultado = fachada.transacoesProdPeriodo(rel);
-
+        rel.setNome("RELATORIOTRANSACOESPRODUTO");
+        resultado = fachada.consultar(rel);
+        System.out.println("testeRelatorioTransacaoProdPeriodoFachada");
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
             System.out.print(
@@ -226,8 +238,13 @@ public class MainTestes {
         resultado = new Resultado();
         r.setDtInicial("01/03/2015");
         r.setDtFinal("31/12/2015");
+        r.setNome("RELATORIOTRANSACOESPRODUTO");
 
-        resultado.setEntidades(dao.consultarTransacoesProdPeriodo(r));
+        try {
+            resultado.setEntidades(dao.consultar(r));
+        } catch (SQLException ex) {
+            Logger.getLogger(MainTestes.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
@@ -239,8 +256,7 @@ public class MainTestes {
                     + "Mês: " + s.getMes());
             System.out.println();
         }
-    }//testeRelatorioProdPeriodoDAO
-
+    }
     public static void testeRelatorioTransacaoPeriodoFachada() {
         fachada = new Fachada();
         EntidadeRelatorio rel = new EntidadeRelatorio();
@@ -248,8 +264,9 @@ public class MainTestes {
 
         rel.setDtInicial(("01/01/2015"));
         rel.setDtFinal(("17/06/2015"));
-        resultado = fachada.transacoesPeriodo(rel);
-
+        rel.setNome("RELATORIOTRANSACOES");
+        resultado = fachada.consultar(rel);
+        System.out.println("testeRelatorioTransacaoPeriodoFachada");
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
             System.out.print("Transção: " + s.getTransacao().getTipoDeTransacao() + " "
@@ -266,8 +283,13 @@ public class MainTestes {
         resultado = new Resultado();
         r.setDtInicial(("01/03/2015"));
         r.setDtFinal(("31/12/2015"));
+        r.setNome("RELATORIOTRANSACOES");
 
-        resultado.setEntidades(dao.consultarRelTransacoesPeriodo(r));
+        try {
+            resultado.setEntidades(dao.consultar(r));
+        } catch (SQLException ex) {
+            Logger.getLogger(MainTestes.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
@@ -277,8 +299,7 @@ public class MainTestes {
 
             System.out.println();
         }
-    }//testeRelatorioTransaPeriodoDAO
-
+    }
     public static void testeDeveEnviarEmail() {
         EmailAplicacao emailEnviado = new EmailAplicacao();
         emailEnviado.setAssunto("Teste Email");
@@ -313,11 +334,36 @@ public class MainTestes {
     public static void testeRelatorioInicialFachada() {
         Fachada f = new Fachada();
         Resultado r = new Resultado();
-        r = f.RelatorioInicial(new Produto());
+        EntidadeRelatorio rel = new EntidadeRelatorio();
+        rel.setNome("RELATORIOINICIAL");
+        
+        r = f.consultar(rel);
+        
         for (EntidadeDominio e : r.getEntidades()) {
             System.out.println(e.getId());
         }
     }//testeRelatorioInicialFachada
+    
+       public static void testeRelatorioInicialDAO() {
+        Fachada f = new Fachada();
+        Resultado r = new Resultado();
+        EntidadeRelatorio rel = new EntidadeRelatorio();
+        rel.setNome("RELATORIOINICIAL");
+        RelatoriosDAO dao = new RelatoriosDAO();
+        
+        
+        try {
+            r.setEntidades(dao.consultar(rel));
+        } catch (SQLException ex) {
+            Logger.getLogger(MainTestes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        for (EntidadeDominio e : r.getEntidades()) {
+            System.out.println(e.getId());
+        }
+    }    
 
     public static void testeAcesso() {
         Fachada f = new Fachada();

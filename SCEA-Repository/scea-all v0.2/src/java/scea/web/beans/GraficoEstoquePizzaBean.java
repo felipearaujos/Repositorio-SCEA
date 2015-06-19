@@ -28,9 +28,10 @@ public class GraficoEstoquePizzaBean {
         public void inicializarGrafico()
         {
         EntidadeRelatorio rel = new EntidadeRelatorio();
+        rel.setNome("RELATORIOSITUACAOESTOQUE");
         resultado = new Resultado();
         fachada = new Fachada();
-        resultado = fachada.relatorioEstoque(rel);
+        resultado = fachada.consultar(rel);
         
             GraficoPizzaEstoqueBuilder builder = new GraficoPizzaEstoqueBuilder()
                     .initModelo(resultado.getEntidades())

@@ -57,7 +57,7 @@ public class TransacaoBean extends ProdutoBean{
         setOperacao("ENTRADA");
         Transacao transacao = this.createTransacao();
         
-        Resultado resultado = fachadaTransacao.salvar(transacao);
+        Resultado resultado = fachada.salvar(transacao);
         //Resultado resultado = fachadaTransacao.entrada(transacao);
         if(resultado.getMsg() == null){
             resultado.setMsg("Entrada realizada COM SUCESSO");
@@ -78,7 +78,7 @@ public class TransacaoBean extends ProdutoBean{
         Transacao transacao = this.createTransacao();
         
         //Resultado resultado = fachadaTransacao.saida(transacao);
-        Resultado resultado = fachadaTransacao.salvar(transacao);
+        Resultado resultado = fachada.salvar(transacao);
         if(resultado.getMsg() == null){
             resultado.setMsg("SAIDA REALIZADA COM SUCESSO \n\n");
         }

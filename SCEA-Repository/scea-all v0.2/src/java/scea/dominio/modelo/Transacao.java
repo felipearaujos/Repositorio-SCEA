@@ -8,6 +8,13 @@ public class Transacao extends EntidadeDominio{
 	private Date dtCadastro;
 	private Produto produto;
 	private int qtdeDoTipo =0;
+        
+        
+        public Transacao(){
+            produto = new Produto();
+        }
+        
+        
 	
 	public String getTipoDeTransacao() {
 		return tipoDeTransacao;
