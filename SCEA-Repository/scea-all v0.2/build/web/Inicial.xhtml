@@ -18,12 +18,12 @@
                     background-color: #dbe4ad
                 }
             </style>
-            <h:body onload="#{relatorioInicialBean.relatorioInicial()}">
+            <h:body >
                 <h:form id="form">
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
                     <p:outputLabel>Todos os Produtos em estado Crítico ou zerados</p:outputLabel>
-                    <p:dataTable value="#{relatorioInicialBean.produtosCriticos}" id="table" var="f" rows="10" 
+                    <p:dataTable value="#{relatorioInicialBean.produtosCriticos}" id="table" var="f" rows="10" paginator="true"
                                  rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 'naozerado'}"
                                  selectionMode="single" selection="#{relatorioInicialBean.produtoSelecionado}" rowKey="#{f.id}">
 

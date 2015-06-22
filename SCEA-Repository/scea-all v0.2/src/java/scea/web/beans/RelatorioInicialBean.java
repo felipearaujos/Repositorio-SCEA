@@ -7,6 +7,7 @@ package scea.web.beans;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.event.SelectEvent;
 import scea.core.aplicacao.Resultado;
@@ -25,7 +26,7 @@ public class RelatorioInicialBean extends EntidadeDominioBean {
     private List<Produto> produtosCriticos;
         private Produto produtoSelecionado;
 
-    public List<Produto> relatorioInicial() {
+ /*   public List<Produto> relatorioInicial() {
         Resultado r = new Resultado();
         //List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
         EntidadeRelatorio rel = new EntidadeRelatorio();
@@ -42,7 +43,27 @@ public class RelatorioInicialBean extends EntidadeDominioBean {
         setProdutosCriticos(produtos);
         return getProdutosCriticos();
     }
-
+*/
+    @PostConstruct
+    public void init(){
+        Resultado r = new Resultado();
+        //List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+        EntidadeRelatorio rel = new EntidadeRelatorio();
+        rel.setNome("RELATORIOINICIAL");
+        
+        r = fachada.consultar(rel);
+        //r = fachada.RelatorioInicial(new Produto());
+        //entidades = r.getEntidades();
+        List<Produto> produtos = new ArrayList<Produto>();
+        for (EntidadeDominio e : r.getEntidades()) {
+            Produto f = (Produto) e;
+            produtos.add(f);
+        }
+        setProdutosCriticos(produtos);
+    
+    }
+    
+    
     
     public void pegar(SelectEvent event)
     {

@@ -21,7 +21,7 @@ import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
-import scea.core.aplicacao.relatorio.RelatorioESEstoque;
+//import scea.core.aplicacao.relatorio.RelatorioSituacaoEstoque;
 import scea.dominio.modelo.EntidadeDominio;
 import scea.web.beans.Builder.*;
 

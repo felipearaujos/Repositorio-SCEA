@@ -61,11 +61,17 @@ public class TransacaoBean extends ProdutoBean{
         //Resultado resultado = fachadaTransacao.entrada(transacao);
         if(resultado.getMsg() == null){
             resultado.setMsg("Entrada realizada COM SUCESSO");
+            zeraTransacao();
         }
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage mensagem = new FacesMessage(
             FacesMessage.SEVERITY_INFO, "", resultado.getMsg());
             context.addMessage(null, mensagem);
+            
+            
+           
+            
+            
     }
     
     
@@ -81,6 +87,7 @@ public class TransacaoBean extends ProdutoBean{
         Resultado resultado = fachada.salvar(transacao);
         if(resultado.getMsg() == null){
             resultado.setMsg("SAIDA REALIZADA COM SUCESSO \n\n");
+            zeraTransacao();
         }
         
 /*        if(resultado.getEntidades() != null){
@@ -96,6 +103,11 @@ public class TransacaoBean extends ProdutoBean{
     }
      
    
+    private void zeraTransacao(){
+        setId(0);
+            setQuantidade(0);
+    }
+    
     @Override
     public int getQuantidade() {
         return quantidade;

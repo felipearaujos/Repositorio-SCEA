@@ -63,9 +63,9 @@ public class MainTestes {
         //testeDeveEnviarEmail();
         //testeconvercaodata();
         //testeRelatorioTransaPeriodoDAO();
-        //testeRelatorioTransacaoPeriodoFachada();
+        testeRelatorioTransacaoPeriodoFachada();
         //testeRelatorioProdPeriodoDAO();
-        testeRelatorioTransacaoProdPeriodoFachada();
+        //testeRelatorioTransacaoProdPeriodoFachada();
         //testeRelatorioEstoqueDAO();
         //testeRelatorioEstoqueFachada();
         //testeNewTransacao();
@@ -263,7 +263,7 @@ public class MainTestes {
         resultado = new Resultado();
 
         rel.setDtInicial(("01/01/2015"));
-        rel.setDtFinal(("17/06/2015"));
+        rel.setDtFinal(("22/06/2015"));
         rel.setNome("RELATORIOTRANSACOES");
         resultado = fachada.consultar(rel);
         System.out.println("testeRelatorioTransacaoPeriodoFachada");

@@ -195,13 +195,6 @@ private Map<String, IDAO> daos;
                 rns.put("SALVAR", rnsSalvarTipoDeProduto);
                 
                 
-                
-         
-        
-        
-        //rns = new HashMap<String, Map<String, List<IStrategy>>>();
-
-        
                 List<IStrategy> RegrasTransacao = new ArrayList<IStrategy>();
                 RegrasTransacao.add(new ValidarTransacao());
                 Map<String, List<IStrategy>> rnsSalvarTransacao = new HashMap<String, List<IStrategy>>();

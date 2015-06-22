@@ -74,11 +74,11 @@
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
                     
-                        <p:dataTable value="#{produtoBean.todosProdutos}" id="table"  var="f" rows="10" 
+                        <p:dataTable value="#{produtoBean.todosProdutos}" id="table"  var="f" rows="10" paginator="true"
                                      rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}"
                                      selectionMode="single" selection="#{produtoBean.produtoSelecionado}" rowKey="#{f.id}">                                            
                             <p:ajax event="rowSelect" listener="#{produtoBean.pegar}"  />                                                        
-                            <p:column headerText="ID">
+                            <p:column headerText="ID" style="width: 14px">
                                 #{f.id}
                             </p:column>
                             <p:column headerText="Nome"> 
@@ -87,13 +87,13 @@
                             <p:column headerText="Descrição do Tipo">
                                 #{f.tipoDeProduto.descricao}
                             </p:column>                        
-                            <p:column headerText="Quantidade">
+                            <p:column headerText="Quantidade" style="width: 65px">
                                 #{f.quantidade}
                             </p:column>
-                            <p:column headerText="Quantidade Mínima">
+                            <p:column headerText="Quantidade Mínima" style="width: 65px">
                                 #{f.tipoDeProduto.qtdeMin}
                             </p:column>
-                            <p:column headerText="Quantidade Máxima">
+                            <p:column headerText="Quantidade Máxima" style="width: 65px">
                                 #{f.tipoDeProduto.qtdeMax}
                             </p:column>
                             <p:column headerText="Fornecedor">
@@ -102,15 +102,16 @@
                             <p:column headerText="Telefone">
                                 #{f.fornecedor.telefone.numero}
                             </p:column>
+                            
                             <p:column headerText="Email">
                                 #{f.fornecedor.email}
                             </p:column>  
                         </p:dataTable>
-                    
-                    <p:commandButton process="table" value="Enviar Email" update=":form:EmailDialog" oncomplete="PF('EmailModal').show()">
-                       <f:setPropertyActionListener value="#{f}" target="#{produtoBean.produtoSelecionado}" />
-                    </p:commandButton>
-                    
+                    <center>
+                        <p:commandButton process="table" value="Enviar Email" update=":form:EmailDialog" oncomplete="PF('EmailModal').show()">
+                            <f:setPropertyActionListener value="#{f}" target="#{produtoBean.produtoSelecionado}" />
+                        </p:commandButton>
+                    </center>
                         <p:dialog id="idDialogEmail" widgetVar="EmailModal" modal="true">
                             <p:outputPanel id="EmailDialog">
                                 <p:panelGrid  columns="2" columnClasses="label,value">

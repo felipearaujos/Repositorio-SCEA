@@ -21,10 +21,10 @@
                 }
                 </style>
             </h:head>
-             <h:body>
-                <h:form>
+            <h:body onload="#{transacaoBean.consultar()}">
+                <h:form id="form">
                     <p:outputLabel rendered="false" title="#{transacaoBean.idAcesso}" />
-                    <p:fieldset legend="Informações de Entrada">
+                    <p:fieldset id="transacao" legend="Informações de Entrada">
                         <h:panelGrid columns="6">
                             ID Produto:  <p:inputText value="#{transacaoBean.id}">
                                <f:ajax event="keyup" render="table" listener="#{transacaoBean.consultar()}"/>
@@ -34,16 +34,18 @@
                     </p:fieldset>
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="ENTRADA" action="#{transacaoBean.entrada()}"  update ="msgs,avisos"/>
+                            <p:commandButton value="ENTRADA" action="#{transacaoBean.entrada()}"  update ="msgs,avisos,transacao,table"/>
                         </f:facet>
                     </p:toolbar>
                     
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="10000" />
 
-                    <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10"
-                        rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 
-                                                                       (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}">
+                    <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10" paginator="true"
+                                 rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 
+                                                 (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}"
+                                 selectionMode="single" selection="#{transacaoBean.produtoSelecionado}" rowKey="#{f.id}" >                                            
+                            <p:ajax event="rowSelect" listener="#{transacaoBean.pegar}"  update=":form:transacao"/> 
                         <p:column>
                             <f:facet name="header">ID</f:facet>
                             #{f.id}

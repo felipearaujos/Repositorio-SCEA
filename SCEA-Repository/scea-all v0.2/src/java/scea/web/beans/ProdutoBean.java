@@ -116,6 +116,7 @@ public class ProdutoBean extends EntidadeDominioBean{
     */
      public void pegar(SelectEvent event)
     {
+        setId(produtoSelecionado.getId()); 
        
     }
         
