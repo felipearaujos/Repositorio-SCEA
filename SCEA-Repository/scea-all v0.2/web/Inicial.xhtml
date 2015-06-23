@@ -26,7 +26,6 @@
                     <p:dataTable value="#{relatorioInicialBean.produtosCriticos}" id="table" var="f" rows="10" paginator="true"
                                  rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 'naozerado'}"
                                  selectionMode="single" selection="#{relatorioInicialBean.produtoSelecionado}" rowKey="#{f.id}">
-
                             <p:column>
                                 <f:facet name="header">ID</f:facet>
                                 #{f.id}

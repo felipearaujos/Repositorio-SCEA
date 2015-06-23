@@ -40,7 +40,7 @@
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
 
-                    <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10"
+                    <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10" paginator="true"
                                  rowStyleClass="#{f.quantidade eq 0 ? 'zerado' 
                                                   :(f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}"
                                  selectionMode="single" selection="#{transacaoBean.produtoSelecionado}" rowKey="#{f.id}" >                                               

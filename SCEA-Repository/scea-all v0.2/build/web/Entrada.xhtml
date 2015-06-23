@@ -25,7 +25,34 @@
                 <h:form id="form">
                     <p:outputLabel rendered="false" title="#{transacaoBean.idAcesso}" />
                     <p:fieldset id="transacao" legend="Informações de Entrada">
+                        <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+                                    Nome do Produto: 
+                                    <p:outputLabel  value="#{transacaoBean.produtoSelecionado.nome}"/>
+                                       
+                                    Fornecedor: 
+                                    <p:outputLabel  value="#{transacaoBean.produtoSelecionado.fornecedor.nomeFantasia}"/>
+                                     
+                                    Quantidade Atual: 
+                                    <p:outputLabel   value="#{transacaoBean.produtoSelecionado.quantidade}"/>
+                                    
+                                    Quantidade Mínima Recomendavel:    
+                                    <p:outputLabel value="#{transacaoBean.produtoSelecionado.tipoDeProduto.qtdeMin}"/>
+                                    
+                                    Quantidade Máxima Recomendavel:   
+                                    <p:outputLabel value="#{transacaoBean.produtoSelecionado.tipoDeProduto.qtdeMax}"/>
+                                     
+                                    Tipo:   
+                                    <p:outputLabel value="#{transacaoBean.produtoSelecionado.tipoDeProduto.descricao}"/>
+                                </h:panelGrid>
+                        
+                        
                         <h:panelGrid columns="6">
+                            
+                            
+                            
+                            
+                            
                             ID Produto:  <p:inputText value="#{transacaoBean.id}">
                                <f:ajax event="keyup" render="table" listener="#{transacaoBean.consultar()}"/>
                              </p:inputText>
@@ -34,7 +61,7 @@
                     </p:fieldset>
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="ENTRADA" action="#{transacaoBean.entrada()}"  update ="msgs,avisos,transacao,table"/>
+                            <p:commandButton value="ENTRADA" action="#{transacaoBean.entrada()}"  update ="msgs,avisos,transacao,:form:table"/>
                         </f:facet>
                     </p:toolbar>
                     

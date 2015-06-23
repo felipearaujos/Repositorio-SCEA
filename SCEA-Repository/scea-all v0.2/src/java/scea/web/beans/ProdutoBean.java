@@ -31,10 +31,10 @@ public class ProdutoBean extends EntidadeDominioBean{
     //private List<Produto> produtosCriticos;
     private int idFornecedor;
     private Produto produtoSelecionado;
-    private List<TipoDeProduto> tipos;
-        private TipoDeProduto tipo = new TipoDeProduto();
-        private List<SelectItem> itens;
-    
+    /*private List<TipoDeProduto> tipos;
+    private TipoDeProduto tipo = new TipoDeProduto();
+    private List<SelectItem> itens;
+    */
     /**
      * @return the nomeTipo
      */
@@ -54,9 +54,7 @@ public class ProdutoBean extends EntidadeDominioBean{
     
     
     
-    public void init() {  
-        // coloque a sua inicialização aqui.  
-        
+   /* public void init() {  
         r = new Resultado();
         List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
         TipoDeProduto tipodproduto = new TipoDeProduto();
@@ -77,11 +75,11 @@ public class ProdutoBean extends EntidadeDominioBean{
          for(TipoDeProduto p : produtos){
             getItens().add(new SelectItem(p.getId(), p.getTipo()));
         }
+   
          
-        
-         
+         consultar();
     }  
-
+*/
     public List<Produto> consultar()
     {
         Resultado r = new Resultado();
@@ -117,6 +115,10 @@ public class ProdutoBean extends EntidadeDominioBean{
      public void pegar(SelectEvent event)
     {
         setId(produtoSelecionado.getId()); 
+        setNome(produtoSelecionado.getNome());
+        setIdFornecedor(produtoSelecionado.getFornecedor().getId());
+        setIdTipo(produtoSelecionado.getTipoDeProduto().getId());
+        setValor(produtoSelecionado.getValor());
        
     }
         
@@ -132,6 +134,23 @@ public class ProdutoBean extends EntidadeDominioBean{
             FacesMessage.SEVERITY_INFO, "", r.getMsg());
             context.addMessage(null, mensagem);
     }
+    
+    
+        public void Alterar()
+    {
+        Produto produto = this.createProduto();
+        Resultado r = fachada.alterar(produto);
+        if(r.getMsg() == null){
+            r.setMsg("ALTERADO COM SUCESSO");
+        }
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage mensagem = new FacesMessage(
+            FacesMessage.SEVERITY_INFO, "", r.getMsg());
+            context.addMessage(null, mensagem);
+    }
+    
+    
+    
     
     public void Excluir()
     {
@@ -255,47 +274,32 @@ public class ProdutoBean extends EntidadeDominioBean{
         this.produtoSelecionado = produtoSelecionado;
     }
 
-    /**
-     * @return the tipos
-     */
+  /* 
     public List<TipoDeProduto> getTipos() {
         return tipos;
     }
 
-    /**
-     * @param tipos the tipos to set
-     */
+   
     public void setTipos(List<TipoDeProduto> tipos) {
         this.tipos = tipos;
     }
 
-    /**
-     * @return the tipo
-     */
+ 
     public TipoDeProduto getTipo() {
         return tipo;
     }
 
-    /**
-     * @param tipo the tipo to set
-     */
     public void setTipo(TipoDeProduto tipo) {
         this.tipo = tipo;
     }
 
-    /**
-     * @return the itens
-     */
     public List<SelectItem> getItens() {
         return itens;
     }
 
-    /**
-     * @param itens the itens to set
-     */
     public void setItens(List<SelectItem> itens) {
         this.itens = itens;
     }
 
-
+*/
 }

@@ -8,9 +8,11 @@ package scea.web.beans;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import org.primefaces.event.SelectEvent;
 import scea.core.aplicacao.Resultado;
 import scea.dominio.modelo.EntidadeDominio;
@@ -23,7 +25,9 @@ public class TipodeProdutoBean extends EntidadeDominioBean{
     private TipoDeProduto tipoDeProduto = new TipoDeProduto();
     private List<TipoDeProduto> todosTiposDeProdutos;
     private int idtp;
-    
+     private List<SelectItem> itens;
+         private TipoDeProduto tipo = new TipoDeProduto();
+        private List<TipoDeProduto> tipos;
     /**
      * @return the nomeTipo
      */
@@ -38,6 +42,32 @@ public class TipodeProdutoBean extends EntidadeDominioBean{
         
         return ntp;
     }
+    @PostConstruct
+    public void init() {  
+        r = new Resultado();
+        List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+        TipoDeProduto tipodproduto = new TipoDeProduto();
+        tipodproduto.setId(0);
+        r = fachada.consultar(tipodproduto);
+        entidades = r.getEntidades();
+        List<TipoDeProduto> produtos = new ArrayList<TipoDeProduto>();
+        for(EntidadeDominio e: entidades)
+        {
+            TipoDeProduto f = (TipoDeProduto)e;
+            produtos.add(f);
+        }
+        setTipos(produtos);
+        //return getTipos();
+        
+        setItens(new ArrayList<SelectItem>(produtos.size()));
+        
+         for(TipoDeProduto p : produtos){
+            getItens().add(new SelectItem(p.getId(), p.getTipo()));
+        }
+    }  
+
+    
+    
   /*  
     public void Salvar()
     {
@@ -130,6 +160,36 @@ public class TipodeProdutoBean extends EntidadeDominioBean{
     }
 
    
+    /**
+     * @return the tipo
+     */
+    public TipoDeProduto getTipo() {
+        return tipo;
+    }
 
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(TipoDeProduto tipo) {
+        this.tipo = tipo;
+    }
+
+    /**
+     * @return the itens
+     */
+    public List<SelectItem> getItens() {
+        return itens;
+    }
+
+    /**
+     * @param itens the itens to set
+     */
+    public void setItens(List<SelectItem> itens) {
+        this.itens = itens;
+    }
+
+    public void setTipos(List<TipoDeProduto> tipos) {
+        this.tipos = tipos;
+    }
 
 }

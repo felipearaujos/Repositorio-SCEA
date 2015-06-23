@@ -7,6 +7,7 @@
 package scea.web.beans;
 
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -50,7 +51,11 @@ public class TransacaoBean extends ProdutoBean{
         return transacao;
     }
     
-   
+    @PostConstruct
+     public void init(){
+         setId(0);
+         setQuantidade(0);
+     }
         
     public void entrada()
     {

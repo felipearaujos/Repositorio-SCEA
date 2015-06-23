@@ -133,17 +133,12 @@ public class ProdutoDAO extends AbstractJdbcDAO{
 		
 	}
 
-	
-	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
+public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
 		PreparedStatement pst = null;
 		
 		Produto produto = (Produto)entidade;
 		String sql=null;
-                sql = "SELECT * FROM "
-                            + "tb_produto "
-                            + "JOIN tb_tipodeproduto USING(id_tipodeproduto) "
-                            + "JOIN tb_fornecedor USING(id_fornecedor) "
-                            + "ORDER BY id_produto";
+                
 	
 		 if(produto.getId() == 0 && produto.getNome() == null && produto.getFornecedor().getId() == 0){
                     sql = "SELECT * FROM "
@@ -178,7 +173,25 @@ public class ProdutoDAO extends AbstractJdbcDAO{
                             + "JOIN tb_fornecedor USING(id_fornecedor) "
                             + "WHERE id_fornecedor=?   "
                             + "ORDER BY id_produto";
-		} 
+		}
+                else if(produto.getId() != 0){
+                    sql = "SELECT * "
+                            + "FROM tb_produto "
+                            + "JOIN tb_tipodeproduto USING(id_tipodeproduto) "
+                            + "JOIN tb_fornecedor USING(id_fornecedor) "
+                            + "WHERE id_produto=?   ORDER BY id_produto";
+		}
+                
+                
+                
+                else{
+                sql = "SELECT * FROM "
+                            + "tb_produto "
+                            + "JOIN tb_tipodeproduto USING(id_tipodeproduto) "
+                            + "JOIN tb_fornecedor USING(id_fornecedor) "
+                            + "ORDER BY id_produto";
+                
+                }
                  
 
 	try {
@@ -195,6 +208,10 @@ public class ProdutoDAO extends AbstractJdbcDAO{
                 else if( produto.getId() == 0 && produto.getNome() == null && produto.getFornecedor().getId() != 0){
                     pst.setInt(1,produto.getFornecedor().getId());
                 }
+                
+                else if(produto.getId() != 0){
+			pst.setInt(1, produto.getId());	
+		}
 		
 		ResultSet rs = pst.executeQuery();
 		List<EntidadeDominio> produtos = new ArrayList<EntidadeDominio>();
@@ -228,10 +245,7 @@ public class ProdutoDAO extends AbstractJdbcDAO{
 	}
 	return null;
 
-	}
-        
-        
-        
+	}  
         
         
         

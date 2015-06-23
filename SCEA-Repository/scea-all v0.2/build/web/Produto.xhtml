@@ -21,7 +21,7 @@
                     background-color: #dbe4ad
                 }
             </style>
-            <h:body onload="#{produtoBean.init()}">
+            <h:body onload="#{produtoBean.consultar()}">
                 <h:form id="form">
                     <br></br><br></br>
                     <div>
@@ -41,13 +41,19 @@
                                                
                                     Tipo:        
                                     <p:selectOneMenu id="tipo" value="#{produtoBean.idTipo}" onchange="#{produtoBean.consultar()}" >
-                                        <f:selectItems value="#{produtoBean.itens}" />
+                                        <f:selectItems value="#{tipoDeprodutoBean.itens}" />
                                     </p:selectOneMenu>
                                     
                                     Quantidade: <p:inputText value="#{produtoBean.quantidade}"/>
                                     
                                     Valor:  <p:inputText value="#{produtoBean.valor}"/>
                                 </h:panelGrid>
+                                
+                                
+                                
+                                
+                               
+                          
                             </p:fieldset>
                         </p:outputPanel>
                     </div>
@@ -57,27 +63,26 @@
                                 <p:commandButton value="Salvar" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table,info">
                                     <p:resetInput target="info"/>
                                 </p:commandButton>
-                                <p:commandButton value="Alterar" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table"/>
+                                <p:commandButton value="Alterar" action="#{produtoBean.Alterar()}"  update ="avisos,msgs,table"/>
                                 <p:commandButton value="Excluir" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table"/>
                                 <span class="ui-separator">
                                     <span class="ui-icon ui-icon-grip-dotted-vertical" />
                                 </span>
                             </f:facet> 
-                            <f:facet name="right">
-                                <p:outputLabel value="Pesquisar por ID: " ></p:outputLabel>
-                                <p:inputText value="#{produtoBean.id}" placeholder="Pesquisar ID">
-                                    <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
-                                </p:inputText>
+                            <f:facet name="right" id="id">
+                                <p:outputLabel id="idPesq" value="Pesquisar por ID: " ><p:inputText value="#{produtoBean.id}" placeholder="Pesquisar ID">
+                                     <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
+                                </p:inputText></p:outputLabel>
                             </f:facet>
                         </p:toolbar>
                     </div>
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
                     
-                        <p:dataTable value="#{produtoBean.todosProdutos}" id="table"  var="f" rows="10" paginator="true"
+                        <p:dataTable value="#{produtoBean.todosProdutos}" id="table"  var="f" rows="6" paginator="true"
                                      rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : (f.quantidade le f.tipoDeProduto.qtdeMin ? 'critico' : 'disponivel')}"
                                      selectionMode="single" selection="#{produtoBean.produtoSelecionado}" rowKey="#{f.id}">                                            
-                            <p:ajax event="rowSelect" listener="#{produtoBean.pegar}"  />                                                        
+                            <p:ajax event="rowSelect" listener="#{produtoBean.pegar}"  update=":form:info,table,:form:idPesq"/>                                                        
                             <p:column headerText="ID" style="width: 14px">
                                 #{f.id}
                             </p:column>

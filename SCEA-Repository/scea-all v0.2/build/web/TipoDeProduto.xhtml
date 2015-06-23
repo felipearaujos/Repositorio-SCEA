@@ -21,7 +21,7 @@
                     background-color: #dbe4ad
                 }
             </style>
-            <h:body >
+            <h:body onload="#{tipoDeprodutoBean.consultar()}">
                 <h:form id="form">
                     <br></br><br></br>
                     <div>
@@ -70,7 +70,7 @@
                     <p:growl id="avisos" showDetail="true" life="3000" />
 
                     <p:dataTable id="table" value="#{tipoDeprodutoBean.todosTiposDeProdutos}"   
-                                 var="tp" rows="10" paginator="true">                                            
+                                 var="tp" rows="8" paginator="true">                                            
                         <p:column headerText="ID">   #{tp.id}   </p:column>
                         <p:column headerText="Tipo"> #{tp.tipo} </p:column>
                         <p:column headerText="Descrição do Tipo"> #{tp.descricao} </p:column>                        
