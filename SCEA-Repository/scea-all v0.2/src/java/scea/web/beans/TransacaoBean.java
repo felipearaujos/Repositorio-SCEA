@@ -103,6 +103,7 @@ public class TransacaoBean extends ProdutoBean{
      public void init(){
          setId(0);
          setQuantidade(0);
+         setProdutoSelecionado(null);
      }
         
     public void entrada()

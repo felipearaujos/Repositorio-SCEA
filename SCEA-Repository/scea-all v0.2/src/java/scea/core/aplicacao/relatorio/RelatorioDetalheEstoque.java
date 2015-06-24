@@ -11,22 +11,22 @@ package scea.core.aplicacao.relatorio;
  * @author Felipe
  */
 public class RelatorioDetalheEstoque extends EntidadeRelatorio{
-    private int qtdeEstoque;
+    private int qtdeZerado;
     private int qtdeDiponivel;
-    private double porcentagemOcupada;
+    private int qtdeCritico;
 
     /**
-     * @return the qtdeEstoque
+     * @return the qtdeZerado
      */
-    public int getQtdeEstoque() {
-        return qtdeEstoque;
+    public int getQtdeZerado() {
+        return qtdeZerado;
     }
 
     /**
-     * @param qtdeEstoque the qtdeEstoque to set
+     * @param qtdeZerado the qtdeZerado to set
      */
-    public void setQtdeEstoque(int qtdeEstoque) {
-        this.qtdeEstoque = qtdeEstoque;
+    public void setQtdeZerado(int qtdeZerado) {
+        this.qtdeZerado = qtdeZerado;
     }
 
     /**
@@ -44,17 +44,19 @@ public class RelatorioDetalheEstoque extends EntidadeRelatorio{
     }
 
     /**
-     * @return the porcentagemOcupada
+     * @return the qtdeCritico
      */
-    public double getPorcentagemOcupada() {
-        return porcentagemOcupada;
+    public int getQtdeCritico() {
+        return qtdeCritico;
     }
 
     /**
-     * @param porcentagemOcupada the porcentagemOcupada to set
+     * @param qtdeCritico the qtdeCritico to set
      */
-    public void setPorcentagemOcupada(double porcentagemOcupada) {
-        this.porcentagemOcupada = porcentagemOcupada;
+    public void setQtdeCritico(int qtdeCritico) {
+        this.qtdeCritico = qtdeCritico;
     }
+
+   
     
 }

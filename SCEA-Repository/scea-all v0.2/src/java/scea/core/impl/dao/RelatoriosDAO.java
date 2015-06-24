@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
+import scea.core.aplicacao.relatorio.RelatorioDetalheEstoque;
 import scea.core.aplicacao.relatorio.RelatorioEstoque;
 
 import scea.core.impl.dao.AbstractJdbcDAO;
@@ -47,11 +48,15 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
             }
             
             else  if(relatorio.getNome().toUpperCase().equals("RELATORIOINICIAL")){
-                return relatorioInicial(entidade);
+                return relatorioInicial();
             }
             
             else  if(relatorio.getNome().toUpperCase().equals("RELATORIOTRANSACOESPRODUTO")){
                 return relatorioTransacoesProduto(entidade);
+            }
+            
+            else  if(relatorio.getNome().toUpperCase().equals("RELATORIODETALHEINICIAL")){
+                return relatorioDetalheInicial();
             }
                 
         return null;
@@ -66,7 +71,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
 
         sql = "SELECT  transacao, "
                 + "sum(quantidade) AS 'quantidade', "
-                + "   ADDDATE(LAST_DAY(SUBDATE(dt_transacao, INTERVAL 1 MONTH)),1) AS 'mes' "
+                + "ADDDATE(LAST_DAY(SUBDATE(dt_transacao, INTERVAL 1 MONTH)),1) AS 'mes' "
                 + "FROM tb_transacao  "
                 + "WHERE dt_transacao BETWEEN ? AND ? "
                 + "GROUP BY transacao, "
@@ -143,7 +148,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
 
     }
 
-    private List<EntidadeDominio> relatorioInicial(EntidadeDominio entidade) {
+    private List<EntidadeDominio> relatorioInicial() {
         PreparedStatement pst = null;
 
         String sql = null;
@@ -192,6 +197,44 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
 
     }
 
+    private List<EntidadeDominio> relatorioDetalheInicial() {
+        PreparedStatement pst = null;
+
+        String sql = null;
+
+        sql = "SELECT "
+                + "(SELECT count(p.id_produto) FROM tb_produto p WHERE  p.quantidade = 0) zerado, "
+                + "(SELECT count(p.id_produto) FROM tb_produto p "
+                    + "JOIN tb_tipodeproduto tp USING(id_tipodeproduto)  "
+                    + "WHERE  p.quantidade <= tp.qtdeMin  and p.quantidade != 0) critico,"
+                + "(SELECT count(p.id_produto) FROM tb_produto p "
+                + "JOIN tb_tipodeproduto tp USING(id_tipodeproduto) "
+                + "WHERE p.quantidade > tp.qtdeMin  )  demais "
+              + "FROM dual";
+
+        try {
+            openConnection();
+            pst = connection.prepareStatement(sql);
+
+            ResultSet rs = pst.executeQuery();
+            List<EntidadeDominio> produtos = new ArrayList<EntidadeDominio>();
+            while (rs.next()) {
+                RelatorioDetalheEstoque p = new RelatorioDetalheEstoque();
+                p.setQtdeCritico(rs.getInt("critico"));
+                p.setQtdeZerado(rs.getInt("zerado"));
+                p.setQtdeDiponivel(rs.getInt("demais"));
+                produtos.add(p);
+            }
+            return produtos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    
+    
     private List<EntidadeDominio> relatorioSituacaoEstoque(EntidadeDominio entidade) {
         PreparedStatement pst = null;
 

@@ -24,7 +24,7 @@
             <h:body onload="#{transacaoBean.consultar()}">
                 <h:form id="form">
                     <p:outputLabel rendered="false" title="#{transacaoBean.idAcesso}" />
-                    <p:fieldset id="transacao" legend="Informações de Entrada">
+                    <p:fieldset id="transacao" legend="Dados da Entrada">
                         <h:panelGrid columns="4" columnClasses="column" cellpadding="2">
 
                             <strong>Nome do Produto:</strong> 
@@ -59,11 +59,11 @@
                             Quantidade: <p:inputText value="#{transacaoBean.quantidade}"/>
                         </h:panelGrid>
                     </p:fieldset>
-                    <p:toolbar>
-                        <f:facet name="left">
-                            <p:commandButton value="ENTRADA" action="#{transacaoBean.entrada()}"  update ="msgs,avisos,transacao,:form:table"/>
-                        </f:facet>
-                    </p:toolbar>
+                    
+                    <center>
+                        <p:commandButton style="width: 200px; height: 40px" value="Realizar Entrada" action="#{transacaoBean.entrada()}"  update ="msgs,avisos,transacao,:form:table"/>
+                    </center>    
+                    
                     
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="10000" />

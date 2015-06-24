@@ -24,7 +24,29 @@
             </style>
             <h:body>
                 <h:form id="form">
-                    <p:fieldset id="transacao" legend="Dados da Saída">
+                    <p:fieldset id="transacao" legend="Dados da Saida">
+                        <h:panelGrid columns="4" columnClasses="column" cellpadding="2">
+
+                            <strong>Nome do Produto:</strong> 
+                                    <p:outputLabel  value="#{transacaoBean.produtoSelecionado.nome}"/>
+                                       
+                                    <strong>Fornecedor: </strong> 
+                                    <p:outputLabel  value="#{transacaoBean.produtoSelecionado.fornecedor.nomeFantasia}"/>
+                                     
+                                    <strong>Quantidade Atual: </strong> 
+                                    <p:outputLabel   value="#{transacaoBean.produtoSelecionado.quantidade}"/>
+                                    
+                                    <strong>Quantidade Mínima Recomendavel: </strong>    
+                                    <p:outputLabel value="#{transacaoBean.produtoSelecionado.tipoDeProduto.qtdeMin}"/>
+                                    
+                                    <strong>Quantidade Máxima Recomendavel: </strong>   
+                                    <p:outputLabel value="#{transacaoBean.produtoSelecionado.tipoDeProduto.qtdeMax}"/>
+                                     
+                                    <strong>Tipo: </strong>   
+                                    <p:outputLabel value="#{transacaoBean.produtoSelecionado.tipoDeProduto.descricao}"/>
+                                </h:panelGrid>
+
+                        
                         <h:panelGrid columns="6">
                            ID Produto:  <p:inputText value="#{transacaoBean.id}">
                                <f:ajax event="keyup" render="table" listener="#{transacaoBean.consultar()}"/>
@@ -32,11 +54,10 @@
                             Quantidade: <p:inputText value="#{transacaoBean.quantidade}"/>
                         </h:panelGrid>
                         </p:fieldset>
-                    <p:toolbar>
-                        <f:facet name="left">
-                            <p:commandButton value="Realizar Saída" action="#{transacaoBean.saida()}"  update ="msgs,avisos,transacao,table"/>       
-                        </f:facet>
-                    </p:toolbar>
+                    <center>
+                        <p:commandButton style="width: 200px; height: 40px" value="Realizar Saida" 
+                                         action="#{transacaoBean.saida()}"  update ="msgs,avisos,transacao,:form:table"/>
+                    </center> 
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
 

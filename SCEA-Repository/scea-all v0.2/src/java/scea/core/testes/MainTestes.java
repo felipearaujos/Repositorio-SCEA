@@ -13,6 +13,7 @@ import scea.core.aplicacao.EmailAplicacao;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
+import scea.core.aplicacao.relatorio.RelatorioDetalheEstoque;
 import scea.core.aplicacao.relatorio.RelatorioEstoque;
 import scea.core.impl.controle.Fachada;
 
@@ -66,11 +67,12 @@ public class MainTestes {
         //testeconvercaodata();
         //testeRelatorioTransaPeriodoDAO();
         //
-        testeRelatorioTransacaoPeriodoFachada();
+        //esteRelatorioTransacaoPeriodoFachada();
         //testeRelatorioProdPeriodoDAO();
         //testeRelatorioTransacaoProdPeriodoFachada();
-        //testeRelatorioEstoqueDAO();
-        //testeRelatorioEstoqueFachada();
+       // testeRelatorioEstoqueDAO();
+        testeRelatorioDetalheInicial();
+        testeRelatorioEstoqueFachada();
         //testeNewTransacao();
         //testedia();
         //testeSalvarFachada();
@@ -89,6 +91,30 @@ public class MainTestes {
         rel.setDtInicial("01/03/2015");
         rel.setDtFinal(("31/04/2015"));
         //resultado = fachada.relatorioEstoque(rel);
+        rel.setNome("RELATORIODETALHEINICIAL");
+        resultado = fachada.consultar(rel);
+        
+        
+        for (EntidadeDominio e : resultado.getEntidades()) {
+            RelatorioDetalheEstoque s = (RelatorioDetalheEstoque) e;
+            System.out.print(
+                    "Quantidade critico :  " + s.getQtdeCritico() + " "
+                    + "Quantidade Disponivel:  " + s.getQtdeDiponivel() + " "
+                    + "Quantidade Zerada:  " + s.getQtdeZerado() + " "
+            );
+        }
+    }//testeRelatorioEstoqueFachada
+
+    
+    public static void testeRelatorioDetalheEstoqueFachada() {
+        
+        System.out.println("123123");
+        fachada = new Fachada();
+        EntidadeRelatorio rel = new EntidadeRelatorio();
+        resultado = new Resultado();
+
+        
+        //resultado = fachada.relatorioEstoque(rel);
         rel.setNome("RELATORIOSITUACAOESTOQUE");
         resultado = fachada.consultar(rel);
         
@@ -96,14 +122,16 @@ public class MainTestes {
         for (EntidadeDominio e : resultado.getEntidades()) {
             RelatorioEstoque s = (RelatorioEstoque) e;
             System.out.print(
-                    "Quantidade Ocupada" + s.getQtdeEstoque() + " "
-                    + "Quantidade Disponivel" + s.getQtdeDiponivel() + " "
+                    "Quantidade Ocupada:  " + s.getQtdeEstoque() + " "
+                    + "Quantidade Disponivel :  " + s.getQtdeDiponivel() + " "
                     + "Pct ocp" + Math.floor(s.getPorcentagemOcupada()) + " "
             );
             System.out.println();
         }
     }//testeRelatorioEstoqueFachada
 
+    
+    
     public static void testeDAOTransacao() {
         Fachada f = new Fachada();
         Produto p = new Produto();
@@ -215,6 +243,31 @@ public class MainTestes {
             System.out.println();
         }
     }
+    
+    public static void testeRelatorioDetalheInicial() {
+        RelatoriosDAO dao = new RelatoriosDAO();
+        EntidadeRelatorio r = new EntidadeRelatorio();
+        resultado = new Resultado();
+       
+        r.setNome("RELATORIODETALHEINICIAL");
+        try {
+            resultado.setEntidades(dao.consultar(r));
+        } catch (SQLException ex) {
+            Logger.getLogger(MainTestes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for (EntidadeDominio e : resultado.getEntidades()) {
+            RelatorioDetalheEstoque s = (RelatorioDetalheEstoque) e;
+            System.out.print(
+                    "Quantidade critico :  " + s.getQtdeCritico() + " "
+                    + "Quantidade Disponivel:  " + s.getQtdeDiponivel() + " "
+                    + "Quantidade Zerada:  " + s.getQtdeZerado() + " "
+            );
+            System.out.println();
+        }
+    }
+    
+    
     public static void testeRelatorioTransacaoProdPeriodoFachada() {
         fachada = new Fachada();
         EntidadeRelatorio rel = new EntidadeRelatorio();

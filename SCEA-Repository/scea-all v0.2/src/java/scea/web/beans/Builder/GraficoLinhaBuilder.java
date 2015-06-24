@@ -105,7 +105,7 @@ public class GraficoLinhaBuilder implements Serializable{
             DateAxis axis = new DateAxis("Meses entre o período");
             DateAxis axis2 = new DateAxis("Quantidade de Entradas e Saídas");
             axis.setTickAngle(-50);
-            axis.setTickFormat("%B");
+            axis.setTickFormat("%#d / %b / %y");
             graficoLinha.getAxes().put(AxisType.X, axis);
             graficoLinha.getAxis(AxisType.Y).setLabel("Meses entre o período");
         }

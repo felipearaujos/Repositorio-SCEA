@@ -10,11 +10,17 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.chart.PieChartModel;
 import scea.core.aplicacao.Resultado;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
+import scea.core.impl.controle.Fachada;
+import static scea.core.testes.MainTestes.fachada;
+import static scea.core.testes.MainTestes.resultado;
 
 import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Produto;
+import scea.web.beans.Builder.GraficoPizzaDetalheBuilder;
+import scea.web.beans.Builder.GraficoPizzaEstoqueBuilder;
 
 /**
  *
@@ -25,6 +31,25 @@ public class RelatorioInicialBean extends EntidadeDominioBean {
 
     private List<Produto> produtosCriticos;
         private Produto produtoSelecionado;
+        
+        
+               private PieChartModel graficoPizza;
+        
+        public void inicializarGrafico()
+        {
+        EntidadeRelatorio rel = new EntidadeRelatorio();
+        rel.setNome("RELATORIODETALHEINICIAL");
+        resultado = new Resultado();
+        fachada = new Fachada();
+        resultado = fachada.consultar(rel);
+        
+            GraficoPizzaDetalheBuilder builder = new GraficoPizzaDetalheBuilder()
+                    .initModelo(resultado.getEntidades())
+                    .informacoesGrafico();
+            setGraficoPizza(builder.getGraficoPizza());
+        }
+
+        
 
  /*   public List<Produto> relatorioInicial() {
         Resultado r = new Resultado();
@@ -61,6 +86,9 @@ public class RelatorioInicialBean extends EntidadeDominioBean {
         }
         setProdutosCriticos(produtos);
     
+        
+        
+        inicializarGrafico();
     }
     
     
@@ -97,5 +125,17 @@ public class RelatorioInicialBean extends EntidadeDominioBean {
      */
     public void setProdutoSelecionado(Produto produtoSelecionado) {
         this.produtoSelecionado = produtoSelecionado;
+    }
+    
+    
+    public PieChartModel getGraficoPizza() {
+        return graficoPizza;
+    }
+
+    /**
+     * @param graficoPizza the graficoPizza to set
+     */
+    public void setGraficoPizza(PieChartModel graficoPizza) {
+        this.graficoPizza = graficoPizza;
     }
 }
