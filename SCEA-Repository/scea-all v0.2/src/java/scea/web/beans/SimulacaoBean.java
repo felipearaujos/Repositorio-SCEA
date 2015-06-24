@@ -23,8 +23,10 @@ import scea.core.factories.dominio.SimulacaoFactory;
 import scea.core.factories.dominio.TransacaoFactory;
 import scea.dominio.modelo.Acesso;
 import scea.dominio.modelo.EntidadeDominio;
+import scea.dominio.modelo.Entrada;
 import scea.dominio.modelo.Fornecedor;
 import scea.dominio.modelo.Produto;
+import scea.dominio.modelo.Saida;
 import scea.dominio.modelo.Simulacao;
 import scea.dominio.modelo.Transacao;
 
@@ -133,31 +135,43 @@ public class SimulacaoBean extends EntidadeDominioBean{
     public void salvarTransacao()
     {
         
-        Transacao transaction = new Transacao();
-        transaction.setQtdeDoTipo(simulacaoSelecionada.getQtdeItens());
-        transaction.setTipoDeTransacao(simulacaoSelecionada.getTipoDeTransacao());
+        Transacao transacao= new Transacao();
+        
+        if(simulacaoSelecionada.getTipoDeTransacao().equals("ENTRADA")){
+            transacao = new Entrada();
+            
+            
+           
+        }
+        else if(simulacaoSelecionada.getTipoDeTransacao().equals("SAIDA")){
+            transacao = new Saida();
+        }
+        
+       transacao.setQtdeDoTipo(simulacaoSelecionada.getQtdeItens());
+        transacao.setTipoDeTransacao(simulacaoSelecionada.getTipoDeTransacao());
         Produto p = new Produto();
         p.setId(getId_produto());
-        transaction.setProduto(p);
-        transaction.getProduto().setFornecedor(new Fornecedor());
-        transaction.getProduto().getFornecedor().setId(0);
-        transaction.getProduto().setNome(null);
+        transacao.setProduto(p);
+        transacao.getProduto().setFornecedor(new Fornecedor());
+        transacao.getProduto().getFornecedor().setId(0);
+        transacao.getProduto().setNome(null);
           
         Acesso acesso = new Acesso();
         acesso.setId(Integer.parseInt(getId_usuario()));
-        transaction.setAcesso(acesso);
-      
-        r = fachada.salvar(transaction);
+        transacao.setAcesso(acesso);
+            
+        
+         r = fachada.salvar(transacao);
+       
 
         FacesContext context = FacesContext.getCurrentInstance();
         if(r.getMsg() == null){
             FacesMessage mensagem = new FacesMessage(
-                FacesMessage.SEVERITY_INFO, "", ("Transação de " + simulacaoSelecionada.getTipoDeTransacao() + " realizada com sucesso!").toString() );
+            FacesMessage.SEVERITY_INFO, "", ("TRANSACAO DE '" + simulacaoSelecionada.getTipoDeTransacao() + "' REALIZADA COM SUCESSO!"));
             context.addMessage(null, mensagem);
-        }else
-        {
+        }else{
             FacesMessage mensagem = new FacesMessage(
-                FacesMessage.SEVERITY_INFO, "", r.getMsg() );
+            FacesMessage.SEVERITY_INFO, "", r.getMsg() );
             context.addMessage(null, mensagem);
     
         }

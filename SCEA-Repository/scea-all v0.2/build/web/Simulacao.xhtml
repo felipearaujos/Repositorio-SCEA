@@ -12,7 +12,7 @@
             </h:head>
             <h:body onload="#{simulacaoBean.pegarIdeLoginUsuarioAtual()}">
                 <h:form id="form">
-                    <br/><br/><br/>
+               
                     <p:outputLabel rendered="false" title="#{simulacaoBean.id_usuario}" />
                     <p:fieldset legend="Informações de Acesso">
                         <p:panelGrid columns="2">
@@ -40,7 +40,8 @@
                     <p:messages id="mensagens" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="9000" />
                     
-                    <p:dataTable id="table" value = "#{simulacaoBean.simulacoes}"  selectionMode="single" selection="#{simulacaoBean.simulacaoSelecionada}" rowKey="#{s.id}" var="s">
+                    <p:dataTable id="table" value = "#{simulacaoBean.simulacoes}"  selectionMode="single" rows="5" paginator="true"
+                                 selection="#{simulacaoBean.simulacaoSelecionada}" rowKey="#{s.id}" var="s">
                         <p:ajax event="rowSelect" listener="#{simulacaoBean.pegar}"  />
                         <p:column headerText="ID"> #{s.id} </p:column>
                         <p:column headerText="Transação"> #{s.tipoDeTransacao} </p:column>
@@ -49,8 +50,6 @@
                         <p:column headerText="Nome do Produto">  #{s.produto.nome}</p:column>
                     </p:dataTable>
                     <center>
-                        <br/>
-                        <br/>
                         <p:commandButton style="width: 200px; height: 30px" action="#{simulacaoBean.salvarTransacao()}" value="Realizar Transação" update=":form:avisos, :form:mensagens"/>
                     </center>
                 

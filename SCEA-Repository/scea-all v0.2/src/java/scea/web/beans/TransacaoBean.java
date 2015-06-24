@@ -49,7 +49,7 @@ public class TransacaoBean extends ProdutoBean{
         transacao.setAcesso(new Acesso());
         transacao.getAcesso().setId(getIdAcesso());
         transacao.getProduto().setQuantidade(getQuantidade());
-        transacao.setTipoDeTransacao(getOperacao());
+        //transacao.setTipoDeTransacao(getOperacao());
         return transacao;
     }
     
@@ -60,6 +60,7 @@ public class TransacaoBean extends ProdutoBean{
         entidadeFactory = new EntradaFactory();
         Entrada entrada = (Entrada)entidadeFactory.createEntidade();
         entrada.setQtdeDoTipo(getQuantidade());
+        
         entrada.setProduto(new Produto());
         entrada.getProduto().setId(getId());
         entrada.getProduto().setFornecedor(new Fornecedor());
@@ -70,7 +71,7 @@ public class TransacaoBean extends ProdutoBean{
         entrada.getAcesso().setId(getIdAcesso());
          
         entrada.getProduto().setQuantidade(getQuantidade());
-        entrada.setTipoDeTransacao(getOperacao());
+        //entrada.setTipoDeTransacao(getOperacao());
         return entrada;
     }
     

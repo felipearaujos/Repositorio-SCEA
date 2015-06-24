@@ -3,7 +3,7 @@ package scea.dominio.modelo;
 import java.util.Date;
 
 public class Transacao extends EntidadeDominio{
-	private String tipoDeTransacao;
+	protected String tipoDeTransacao;
 	protected Acesso acesso;
 	protected Date dtCadastro;
 	protected Produto produto;

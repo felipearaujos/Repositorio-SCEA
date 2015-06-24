@@ -25,24 +25,24 @@
                 <h:form id="form">
                     <p:outputLabel rendered="false" title="#{transacaoBean.idAcesso}" />
                     <p:fieldset id="transacao" legend="Informações de Entrada">
-                        <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+                        <h:panelGrid columns="4" columnClasses="column" cellpadding="2">
 
-                                    Nome do Produto: 
+                            <strong>Nome do Produto:</strong> 
                                     <p:outputLabel  value="#{transacaoBean.produtoSelecionado.nome}"/>
                                        
-                                    Fornecedor: 
+                                    <strong>Fornecedor: </strong> 
                                     <p:outputLabel  value="#{transacaoBean.produtoSelecionado.fornecedor.nomeFantasia}"/>
                                      
-                                    Quantidade Atual: 
+                                    <strong>Quantidade Atual: </strong> 
                                     <p:outputLabel   value="#{transacaoBean.produtoSelecionado.quantidade}"/>
                                     
-                                    Quantidade Mínima Recomendavel:    
+                                    <strong>Quantidade Mínima Recomendavel: </strong>    
                                     <p:outputLabel value="#{transacaoBean.produtoSelecionado.tipoDeProduto.qtdeMin}"/>
                                     
-                                    Quantidade Máxima Recomendavel:   
+                                    <strong>Quantidade Máxima Recomendavel: </strong>   
                                     <p:outputLabel value="#{transacaoBean.produtoSelecionado.tipoDeProduto.qtdeMax}"/>
                                      
-                                    Tipo:   
+                                    <strong>Tipo: </strong>   
                                     <p:outputLabel value="#{transacaoBean.produtoSelecionado.tipoDeProduto.descricao}"/>
                                 </h:panelGrid>
                         

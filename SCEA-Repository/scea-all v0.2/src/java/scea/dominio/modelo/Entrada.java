@@ -11,25 +11,18 @@ package scea.dominio.modelo;
  * @author Felipe
  */
 public class Entrada extends Transacao{
-    private String tipoDeTransacao = "ENTRADA";
+   
     
     
     public Entrada(){
-            produto = new Produto();   
+            produto = new Produto();
+            tipoDeTransacao = "ENTRADA";
+            super.tipoDeTransacao = "ENTRADA";
     }
 
     /**
      * @return the tipoDeTransacao
      */
-    public String getTipoDeTransacao() {
-        return tipoDeTransacao;
-    }
-
-    /**
-     * @param tipoDeTransacao the tipoDeTransacao to set
-     */
-    public void setTipoDeTransacao(String tipoDeTransacao) {
-        this.tipoDeTransacao = tipoDeTransacao;
-    }
+    
     
 }

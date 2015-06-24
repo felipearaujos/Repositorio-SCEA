@@ -13,64 +13,44 @@ import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.TipoDeProduto;
 import scea.dominio.modelo.Transacao;
 
-public class ValidarLimiteEntrada implements IStrategy{
+public class ValidarLimiteEntrada implements IStrategy {
 
-	public Resultado processar(EntidadeDominio entidade)
-	{
+    public Resultado processar(EntidadeDominio entidade) {
 
-            Resultado resultado = new Resultado();
-            Estoque entEntrada = new Estoque();
-            Transacao transacao = (Transacao)entidade;
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            boolean flgExiste = false;
+        Resultado resultado = new Resultado();
+        //Estoque entEntrada = new Estoque();
+        Transacao transacao = (Transacao) entidade;
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        boolean flgExiste = false;
 
-            Produto produtoBuscado = new Produto();
-             resultado.setEntidades(produtoDAO.consultar(transacao.getProduto()));
-            for(EntidadeDominio e : resultado.getEntidades()){
-                Produto produto = (Produto)e;
-                if(produto.getId().equals(transacao.getProduto().getId()) ){
-                    produtoBuscado = produto;
-                    flgExiste = true;
-                    break;
-                }  
+        Produto produtoBuscado = new Produto();
+        resultado.setEntidades(produtoDAO.consultar(transacao.getProduto()));
+        for (EntidadeDominio e : resultado.getEntidades()) {
+            Produto produto = (Produto) e;
+            if (produto.getId().equals(transacao.getProduto().getId())) {
+                produtoBuscado = produto;
+                flgExiste = true;
+                break;
             }
-            if(!flgExiste){
-               resultado.setMsg("PRODUTO NÃO CADASTRADO");
-            }
-            else{
-                 //Verifica os valores da quantidade
-                if(transacao.getQtdeDoTipo() <= 0){
-                     resultado.setMsg("TRANSACAO NÃO RESPEITA OS VALORES PERMITIDOS");
-                }else{
-                    //Produto produtoBuscado = (Produto)produtoDAO.consultar(transacao.getProduto()).get(0);
-                    entEntrada.setProduto(produtoBuscado);
-                    entEntrada.setQtdeTentativa(transacao.getProduto().getQuantidade());
-                    entEntrada.setQtdeDisponivel(produtoBuscado.getTipoDeProduto().getQtdeMax() - produtoBuscado.getQuantidade());
-                    entEntrada.setQtdeFutura(produtoBuscado.getQuantidade() + transacao.getProduto().getQuantidade());
-                    
-
-                    if((transacao.getQtdeDoTipo() + produtoBuscado.getQuantidade()) > produtoBuscado.getTipoDeProduto().getQtdeMax())
-                    {
-                            resultado.setMsg("TENTATIVA DE ENTRADA NÃO RESPEITA OS LIMITES PERMITIDOS");
-                            return resultado;
-                    }
-                    else{
-                            ArrayList<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
-                            entidades.add(0, entEntrada);
-                            resultado.setEntidades(entidades);
-                            
-                            entEntrada.setFlgValida(true);
-                            RealizarEntrada rel = new RealizarEntrada();
-                            resultado = rel.processar(transacao);
-                            resultado.setMsg(null);
-                    }
-                }
-            }
-            ArrayList<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
-            entidades.add(0, entEntrada);
-            resultado.setEntidades(entidades);
+        }
+        if (!flgExiste) {
+            resultado.setMsg("PRODUTO NÃO CADASTRADO");
             return resultado;
         }
-	
-}
+        //Verifica os valores da quantidade
+        if (transacao.getQtdeDoTipo() <= 0) {
+            resultado.setMsg("TRANSACAO NÃO RESPEITA OS VALORES PERMITIDOS");
 
+        } else if ((transacao.getQtdeDoTipo() + produtoBuscado.getQuantidade()) > produtoBuscado.getTipoDeProduto().getQtdeMax()) {
+            resultado.setMsg("TENTATIVA DE ENTRADA NÃO RESPEITA OS LIMITES PERMITIDOS");
+        } else {
+
+            RealizarEntrada rel = new RealizarEntrada();
+            resultado = rel.processar(transacao);
+            resultado.setMsg(null);
+        }
+
+        return resultado;
+    }
+
+}

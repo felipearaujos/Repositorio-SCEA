@@ -66,7 +66,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
 
         sql = "SELECT  transacao, "
                 + "sum(quantidade) AS 'quantidade', "
-                + "dt_transacao AS 'mes' "
+                + "   ADDDATE(LAST_DAY(SUBDATE(dt_transacao, INTERVAL 1 MONTH)),1) AS 'mes' "
                 + "FROM tb_transacao  "
                 + "WHERE dt_transacao BETWEEN ? AND ? "
                 + "GROUP BY transacao, "

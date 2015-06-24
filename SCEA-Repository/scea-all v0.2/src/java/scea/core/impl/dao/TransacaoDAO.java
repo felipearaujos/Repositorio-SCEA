@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 import scea.core.interfaces.ITransacao;
 import scea.dominio.modelo.EntidadeDominio;
+import scea.dominio.modelo.Entrada;
 import scea.dominio.modelo.Produto;
+import scea.dominio.modelo.Saida;
 import scea.dominio.modelo.Transacao;
 
 
@@ -26,6 +28,14 @@ public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 		
 		PreparedStatement pst = null;
 		Transacao transacao = (Transacao)entidade;
+                
+               /* if(transacao instanceof Entrada){
+                    transacao = (Entrada)entidade;
+                }
+                else if(transacao instanceof Saida){
+                    transacao = (Saida)entidade;
+                }*/
+                
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("INSERT INTO tb_transacao ");
@@ -37,6 +47,7 @@ public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 			connection.setAutoCommit(false);
 					
 			pst = connection.prepareStatement(sql.toString());
+                        
 			pst.setString(1, transacao.getTipoDeTransacao());
 			//pst.setString(2, " sysdate() ");//pst.setString(2, transacao.transacao.getData());
 			

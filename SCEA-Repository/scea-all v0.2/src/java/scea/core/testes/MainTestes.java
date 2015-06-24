@@ -50,7 +50,7 @@ public class MainTestes {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         // TODO Auto-generated method stub
         //testeConexao();
-        testeTransacao();
+        //testeTransacao();
         //testeDAOProduto.testeCadastrarProduto();
         //testeSalvarFachada();
         //testeDAODFornecedor.testeConsultaTodosOsFornecedores();
@@ -65,7 +65,8 @@ public class MainTestes {
         //testeDeveEnviarEmail();
         //testeconvercaodata();
         //testeRelatorioTransaPeriodoDAO();
-        //testeRelatorioTransacaoPeriodoFachada();
+        //
+        testeRelatorioTransacaoPeriodoFachada();
         //testeRelatorioProdPeriodoDAO();
         //testeRelatorioTransacaoProdPeriodoFachada();
         //testeRelatorioEstoqueDAO();
@@ -73,6 +74,8 @@ public class MainTestes {
         //testeNewTransacao();
         //testedia();
         //testeSalvarFachada();
+        
+        
     }//MAIN
     
 

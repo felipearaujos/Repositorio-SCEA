@@ -25,28 +25,14 @@ public class RealizarEntrada implements IStrategy {
     @Override
     public Resultado processar(EntidadeDominio entidade) {
         Resultado resultado = new Resultado();
-        TransacaoDAO transacaoDAO = new TransacaoDAO();
-        // declaracoes e castings
+
         Transacao t = (Transacao) entidade;
         ProdutoDAO produtoDAO = new ProdutoDAO();
-			//EntidadeDominio entidadeConsultada = new EntidadeDominio();
-
-        //Produto produtoBanco = new Produto();
-        //produtoBanco = (Produto) produtoDAO.consultar(t.getProduto()).get(0);
 
         Produto produtoBanco = (Produto) produtoDAO.consultar(t.getProduto()).get(0);
-       
-        //produtoBanco.setQuantidade(produtoBanco.getQuantidade() +  t.getProduto().getQuantidade()); 
         produtoBanco.setQuantidade(produtoBanco.getQuantidade() + t.getQtdeDoTipo());
-
         produtoDAO.alterar(produtoBanco);
-
         
-        /*try {
-            transacaoDAO.salvar(t);
-        } catch (SQLException ex) {
-            resultado.setMsg("Erro sql");
-        }*/
         resultado.setMsg(null);
         return resultado;
 
