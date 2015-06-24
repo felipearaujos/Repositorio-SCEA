@@ -147,7 +147,7 @@ public class SimulacaoBean extends EntidadeDominioBean{
         acesso.setId(Integer.parseInt(getId_usuario()));
         transaction.setAcesso(acesso);
       
-        r = fachadaTransacao.salvar(transaction);
+        r = fachada.salvar(transaction);
 
         FacesContext context = FacesContext.getCurrentInstance();
         if(r.getMsg() == null){

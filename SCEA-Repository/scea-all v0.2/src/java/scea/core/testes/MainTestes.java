@@ -15,7 +15,7 @@ import scea.core.aplicacao.Resultado;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 import scea.core.aplicacao.relatorio.RelatorioEstoque;
 import scea.core.impl.controle.Fachada;
-import scea.core.impl.controle.FachadaTransacao;
+
 import scea.core.impl.dao.RelatoriosDAO;
 import scea.core.impl.dao.SimulacaoDAO;
 import scea.core.impl.dao.TransacaoDAO;
@@ -26,7 +26,7 @@ import scea.core.impl.negocio.validadores.ValidarExistenciaFornecedor;
 import scea.core.impl.negocio.validadores.ValidarExistenciaTipoDeProduto;
 import scea.core.impl.negocio.validadores.ValidarLimiteEntrada;
 import scea.core.impl.negocio.validadores.ValidarLimiteSaida;
-import scea.core.impl.negocio.validadores.ValidarTransacao;
+
 import scea.core.testes.testesDAO.testaDAOAcesso;
 import scea.core.testes.testesDAO.testeDAODFornecedor;
 import scea.core.testes.testesDAO.testeDAOProduto;
@@ -34,8 +34,10 @@ import scea.core.testes.testesDAO.testeValidadorLimiteEntrada;
 import scea.core.testes.testesDAO.testeValidadorLimiteSaida;
 import scea.dominio.modelo.Acesso;
 import scea.dominio.modelo.EntidadeDominio;
+import scea.dominio.modelo.Entrada;
 import scea.dominio.modelo.Fornecedor;
 import scea.dominio.modelo.Produto;
+import scea.dominio.modelo.Saida;
 import scea.dominio.modelo.Simulacao;
 import scea.dominio.modelo.TipoDeProduto;
 import scea.dominio.modelo.Transacao;
@@ -48,7 +50,7 @@ public class MainTestes {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         // TODO Auto-generated method stub
         //testeConexao();
-        //testeTransacao
+        testeTransacao();
         //testeDAOProduto.testeCadastrarProduto();
         //testeSalvarFachada();
         //testeDAODFornecedor.testeConsultaTodosOsFornecedores();
@@ -63,7 +65,7 @@ public class MainTestes {
         //testeDeveEnviarEmail();
         //testeconvercaodata();
         //testeRelatorioTransaPeriodoDAO();
-        testeRelatorioTransacaoPeriodoFachada();
+        //testeRelatorioTransacaoPeriodoFachada();
         //testeRelatorioProdPeriodoDAO();
         //testeRelatorioTransacaoProdPeriodoFachada();
         //testeRelatorioEstoqueDAO();
@@ -100,7 +102,7 @@ public class MainTestes {
     }//testeRelatorioEstoqueFachada
 
     public static void testeDAOTransacao() {
-        FachadaTransacao f = new FachadaTransacao();
+        Fachada f = new Fachada();
         Produto p = new Produto();
 
         p.setId(5);
@@ -144,7 +146,7 @@ public class MainTestes {
     
     
     public static void testeNewTransacao() {
-        FachadaTransacao f = new FachadaTransacao();
+        Fachada f = new Fachada();
         Produto p = new Produto();
 
         p.setId(3);
@@ -427,18 +429,19 @@ public class MainTestes {
     }//testeSalvarFachada
 
     public static void testeTransacao() {
-        FachadaTransacao f = new FachadaTransacao();
+        Fachada f = new Fachada();
         Produto p = new Produto();
 
         p.setId(1);
-        p.setQuantidade(1000);
+        p.setQuantidade(7);
+        
         p.setTipoDeProduto(new TipoDeProduto());
         p.getTipoDeProduto().setTipo("");
 
-        Transacao ts = new Transacao();
+        Saida ts = new Saida();
         ts.setAcesso(new Acesso());
         ts.getAcesso().setId(1);
-        ts.setTipoDeTransacao("ENTRADA");
+        //ts.setTipoDeTransacao("ENTRADA");
         ts.setProduto(p);
         ts.setQtdeDoTipo(p.getQuantidade());
         Resultado r = f.salvar(ts);
@@ -448,7 +451,7 @@ public class MainTestes {
         if (r.getMsg() != null) {
             System.out.println(r.getMsg());
         } else {
-            System.out.println(((Estoque) r.getEntidades().get(0)).getObs());
+           /* System.out.println(((Estoque) r.getEntidades().get(0)).getObs());
             System.out.println("ID: " + ((Estoque) r.getEntidades().get(0)).getProduto().getId());
             System.out.println("NOME: " + ((Estoque) r.getEntidades().get(0)).getProduto().getNome().toUpperCase());
             System.out.println("QUANTIDADE: " + ((Estoque) r.getEntidades().get(0)).getProduto().getQuantidade());
@@ -457,7 +460,9 @@ public class MainTestes {
             System.out.println("DISPONIVEL: " + ((Estoque) r.getEntidades().get(0)).getQtdeDisponivel());
             System.out.println("FUTURA: " + ((Estoque) r.getEntidades().get(0)).getQtdeFutura());
             System.out.println("TENTATIVA: " + ((Estoque) r.getEntidades().get(0)).getQtdeTentativa());
-        }
+        */
+            System.out.println("ok");
+                   }
     }//testeTransacao
 
     public static void testeConexao() {

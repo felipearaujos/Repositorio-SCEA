@@ -120,6 +120,8 @@ private Map<String, IDAO> daos;
 		
                 entidadeDAOFactory = new TransacaoDAOFactory();
                 daos.put(Transacao.class.getName(), new TransacaoDAO());
+                daos.put(Entrada.class.getName(), new TransacaoDAO());
+                daos.put(Saida.class.getName(), new TransacaoDAO());
 		
                 entidadeDAOFactory = new FornecedorDAOFactory();
                 daos.put(Fornecedor.class.getName(), new FornecedorDAO());
@@ -195,13 +197,22 @@ private Map<String, IDAO> daos;
                 rns.put("SALVAR", rnsSalvarTipoDeProduto);
                 
                 
-                List<IStrategy> RegrasTransacao = new ArrayList<IStrategy>();
-                RegrasTransacao.add(new ValidarTransacao());
+                //List<IStrategy> RegrasTransacao = new ArrayList<IStrategy>();
+              
                 Map<String, List<IStrategy>> rnsSalvarTransacao = new HashMap<String, List<IStrategy>>();
-                rnsSalvarTransacao.put(Transacao.class.getName(), RegrasTransacao);
+
+                
+                
+                
+                List<IStrategy> RegrasEntrada = new ArrayList<IStrategy>();
+                RegrasEntrada.add(new ValidarLimiteEntrada());
+                rnsSalvarTransacao.put(Entrada.class.getName(), RegrasEntrada);
                 rns.put("SALVAR", rnsSalvarTransacao);
                 
-      
+                List<IStrategy> RegrasSaida = new ArrayList<IStrategy>();
+                RegrasSaida.add(new ValidarLimiteSaida());
+                rnsSalvarTransacao.put(Saida.class.getName(), RegrasSaida);
+                rns.put("SALVAR", rnsSalvarTransacao);
 			
 	}//Fachada
 	

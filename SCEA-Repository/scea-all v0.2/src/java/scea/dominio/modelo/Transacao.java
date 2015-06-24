@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class Transacao extends EntidadeDominio{
 	private String tipoDeTransacao;
-	private Acesso acesso;
-	private Date dtCadastro;
-	private Produto produto;
-	private int qtdeDoTipo =0;
+	protected Acesso acesso;
+	protected Date dtCadastro;
+	protected Produto produto;
+	protected int qtdeDoTipo =0;
         
         
         public Transacao(){

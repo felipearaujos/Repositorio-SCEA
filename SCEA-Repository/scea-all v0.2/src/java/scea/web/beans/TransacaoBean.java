@@ -14,13 +14,17 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
+import scea.core.factories.dominio.EntradaFactory;
+import scea.core.factories.dominio.SaidaFactory;
 import scea.core.factories.dominio.TransacaoFactory;
 import scea.dominio.modelo.Acesso;
+import scea.dominio.modelo.Entrada;
 import scea.dominio.modelo.Fornecedor;
 import scea.dominio.modelo.Produto;
-import scea.dominio.modelo.Transacao;
+import scea.dominio.modelo.Saida;
 
 import scea.dominio.modelo.TipoDeProduto;
+import scea.dominio.modelo.Transacao;
 
 @ManagedBean(name = "transacaoBean")
 public class TransacaoBean extends ProdutoBean{
@@ -42,14 +46,57 @@ public class TransacaoBean extends ProdutoBean{
         transacao.getProduto().setFornecedor(new Fornecedor());
         transacao.getProduto().getFornecedor().setId(0);
         transacao.getProduto().setNome(null);
-        
         transacao.setAcesso(new Acesso());
         transacao.getAcesso().setId(getIdAcesso());
-         
         transacao.getProduto().setQuantidade(getQuantidade());
         transacao.setTipoDeTransacao(getOperacao());
         return transacao;
     }
+    
+    public Entrada createEntrada()
+    {
+        HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
+        setIdAcesso (Integer.parseInt(session.getAttribute("id_user").toString()));
+        entidadeFactory = new EntradaFactory();
+        Entrada entrada = (Entrada)entidadeFactory.createEntidade();
+        entrada.setQtdeDoTipo(getQuantidade());
+        entrada.setProduto(new Produto());
+        entrada.getProduto().setId(getId());
+        entrada.getProduto().setFornecedor(new Fornecedor());
+        entrada.getProduto().getFornecedor().setId(0);
+        entrada.getProduto().setNome(null);
+        
+        entrada.setAcesso(new Acesso());
+        entrada.getAcesso().setId(getIdAcesso());
+         
+        entrada.getProduto().setQuantidade(getQuantidade());
+        entrada.setTipoDeTransacao(getOperacao());
+        return entrada;
+    }
+    
+    public Saida createSaida()
+    {
+        HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
+        setIdAcesso (Integer.parseInt(session.getAttribute("id_user").toString()));
+        entidadeFactory = new SaidaFactory();
+        Saida saida = (Saida)entidadeFactory.createEntidade();
+        saida.setQtdeDoTipo(getQuantidade());
+        saida.setProduto(new Produto());
+        saida.getProduto().setId(getId());
+        saida.getProduto().setFornecedor(new Fornecedor());
+        saida.getProduto().getFornecedor().setId(0);
+        saida.getProduto().setNome(null);
+        
+        saida.setAcesso(new Acesso());
+        saida.getAcesso().setId(getIdAcesso());
+         
+        saida.getProduto().setQuantidade(getQuantidade());
+        saida.setTipoDeTransacao(getOperacao());
+        return saida;
+    }
+    
+    
+    
     
     @PostConstruct
      public void init(){
@@ -59,13 +106,13 @@ public class TransacaoBean extends ProdutoBean{
         
     public void entrada()
     {
-        setOperacao("ENTRADA");
-        Transacao transacao = this.createTransacao();
+        //setOperacao("ENTRADA");
+        Transacao transacao = this.createEntrada();
         
         Resultado resultado = fachada.salvar(transacao);
         //Resultado resultado = fachadaTransacao.entrada(transacao);
         if(resultado.getMsg() == null){
-            resultado.setMsg("Entrada realizada COM SUCESSO");
+            resultado.setMsg("ENTRADA REALIZADA COM SUCESSO");
             zeraTransacao();
         }
             FacesContext context = FacesContext.getCurrentInstance();
@@ -85,8 +132,8 @@ public class TransacaoBean extends ProdutoBean{
     {
 
         String obs = "";
-        setOperacao("SAIDA");
-        Transacao transacao = this.createTransacao();
+        //setOperacao("SAIDA");
+        Transacao transacao = this.createSaida();
         
         //Resultado resultado = fachadaTransacao.saida(transacao);
         Resultado resultado = fachada.salvar(transacao);

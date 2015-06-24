@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedBean;
 import scea.core.aplicacao.Resultado;
 import scea.core.factories.controle.FachadaFactory;
 import scea.core.impl.controle.Fachada;
-import scea.core.impl.controle.FachadaTransacao;
+
 import scea.core.interfaces.Factories.IEntidadeDAOFactory;
 import scea.core.interfaces.Factories.IEntidadeFactory;
 import scea.core.interfaces.Factories.IFachadaFactory;
@@ -28,7 +28,7 @@ public abstract class EntidadeDominioBean {
     IEntidadeDAOFactory entidadeDAOFactory;
 
     IFachada fachada = fachadaFactory.createFachada();
-    FachadaTransacao fachadaTransacao = new FachadaTransacao();
+    
     public Resultado r = new Resultado();
     
     
