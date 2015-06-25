@@ -14,7 +14,7 @@ public class ComplementarDtTransacao implements IStrategy {
 	public Resultado processar(EntidadeDominio entidade) {		
 		Resultado r = new Resultado();
 		Transacao transacao = (Transacao)entidade;
-		if(transacao !=null){
+		if(transacao != null){
 			Date data = new Date();		
 			transacao.setDtCadastro(data);
 		}else{
@@ -23,8 +23,8 @@ public class ComplementarDtTransacao implements IStrategy {
 		}
 		
 		
-		
-		return null;
+		r.setMsg(null);
+		return r;
 	}
 
 }

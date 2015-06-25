@@ -64,6 +64,10 @@ public class TipodeProdutoBean extends EntidadeDominioBean{
          for(TipoDeProduto p : produtos){
             getItens().add(new SelectItem(p.getId(), p.getTipo()));
         }
+         
+         
+         
+        
     }  
 
     

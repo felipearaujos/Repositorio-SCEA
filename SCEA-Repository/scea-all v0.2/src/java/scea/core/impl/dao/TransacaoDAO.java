@@ -51,9 +51,9 @@ public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 			pst.setString(1, transacao.getTipoDeTransacao());
 			//pst.setString(2, " sysdate() ");//pst.setString(2, transacao.transacao.getData());
 			
-			Date data = new Date();		
-			Timestamp time = new Timestamp(data.getTime());
-			pst.setTimestamp(2, time);
+			//Date data = new Date();		
+			//Timestamp time = ;
+			pst.setTimestamp(2, new Timestamp(transacao.getDtCadastro().getTime()));
 			pst.setInt(3, transacao.getAcesso().getId());
 			pst.setInt(4, transacao.getProduto().getId());
 			//pst.setInt(5, transacao.getProduto().getQuantidade());

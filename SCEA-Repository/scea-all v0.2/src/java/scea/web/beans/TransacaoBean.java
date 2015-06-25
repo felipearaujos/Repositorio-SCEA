@@ -92,7 +92,7 @@ public class TransacaoBean extends ProdutoBean{
         saida.getAcesso().setId(getIdAcesso());
          
         saida.getProduto().setQuantidade(getQuantidade());
-        saida.setTipoDeTransacao(getOperacao());
+        
         return saida;
     }
     
@@ -108,11 +108,9 @@ public class TransacaoBean extends ProdutoBean{
         
     public void entrada()
     {
-        //setOperacao("ENTRADA");
         Transacao transacao = this.createEntrada();
         
         Resultado resultado = fachada.salvar(transacao);
-        //Resultado resultado = fachadaTransacao.entrada(transacao);
         if(resultado.getMsg() == null){
             resultado.setMsg("ENTRADA REALIZADA COM SUCESSO");
             zeraTransacao();
@@ -121,45 +119,31 @@ public class TransacaoBean extends ProdutoBean{
             FacesMessage mensagem = new FacesMessage(
             FacesMessage.SEVERITY_INFO, "", resultado.getMsg());
             context.addMessage(null, mensagem);
-            
-            
-           
-            
-            
+    
     }
     
     
     
     public void saida()
-    {
-
-        String obs = "";
-        //setOperacao("SAIDA");
+    {              
         Transacao transacao = this.createSaida();
-        
-        //Resultado resultado = fachadaTransacao.saida(transacao);
         Resultado resultado = fachada.salvar(transacao);
         if(resultado.getMsg() == null){
             resultado.setMsg("SAIDA REALIZADA COM SUCESSO \n\n");
             zeraTransacao();
         }
-        
-/*        if(resultado.getEntidades() != null){
-            if(((Estoque)resultado.getEntidades().get(0)).getObs() != null ){
-              obs = ((Estoque)resultado.getEntidades().get(0)).getObs();
-            }
-        }
-  */      
+              
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage mensagem = new FacesMessage(
-            FacesMessage.SEVERITY_INFO, "", resultado.getMsg()+"\n"+ obs);
+            FacesMessage.SEVERITY_INFO, "", resultado.getMsg());
             context.addMessage(null, mensagem);
     }
      
    
     private void zeraTransacao(){
         setId(0);
-            setQuantidade(0);
+        setQuantidade(0);
+        setProdutoSelecionado(null);
     }
     
     @Override
@@ -175,16 +159,7 @@ public class TransacaoBean extends ProdutoBean{
         this.quantidade = quantidade;
     }
 
-    /**
-     * @return the idProduto
-     */
-   /* public int getIdProduto() {
-        return idProduto;
-    }
-
-    public void setIdProduto(int idProduto) {
-        this.idProduto = idProduto;
-    }*/
+   
 
     /**
      * @return the idAcesso

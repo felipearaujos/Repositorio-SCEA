@@ -22,7 +22,7 @@
                     background-color: #dbe4ad
                 }
             </style>
-            <h:body>
+            <h:body onload="#{transacaoBean.consultar()}">
                 <h:form id="form">
                     <p:fieldset id="transacao" legend="Dados da Saida">
                         <h:panelGrid columns="4" columnClasses="column" cellpadding="2">

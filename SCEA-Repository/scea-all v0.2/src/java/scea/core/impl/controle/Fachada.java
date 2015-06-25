@@ -116,18 +116,18 @@ private Map<String, IDAO> daos;
 		daos.put(Produto.class.getName(), entidadeDAOFactory.createDAO() );
                 
                 entidadeDAOFactory = new SimulacaoDAOFactory();
-                daos.put(Simulacao.class.getName(), new SimulacaoDAO());
+                daos.put(Simulacao.class.getName(), entidadeDAOFactory.createDAO());
 		
                 entidadeDAOFactory = new TransacaoDAOFactory();
-                daos.put(Transacao.class.getName(), new TransacaoDAO());
-                daos.put(Entrada.class.getName(), new TransacaoDAO());
-                daos.put(Saida.class.getName(), new TransacaoDAO());
+                daos.put(Transacao.class.getName(), entidadeDAOFactory.createDAO());
+                daos.put(Entrada.class.getName(), entidadeDAOFactory.createDAO());
+                daos.put(Saida.class.getName(), entidadeDAOFactory.createDAO());
 		
                 entidadeDAOFactory = new FornecedorDAOFactory();
-                daos.put(Fornecedor.class.getName(), new FornecedorDAO());
+                daos.put(Fornecedor.class.getName(), entidadeDAOFactory.createDAO());
 		
                 entidadeDAOFactory = new AcessoDAOFactory();
-                daos.put(Acesso.class.getName(), new AcessoDAO());
+                daos.put(Acesso.class.getName(),entidadeDAOFactory.createDAO());
                 
                 entidadeDAOFactory = new TipoDeProdutoDAOFactory();
                 daos.put(TipoDeProduto.class.getName(), entidadeDAOFactory.createDAO());
@@ -206,11 +206,13 @@ private Map<String, IDAO> daos;
                 
                 List<IStrategy> RegrasEntrada = new ArrayList<IStrategy>();
                 RegrasEntrada.add(new ValidarLimiteEntrada());
+                RegrasEntrada.add(new ComplementarDtTransacao());
                 rnsSalvarTransacao.put(Entrada.class.getName(), RegrasEntrada);
                 rns.put("SALVAR", rnsSalvarTransacao);
                 
                 List<IStrategy> RegrasSaida = new ArrayList<IStrategy>();
                 RegrasSaida.add(new ValidarLimiteSaida());
+                RegrasSaida.add(new ComplementarDtTransacao());
                 rnsSalvarTransacao.put(Saida.class.getName(), RegrasSaida);
                 rns.put("SALVAR", rnsSalvarTransacao);
 			

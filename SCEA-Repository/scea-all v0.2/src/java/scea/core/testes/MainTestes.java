@@ -16,7 +16,6 @@ import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 import scea.core.aplicacao.relatorio.RelatorioDetalheEstoque;
 import scea.core.aplicacao.relatorio.RelatorioEstoque;
 import scea.core.impl.controle.Fachada;
-
 import scea.core.impl.dao.RelatoriosDAO;
 import scea.core.impl.dao.SimulacaoDAO;
 import scea.core.impl.dao.TransacaoDAO;
@@ -30,6 +29,7 @@ import scea.core.impl.negocio.validadores.ValidarLimiteSaida;
 
 import scea.core.testes.testesDAO.testaDAOAcesso;
 import scea.core.testes.testesDAO.testeDAODFornecedor;
+import static scea.core.testes.testesDAO.testeDAODFornecedor.testeConsultaTodosOsFornecedores;
 import scea.core.testes.testesDAO.testeDAOProduto;
 import scea.core.testes.testesDAO.testeValidadorLimiteEntrada;
 import scea.core.testes.testesDAO.testeValidadorLimiteSaida;
@@ -71,12 +71,12 @@ public class MainTestes {
         //testeRelatorioProdPeriodoDAO();
         //testeRelatorioTransacaoProdPeriodoFachada();
        // testeRelatorioEstoqueDAO();
-        testeRelatorioDetalheInicial();
-        testeRelatorioEstoqueFachada();
+        //testeRelatorioDetalheInicial();
+        //testeRelatorioEstoqueFachada();
         //testeNewTransacao();
         //testedia();
         //testeSalvarFachada();
-        
+        testeConsultaTodosOsFornecedores();
         
     }//MAIN
     

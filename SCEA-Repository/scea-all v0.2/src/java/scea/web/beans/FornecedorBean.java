@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import scea.core.aplicacao.Resultado;
 import scea.dominio.modelo.Acesso;
 import scea.dominio.modelo.Cidade;
@@ -17,6 +18,7 @@ import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Estado;
 import scea.dominio.modelo.Fornecedor;
 import scea.dominio.modelo.Telefone;
+import scea.dominio.modelo.TipoDeProduto;
 
 @RequestScoped
 @ManagedBean(name = "fornecedorBean")
@@ -36,6 +38,38 @@ public class FornecedorBean extends EntidadeDominioBean{
     private String Estado;
     private String telefoneNumero;
     private List<Fornecedor> todosFornecedores;
+    
+    private List<SelectItem> itens;
+    private TipoDeProduto forn = new TipoDeProduto();
+    private List<Fornecedor> fornecedores;
+    
+    
+    @PostConstruct
+    public void init() {  
+        Resultado r = new Resultado();
+        List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+        r = fachada.consultar(createFornecedorModel());
+        entidades = r.getEntidades();
+        List<Fornecedor> fornecedores = new ArrayList<Fornecedor>();
+        for(EntidadeDominio e: entidades)
+        {
+            Fornecedor f = (Fornecedor)e;
+            fornecedores.add(f);
+        }
+        setTodosFornecedores(fornecedores);
+        //return getTodosFornecedores();
+        //return getTipos();
+        
+        setItens(new ArrayList<SelectItem>(fornecedores.size()));
+        
+         for(Fornecedor p : fornecedores){
+            getItens().add(new SelectItem(p.getId(), p.getNomeFantasia()));
+        }
+    }
+    
+    
+    
+    
     
     
     public Fornecedor createFornecedorModel()
@@ -73,6 +107,16 @@ public class FornecedorBean extends EntidadeDominioBean{
 
         Fornecedor fornecedor = this.createFornecedorModel();
         Resultado r = fachada.salvar(fornecedor);
+        
+        if(r.getMsg() != null){
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage mensagem = new FacesMessage(
+            FacesMessage.SEVERITY_INFO, "","Salvo cm sucesso");
+            context.addMessage(null, mensagem);
+        }
+        
+        
+        
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage mensagem = new FacesMessage(
             FacesMessage.SEVERITY_INFO, "", r.getMsg());
@@ -332,5 +376,20 @@ public class FornecedorBean extends EntidadeDominioBean{
      */
     public void setTodosFornecedores(List<Fornecedor> todosFornecedores) {
         this.todosFornecedores = todosFornecedores;
+    }
+    
+    
+        /**
+     * @return the itens
+     */
+    public List<SelectItem> getItens() {
+        return itens;
+    }
+
+    /**
+     * @param itens the itens to set
+     */
+    public void setItens(List<SelectItem> itens) {
+        this.itens = itens;
     }
 }

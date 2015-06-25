@@ -11,7 +11,7 @@ import scea.core.impl.dao.FornecedorDAO;
 
 public class testeDAODFornecedor {
 
-	public void testeConsultaTodosOsFornecedores()
+	public static void testeConsultaTodosOsFornecedores()
 	{
 		Fornecedor fornecedor = new Fornecedor();
 		Endereco e = new Endereco();

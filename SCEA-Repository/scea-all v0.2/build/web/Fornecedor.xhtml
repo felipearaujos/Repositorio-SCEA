@@ -55,16 +55,14 @@
                             <p:commandButton value="ALTERAR"   action="#{fornecedorBean.Alterar()}" update ="avisos,msgs"/>
                             <p:commandButton value="EXCLUIR"  action="#{fornecedorBean.Excluir()}" update ="avisos,msgs"/>
                         </f:facet>
-                        <f:facet name="right">
-                            Pesquisar por CNPJ: <p:inputMask mask="99.999.999/9999-99" value="#{fornecedorBean.CNPJ}" >
-                                <f:ajax event="keyup" render="table" listener="#{fornecedorBean.consultar()}"></f:ajax>
-                            </p:inputMask>
+                        <f:facet name="right">                        
                         </f:facet>
                     </p:toolbar>
                     <br/>
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
-                    <p:dataTable value="#{fornecedorBean.todosFornecedores}" id="table" var="f" rows="10">
+                    <p:dataTable value="#{fornecedorBean.todosFornecedores}" 
+                                 paginator="true" id="table" var="f" rows="10">
                         <p:column>
                             <f:facet name="header">CNPJ</f:facet>
                             #{f.CNPJ}
@@ -118,6 +116,10 @@
                             #{f.endereco.estado.nome}
                         </p:column>
                     </p:dataTable>
+                    
+                    <br/>
+                    <br/>
+                    <br/>
                 </h:form>
             </h:body>
         </ui:define>

@@ -34,10 +34,11 @@
                                         <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
                                     </p:inputText>   
                                              
-                                    ID Fornecedor: 
-                                    <p:inputText value="#{produtoBean.idFornecedor}"> 
-                                        <f:ajax event="keyup" render="table" listener="#{produtoBean.consultar()}"/>
-                                    </p:inputText>   
+                                    Fornecedor: 
+                                    <p:selectOneMenu id="forn" value="#{produtoBean.idFornecedor}" onchange="#{produtoBean.consultar()}" >
+                                        <f:selectItems value="#{fornecedorBean.itens}" />
+                                    </p:selectOneMenu>
+                                    
                                                
                                     Tipo:        
                                     <p:selectOneMenu id="tipo" value="#{produtoBean.idTipo}" onchange="#{produtoBean.consultar()}" >
@@ -64,7 +65,7 @@
                                     <p:resetInput target="info"/>
                                 </p:commandButton>
                                 <p:commandButton value="Alterar" action="#{produtoBean.Alterar()}"  update ="avisos,msgs,table"/>
-                                <p:commandButton value="Excluir" action="#{produtoBean.Salvar()}"  update ="avisos,msgs,table"/>
+                                <p:commandButton value="Excluir" action="#{produtoBean.excluir()}"  update ="avisos,msgs,table"/>
                                 <span class="ui-separator">
                                     <span class="ui-icon ui-icon-grip-dotted-vertical" />
                                 </span>
