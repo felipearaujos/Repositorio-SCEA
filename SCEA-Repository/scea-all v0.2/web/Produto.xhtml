@@ -50,11 +50,7 @@
                                     Valor:  <p:inputText value="#{produtoBean.valor}"/>
                                 </h:panelGrid>
                                 
-                                
-                                
-                                
-                               
-                          
+
                             </p:fieldset>
                         </p:outputPanel>
                     </div>
@@ -113,23 +109,7 @@
                                 #{f.fornecedor.email}
                             </p:column>  
                         </p:dataTable>
-                    <center>
-                        <p:commandButton process="table" value="Enviar Email" update=":form:EmailDialog" oncomplete="PF('EmailModal').show()">
-                            <f:setPropertyActionListener value="#{f}" target="#{produtoBean.produtoSelecionado}" />
-                        </p:commandButton>
-                    </center>
-                        <p:dialog id="idDialogEmail" widgetVar="EmailModal" modal="true">
-                            <p:outputPanel id="EmailDialog">
-                                <p:panelGrid  columns="2" columnClasses="label,value">
-                                    <h:outputText value="Destinatário:" /> <p:inputText value="#{emailBean.destinatario}" />
-                                    <h:outputText value="Assunto:" /> <p:inputText value="#{emailBean.assunto}" />
-                                    <h:outputText value="Mensagem:" /> <p:inputTextarea value="#{emailBean.mensagem}" />
-                                    <p:commandButton value="Enviar Email"  action="#{emailBean.enviarEmail()}" update="msgs,avisos,idDialogEmail"/>
-                                    <p:commandButton value="Cancelar"  onclick="EmailModal.hide()"/>
-                                </p:panelGrid>
-                            </p:outputPanel>
-                        </p:dialog>
-                    
+                                                               
                 </h:form>
             </h:body>
         </ui:define>

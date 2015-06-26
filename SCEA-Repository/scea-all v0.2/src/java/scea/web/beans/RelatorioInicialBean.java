@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.chart.PieChartModel;
 import scea.core.aplicacao.Resultado;
@@ -95,6 +97,8 @@ public class RelatorioInicialBean extends EntidadeDominioBean {
     
     public void pegar(SelectEvent event)
     {
+        HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true ); 
+        session.setAttribute("produtoSelecionado", this.produtoSelecionado);
        
     }
     

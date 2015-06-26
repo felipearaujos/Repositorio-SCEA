@@ -43,8 +43,10 @@ public class EnviarEmail implements IStrategy{
         } catch (EmailException ex) {
             Logger.getLogger(EnviarEmail.class.getName()).log(Level.SEVERE, null, ex);
             r.setMsg("Email não enviado!");
+            return r;
         }
-
+       
+       r.setMsg(null);
         return r;
     }
     

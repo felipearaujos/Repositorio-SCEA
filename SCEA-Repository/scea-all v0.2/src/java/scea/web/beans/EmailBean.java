@@ -6,11 +6,14 @@
 
 package scea.web.beans;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import scea.core.aplicacao.EmailAplicacao;
 import scea.core.aplicacao.Resultado;
+import scea.dominio.modelo.Produto;
 
 /**
  *
@@ -29,16 +32,45 @@ public class EmailBean extends EntidadeDominioBean{
     
     public EmailAplicacao createEmail()
     {
+        HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
+        Produto produtoSelecionado = ((Produto)session.getAttribute("produtoSelecionado"));
+        
         EmailAplicacao umEmail = new EmailAplicacao();
+        if(produtoSelecionado != null){
+            umEmail.setDestinatario(produtoSelecionado.getFornecedor().getEmail());
+        }
+        else{
+            umEmail.setDestinatario(getDestinatario());
+        }
         umEmail.setAssunto(getAssunto());
-        umEmail.setDestinatario(getDestinatario());
+        
         umEmail.setMensagem(getMensagem());
         
         return umEmail;
     }
     
+    @PostConstruct
+    public void init(){
+    
+        HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
+        Produto produtoSelecionado = ((Produto)session.getAttribute("produtoSelecionado"));
+        
+        
+        if(produtoSelecionado != null){
+            setDestinatario(produtoSelecionado.getFornecedor().getEmail());
+        }
+        else{
+            setDestinatario(getDestinatario());
+        }
+        
+        
+    }
+    
     public void enviarEmail()
     {
+        //(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession();
+        
+        
         EmailAplicacao umEmail = createEmail();
         Resultado r = fachada.enviarEmail(umEmail);
         
