@@ -30,79 +30,6 @@ private Map<String, IDAO> daos;
         IEntidadeFactory entidadeFactory;
         IEntidadeDAOFactory entidadeDAOFactory;
 	
-	/*public Fachada(){
-            
-		daos = new HashMap<String, IDAO>();
-                rns = new HashMap<String, Map<String, List<IStrategy>>>();
-                List<IStrategy> regrasProduto = new ArrayList<IStrategy>();
-                
-                
-                
-                
-                entidadeFactory = new ProdutoFactory();
-                entidadeDAOFactory = new ProdutoDAOFactory();
-		daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
-                regrasProduto.add(new ValidarDadosProduto());	
-                regrasProduto.add(new ValidarExistenciaFornecedor());
-                regrasProduto.add(new ValidarExistenciaTipoDeProduto());
-                Map<String, List<IStrategy>> rnsSalvarProduto = new HashMap<String, List<IStrategy>>();
-		rnsSalvarProduto.put(entidadeFactory.createEntidade().getClass().getName(), regrasProduto);
-                rns.put("SALVAR", rnsSalvarProduto);
-		Map<String, List<IStrategy>> rnsProduto = new HashMap<String, List<IStrategy>>();			
-		rns.put("ALTERAR", rnsProduto);
-		rns.put("CONSULTAR", rnsProduto);
-		rns.put("EXCLUIR", rnsProduto);
-                
-                
-                
-                
-                entidadeFactory = new SimulacaoFactory();
-                entidadeDAOFactory = new SimulacaoDAOFactory();
-                daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
-                
-                
-                
-                
-                entidadeFactory = new TransacaoFactory();
-                entidadeDAOFactory = new TransacaoDAOFactory();
-		daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
-                List<IStrategy> regrasSimulacao = new ArrayList<IStrategy>();
-		regrasSimulacao.add(new ValidaCampos());
-                Map<String, List<IStrategy>> rnsSalvarSimulacao = new HashMap<String, List<IStrategy>>();
-		rnsSalvarSimulacao.put(entidadeFactory.createEntidade().getClass().getName(), regrasSimulacao);
-                
-                
-                
-                entidadeFactory = new FornecedorFactory();
-                entidadeDAOFactory = new FornecedorDAOFactory();
-		daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
-                List<IStrategy> regrasFornecedor = new ArrayList<IStrategy>();
-		regrasFornecedor.add(new ValidaCampos());
-                Map<String, List<IStrategy>> rnsSalvarFornecedor = new HashMap<String, List<IStrategy>>();
-		rnsSalvarFornecedor.put(entidadeFactory.createEntidade().getClass().getName(), regrasFornecedor);
-                rns.put("SALVAR", rnsSalvarFornecedor);
-                
-                
-                
-                
-                
-                entidadeFactory = new AcessoFactory();
-                entidadeDAOFactory = new AcessoDAOFactory();
-		daos.put(entidadeFactory.createEntidade().getClass().getName(), entidadeDAOFactory.createDAO());
-                List<IStrategy> regrasAcesso = new ArrayList<IStrategy>();
-                regrasAcesso.add(new ValidaCampos());
-                regrasAcesso.add(new ValidarAcesso());
-		Map<String, List<IStrategy>> rnsSalvarAcesso = new HashMap<String, List<IStrategy>>();
-		rnsSalvarAcesso.put(entidadeFactory.createEntidade().getClass().getName(), regrasAcesso);
-		Map<String, List<IStrategy>> rnsConsultarAcesso = new HashMap<String, List<IStrategy>>();
-		rnsConsultarAcesso.put(entidadeFactory.createEntidade().getClass().getName(), regrasAcesso);
-		rns.put("CONSULTAR", rnsConsultarAcesso);
-                rns.put("SALVAR", rnsSalvarAcesso);
-
-       
-			
-	}//Fachada
-	*/
         public Fachada(){
 		daos = new HashMap<String, IDAO>();
 		/*
@@ -159,8 +86,8 @@ private Map<String, IDAO> daos;
                 
 		//Acesso
                 List<IStrategy> regrasAcesso = new ArrayList<IStrategy>();
-                regrasAcesso.add(new ValidaCampos());
-                regrasAcesso.add(new ValidarAcesso());
+                regrasAcesso.add(new ValidaAcesso());
+                regrasAcesso.add(new ValidarAutenticacao());
 		
 		Map<String, List<IStrategy>> rnsSalvarAcesso = new HashMap<String, List<IStrategy>>();
 		rnsSalvarAcesso.put(Acesso.class.getName(), regrasAcesso);
@@ -215,6 +142,7 @@ private Map<String, IDAO> daos;
                 RegrasSaida.add(new ComplementarDtTransacao());
                 rnsSalvarTransacao.put(Saida.class.getName(), RegrasSaida);
                 rns.put("SALVAR", rnsSalvarTransacao);
+                
 			
 	}//Fachada
 	
@@ -366,17 +294,6 @@ private Map<String, IDAO> daos;
                 }
 	}
 
-	@Override
-	public Resultado visualizar(EntidadeDominio entidade) {
-
-		Resultado resultado = new Resultado();
-		resultado.setEntidades(new ArrayList<EntidadeDominio>(1));
-		resultado.getEntidades().add(entidade);		
-		return resultado;
-		
-	}
-
-	
 
 	@Override
 	public Resultado simular(EntidadeDominio entidade) {
@@ -400,7 +317,7 @@ private Map<String, IDAO> daos;
 		// TODO Auto-generated method stub
 		
 		Acesso a = (Acesso) entidade;
-		ValidarAcesso validador = new ValidarAcesso();
+		ValidarAutenticacao validador = new ValidarAutenticacao();
 		//Resultado r = validador.processar(a);
 		resultado = validador.processar(a);
                 return resultado;
@@ -419,55 +336,5 @@ private Map<String, IDAO> daos;
 
             return resultado;
         }
-    
-    
-    /*
-        @Override
-        public Resultado transacoesPeriodo(EntidadeDominio entidade) {
-           RelatoriosDAO dao = new RelatoriosDAO();
-           EntidadeRelatorio r =  (EntidadeRelatorio)entidade;
-           resultado = new Resultado();        
-           resultado.setEntidades(dao.relatorioTransacoes(r));
-           return resultado;
-        }
-        
-        @Override
-        public Resultado transacoesProdPeriodo(EntidadeDominio entidade) {
-            RelatoriosDAO dao = new RelatoriosDAO();
-            EntidadeRelatorio r =  (EntidadeRelatorio)entidade;
-            resultado = new Resultado();        
-            resultado.setEntidades(dao.relatorioTransacoesProduto(r));
-            return resultado;
-        }
-        
-        @Override
-        public Resultado relatorioEstoque(EntidadeDominio entidade) {
-            RelatoriosDAO dao = new RelatoriosDAO();
-            EntidadeRelatorio r =  (EntidadeRelatorio)entidade;
-            resultado = new Resultado();        
-            resultado.setEntidades(dao.relatorioSituacaoEstoque(r));
-            return resultado;
-        }
-        
-       @Override
-        public Resultado RelatorioInicial(EntidadeDominio entidade) {
-
-            resultado = new Resultado();
-            Produto a = (Produto) entidade;
-
-            RelatoriosDAO relatorioDAO = new RelatoriosDAO();
-            resultado.setEntidades(relatorioDAO.relatorioInicial(entidade));
-
-            return resultado;
-        }
-   */
-
-
-
-   
-
-    
-
-
 
 }

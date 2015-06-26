@@ -20,7 +20,7 @@ import scea.core.impl.dao.RelatoriosDAO;
 import scea.core.impl.dao.SimulacaoDAO;
 import scea.core.impl.dao.TransacaoDAO;
 import scea.core.impl.negocio.SimularEstoque;
-import scea.core.impl.negocio.validadores.ValidarAcesso;
+import scea.core.impl.negocio.validadores.ValidarAutenticacao;
 import scea.core.impl.negocio.validadores.ValidarDadosProduto;
 import scea.core.impl.negocio.validadores.ValidarExistenciaFornecedor;
 import scea.core.impl.negocio.validadores.ValidarExistenciaTipoDeProduto;

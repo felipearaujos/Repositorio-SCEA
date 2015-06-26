@@ -11,7 +11,7 @@ import scea.dominio.modelo.Produto;
 import scea.core.impl.dao.AcessoDAO;
 import scea.core.interfaces.IStrategy;
 
-public class ValidarAcesso implements IStrategy{
+public class ValidarAutenticacao implements IStrategy{
 
 	@Override
 	public Resultado processar(EntidadeDominio entidade) {

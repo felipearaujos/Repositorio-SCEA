@@ -8,15 +8,20 @@
         <title>SCEA WEB - Login do Sistema</title>
     </h:head>
     <h:body>
-            <h:form>
+        <h:form>
 
+            
+                <div id="imgInicial">
+                    <img src="images/IMGSCEA.png" />
+                </div>
                 <p:panelGrid columns="2">
                     Login <h:inputText value="#{loginBean.usuarioLogado}"/>
                     Senha <h:inputSecret value="#{loginBean.senha}"/>
                 </p:panelGrid>
-                <p:commandButton value="Realizar Login" action="#{loginBean.verificarLogin()}" update="avisos,mensagens"/>
-                <p:messages id="mensagens" showDetail="true" />
-                <p:growl id="avisos" showDetail="true" life="3000" />
-          </h:form>
+                <p:commandButton  style="width: 285px; height: 40px" value="Entrar" action="#{loginBean.verificarLogin()}" update="avisos,mensagens"/>
+            
+            <p:messages id="mensagens" showDetail="true" />
+            <p:growl id="avisos" showDetail="true" life="3000" />
+        </h:form>
     </h:body>
 </html>
