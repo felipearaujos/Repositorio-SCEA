@@ -28,50 +28,35 @@
                             <p:chart type="pie" model="#{estoquePizzaBean.graficoPizza}" style="width:500px;height:400px" />  
                         </p:panelGrid>
                      </center>
-                    <p:outputLabel>Todos os Produtos em estado Crítico ou zerados</p:outputLabel>
                     <p:dataTable value="#{relatorioInicialBean.produtosCriticos}" id="table" var="f" rows="10" paginator="true"
                                  rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 'naozerado'}"
                                  selectionMode="single" selection="#{relatorioInicialBean.produtoSelecionado}" rowKey="#{f.id}">
                         <p:ajax event="rowSelect" listener="#{relatorioInicialBean.pegar}"  update=":form, :form:idDialogEmail" onsuccess="#{emailBean.init()}"  />
-                            <p:column>
-                                <f:facet name="header">ID</f:facet>
-                                #{f.id}
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">Nome</f:facet>   
-                                #{f.nome}
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">Quantidade em estoque</f:facet>
-                                #{f.quantidade}
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">Quantidade minima recomendavel</f:facet>
-                                #{f.tipoDeProduto.qtdeMin}
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">Tipo</f:facet>
-                                #{f.tipoDeProduto.tipo}
-                            </p:column>
+                            <f:facet name="header">Todos os Produtos em estado Crítico ou zerados</f:facet>
+                        
+                            <p:column headerText="ID">#{f.id}</p:column>
+                            
+                            <p:column headerText="Nome"> #{f.nome}</p:column>
+                            
+                            <p:column headerText="Quantidade em estoque">#{f.quantidade}</p:column>
+                            
+                            <p:column headerText="Quantidade minima recomendavel">#{f.tipoDeProduto.qtdeMin}</p:column>
+                            
+                            <p:column headerText="Tipo">#{f.tipoDeProduto.tipo}</p:column>
 
-                            <p:column>
-                                <f:facet name="header">Fornecedor</f:facet>
-                                #{f.fornecedor.nomeFantasia}
-                            </p:column>
-                             <p:column>
-                                <f:facet name="header">Fornecedor</f:facet>
-                                #{f.fornecedor.email}
-                            </p:column>               
-                            <p:column headerText="Telefone">
-                                #{f.fornecedor.telefone.numero}
-                            </p:column>
+                            <p:column headerText="Fornecedor">#{f.fornecedor.nomeFantasia}</p:column>
+                             
+                            <p:column headerText="Email">#{f.fornecedor.email}</p:column>   
+                            
+                            <p:column headerText="Telefone">#{f.fornecedor.telefone.numero}</p:column>
+                            
                              <f:facet name="footer">
                                  <p:commandButton process="table" value="Enviar Email" update=":form:EmailDialog" oncomplete="PF('EmailModal').show()">
                                      <f:setPropertyActionListener value="#{f}" target="#{relatorioInicialBean.produtoSelecionado}" />
                                  </p:commandButton>
                              </f:facet>
                         </p:dataTable>
-
+                            
                     <p:dialog id="idDialogEmail"  onShow="#{emailBean.init()}" header="Enviar Email" minHeight="40" widgetVar="EmailModal" modal="true">
                         <p:outputPanel id="EmailDialog">
                             <p:panelGrid  columns="2" columnClasses="label,value"  >
