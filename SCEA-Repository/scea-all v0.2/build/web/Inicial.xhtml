@@ -50,11 +50,11 @@
                             
                             <p:column headerText="Telefone">#{f.fornecedor.telefone.numero}</p:column>
                             
-                             <f:facet name="footer">
+                            <f:facet name="footer">
                                  <p:commandButton process="table" value="Enviar Email" update=":form:EmailDialog" oncomplete="PF('EmailModal').show()">
                                      <f:setPropertyActionListener value="#{f}" target="#{relatorioInicialBean.produtoSelecionado}" />
                                  </p:commandButton>
-                             </f:facet>
+                            </f:facet>
                         </p:dataTable>
                             
                     <p:dialog id="idDialogEmail"  onShow="#{emailBean.init()}" header="Enviar Email" minHeight="40" widgetVar="EmailModal" modal="true">
