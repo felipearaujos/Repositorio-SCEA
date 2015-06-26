@@ -6,7 +6,6 @@ import java.util.List;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
 import scea.core.impl.dao.ProdutoDAO;
-import scea.core.impl.negocio.RealizarSaida;
 import scea.core.interfaces.IStrategy;
 import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Produto;
@@ -49,8 +48,10 @@ public class ValidarLimiteSaida implements IStrategy {
         } else {
 
             resultado.setMsg(null);
-            RealizarSaida rel = new RealizarSaida();
-            resultado = rel.processar(transacao);
+            //RealizarSaida rel = new RealizarSaida();
+            //resultado = rel.processar(transacao);
+            Produto produtoBanco = (Produto) produtoDAO.consultar(transacao.getProduto()).get(0);
+            produtoBanco.setQuantidade(produtoBanco.getQuantidade() - transacao.getQtdeDoTipo());
         }
 
         return resultado;

@@ -146,7 +146,7 @@ private Map<String, IDAO> daos;
                 
                 //Fornecedor
 		List<IStrategy> regrasFornecedor = new ArrayList<IStrategy>();
-		regrasFornecedor.add(new ValidaCampos());
+		regrasFornecedor.add(new ValidarDadosFornecedor());
                 
                 //TipoDeProduto
 		List<IStrategy> regrasTipoDeProduto = new ArrayList<IStrategy>();

@@ -6,7 +6,7 @@ import java.util.List;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
 import scea.core.impl.dao.ProdutoDAO;
-import scea.core.impl.negocio.RealizarEntrada;
+
 import scea.core.interfaces.IStrategy;
 import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Produto;
@@ -45,8 +45,11 @@ public class ValidarLimiteEntrada implements IStrategy {
             resultado.setMsg("TENTATIVA DE ENTRADA NÃO RESPEITA OS LIMITES PERMITIDOS");
         } else {
 
-            RealizarEntrada rel = new RealizarEntrada();
-            resultado = rel.processar(transacao);
+            //RealizarEntrada rel = new RealizarEntrada();
+            //resultado = rel.processar(transacao);
+            Produto produtoBanco = (Produto) produtoDAO.consultar(transacao.getProduto()).get(0);
+            produtoBanco.setQuantidade(produtoBanco.getQuantidade() + transacao.getQtdeDoTipo());
+            
             resultado.setMsg(null);
         }
 

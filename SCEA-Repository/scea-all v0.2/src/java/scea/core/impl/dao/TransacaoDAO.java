@@ -46,17 +46,17 @@ public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 		try {
 			connection.setAutoCommit(false);
 					
-			pst = connection.prepareStatement(sql.toString());
+                        ProdutoDAO prodDAO = new ProdutoDAO();
+			prodDAO.connection = connection;
+			prodDAO.ctrlTransaction = false;
+			prodDAO.alterar(transacao.getProduto());		
+			
+                        pst = connection.prepareStatement(sql.toString());
                         
 			pst.setString(1, transacao.getTipoDeTransacao());
-			//pst.setString(2, " sysdate() ");//pst.setString(2, transacao.transacao.getData());
-			
-			//Date data = new Date();		
-			//Timestamp time = ;
 			pst.setTimestamp(2, new Timestamp(transacao.getDtCadastro().getTime()));
 			pst.setInt(3, transacao.getAcesso().getId());
 			pst.setInt(4, transacao.getProduto().getId());
-			//pst.setInt(5, transacao.getProduto().getQuantidade());
 			pst.setInt(5, transacao.getQtdeDoTipo());
 				
 			
@@ -104,58 +104,5 @@ public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-/*
-	public void entrar(EntidadeDominio entidade) throws SQLException
-	{
-		
-		if(entidade instanceof Transacao)
-		{
-			TransacaoDAO transacaoDAO = new TransacaoDAO();
-			// declaracoes e castings
-			Transacao t = (Transacao)entidade;
-			transacaoDAO.salvar(t);			
-			
-			ProdutoDAO produtoDAO = new ProdutoDAO();
-			//EntidadeDominio entidadeConsultada = new EntidadeDominio();
-			
-			Produto produtoBanco = new Produto();
-			produtoBanco = (Produto)produtoDAO.consultar(t.getProduto()).get(0);
-			
-			//produtoBanco.setQuantidade(produtoBanco.getQuantidade() +  t.getProduto().getQuantidade()); 
-			produtoBanco.setQuantidade(produtoBanco.getQuantidade() +  t.getQtdeDoTipo()); 
-					
-			produtoDAO.alterar(produtoBanco);
-		}
-	}
-*/
-		
-	
-/*	
-	public void sair(EntidadeDominio entidade)throws SQLException
-	{
-	
-		if(entidade instanceof Transacao)
-		{
-			TransacaoDAO transacaoDAO = new TransacaoDAO();
-			// declaracoes e castings
-			Transacao t = (Transacao)entidade;
-			transacaoDAO.salvar(t);			
-			
-			ProdutoDAO produtoDAO = new ProdutoDAO();
-			//EntidadeDominio entidadeConsultada = new EntidadeDominio();
-			
-			Produto produtoBanco = new Produto();
-			produtoBanco = (Produto)produtoDAO.consultar(t.getProduto()).get(0);
-			
-			//produtoBanco.setQuantidade(produtoBanco.getQuantidade() +  t.getProduto().getQuantidade()); 
-			produtoBanco.setQuantidade(produtoBanco.getQuantidade() -  t.getQtdeDoTipo()); 
-					
-			produtoDAO.alterar(produtoBanco);
-			
-		}
-
-	}
-        */
-	
+        
 }

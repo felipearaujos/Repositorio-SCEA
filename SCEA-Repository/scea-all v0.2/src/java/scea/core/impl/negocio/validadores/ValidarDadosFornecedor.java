@@ -7,7 +7,7 @@ import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Fornecedor;
 import scea.dominio.modelo.Produto;
 
-public class ValidaCampos implements IStrategy{
+public class ValidarDadosFornecedor implements IStrategy{
 
     @Override
     public Resultado processar(EntidadeDominio entidade) {
@@ -27,19 +27,7 @@ public class ValidaCampos implements IStrategy{
             }
         }
         
-        if(entidade instanceof Acesso)
-        {
-            Acesso a = (Acesso)entidade;
-            if(a.getLogin().equals("") || a.getSenha().equals(""))
-            {
-                 r.setMsg("Preencha todos os campos obrigatórios!");
-                 return r;
-            }
-            else
-            {
-                return r;
-            }
-        }
+        
         
         return null;
     }
