@@ -17,7 +17,11 @@
                                            <p:calendar  value="#{graficoEntradaSaidaBean.dtInicial}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
                                             Data Final: 
                                             <p:calendar  value="#{graficoEntradaSaidaBean.dtFinal}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
-
+                                            Tipo:        
+                                    <p:selectOneMenu id="tipo" value="#{graficoEntradaSaidaBean.idTipo}" onchange="#{produtoBean.consultar()}" >
+                                       <f:selectItem itemLabel="Select One" itemValue="" />
+                                       <f:selectItems value="#{tipoDeprodutoBean.itens}" />
+                                    </p:selectOneMenu>
                             </p:fieldset>
                             <p:commandButton action="#{graficoEntradaSaidaBean.teste()}" 
                                                        update=":form:grafico"       value="Criar Gráfico" />

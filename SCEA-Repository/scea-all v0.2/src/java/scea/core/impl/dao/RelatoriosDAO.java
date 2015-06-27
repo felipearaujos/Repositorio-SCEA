@@ -26,65 +26,124 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
         super("tb_transacao", "id_transacao");
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @Override
     public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
-            EntidadeRelatorio relatorio = (EntidadeRelatorio) entidade;
-            
-            if(relatorio.getNome().toUpperCase().equals("RELATORIOTRANSACOES")){
-                return relatorioTransacoes(entidade);
-            }
-            
-            else  if(relatorio.getNome().toUpperCase().equals("RELATORIOSITUACAOESTOQUE")){
-                return relatorioSituacaoEstoque(entidade);
-            }
-            
-            else  if(relatorio.getNome().toUpperCase().equals("RELATORIOINICIAL")){
-                return relatorioInicial();
-            }
-            
-            else  if(relatorio.getNome().toUpperCase().equals("RELATORIOTRANSACOESPRODUTO")){
-                return relatorioTransacoesProduto(entidade);
-            }
-            
-            else  if(relatorio.getNome().toUpperCase().equals("RELATORIODETALHEINICIAL")){
-                return relatorioDetalheInicial();
-            }
-                
+        EntidadeRelatorio relatorio = (EntidadeRelatorio) entidade;
+
+        if (relatorio.getNome().toUpperCase().equals("RELATORIOTRANSACOES")) {
+            return relatorioTransacoes(entidade);
+        } else if (relatorio.getNome().toUpperCase().equals("RELATORIOTRANSACOESTIPO")) {
+            return relatorioTransacoesTipo(entidade);
+        } else if (relatorio.getNome().toUpperCase().equals("RELATORIOSITUACAOESTOQUE")) {
+            return relatorioSituacaoEstoque(entidade);
+        } else if (relatorio.getNome().toUpperCase().equals("RELATORIOINICIAL")) {
+            return relatorioInicial();
+        } else if (relatorio.getNome().toUpperCase().equals("RELATORIOTRANSACOESPRODUTO")) {
+            return relatorioTransacoesProduto(entidade);
+        } else if (relatorio.getNome().toUpperCase().equals("RELATORIODETALHEINICIAL")) {
+            return relatorioDetalheInicial();
+        }
+
         return null;
     }
-    
-    
+
     private List<EntidadeDominio> relatorioTransacoes(EntidadeDominio entidade) {
         PreparedStatement pst = null;
 
         EntidadeRelatorio relTransPeriodo = (EntidadeRelatorio) entidade;
-        String sql; //= null;
+        String sql = null;
 
-        sql = "SELECT  transacao, "
-                + "sum(quantidade) AS 'quantidade', "
-                + "ADDDATE(LAST_DAY(SUBDATE(dt_transacao, INTERVAL 1 MONTH)),1) AS 'mes' "
-                + "FROM tb_transacao  "
-                + "WHERE dt_transacao BETWEEN ? AND ? "
-                + "GROUP BY transacao, "
-                + "month(dt_transacao) "
-                + "ORDER BY month(dt_transacao)";
-
+        if (relTransPeriodo.getTransacao().getProduto().getTipoDeProduto().getId() != null) {
+            sql = "SELECT  t.transacao as 'transacao', "
+                    + "sum(t.quantidade) AS 'quantidade',"
+                    + "t.dt_transacao AS 'mes', "
+                    + "dt_transacao "
+                    + "FROM tb_transacao t  "
+                    + "JOIN tb_produto p on(p.id_produto = t.id_produto) "
+                    + "JOIN tb_tipodeproduto tp ON(p.id_tipodeproduto = tp.id_tipodeproduto) "
+                    + "WHERE t.dt_transacao BETWEEN ? AND ?  "
+                    + "AND tp.id_tipodeproduto = ? "
+                    + "GROUP BY t.transacao, "
+                    + "month(t.dt_transacao), "
+                    + "tp.id_tipodeproduto "
+                    + "ORDER BY month(t.dt_transacao),"
+                    + "tp.id_tipodeproduto desc;	";
+        } else {
+            sql = "SELECT  transacao, "
+                    + "sum(quantidade) AS 'quantidade', "
+                    + "ADDDATE(LAST_DAY(SUBDATE(dt_transacao, INTERVAL 1 MONTH)),1) AS 'mes' "
+                    + "FROM tb_transacao  "
+                    + "WHERE dt_transacao BETWEEN ? AND ? "
+                    + "GROUP BY transacao, "
+                    + "month(dt_transacao) "
+                    + "ORDER BY month(dt_transacao)";
+        }
         try {
             openConnection();
             pst = connection.prepareStatement(sql);
 
             pst.setDate(1, new java.sql.Date(relTransPeriodo.getDtInicial().getTime()));
             pst.setDate(2, new java.sql.Date(relTransPeriodo.getDtFinal().getTime()));
+            if (relTransPeriodo.getTransacao().getProduto().getTipoDeProduto().getId() != null) {
+                pst.setInt(3, relTransPeriodo.getTransacao().getProduto().getTipoDeProduto().getId());
+            }
+            ResultSet rs = pst.executeQuery();
+            List<EntidadeDominio> relatorio = new ArrayList<EntidadeDominio>();
+            while (rs.next()) {
+                EntidadeRelatorio r = new EntidadeRelatorio();
+                r.setTransacao(new Transacao());
+                r.getTransacao().setTipoDeTransacao(rs.getString("transacao"));
+                r.getTransacao().setQtdeDoTipo(rs.getInt("quantidade"));
+                r.setMes(rs.getString("mes"));
 
+                relatorio.add(r);
+            }
+            return relatorio;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private List<EntidadeDominio> relatorioTransacoesTipo(EntidadeDominio entidade) {
+        PreparedStatement pst = null;
+
+        EntidadeRelatorio relTransPeriodo = (EntidadeRelatorio) entidade;
+        String sql = null;
+        if (relTransPeriodo.getTransacao().getProduto().getTipoDeProduto().getId() != null) {
+            sql = "SELECT  t.transacao as 'transacao', "
+                    + "sum(t.quantidade) AS 'quantidade',"
+                    + "t.dt_transacao AS 'mes', "
+                    + "dt_transacao "
+                    + "FROM tb_transacao t  "
+                    + "JOIN tb_produto p on(p.id_produto = t.id_produto) "
+                    + "JOIN tb_tipodeproduto tp ON(p.id_tipodeproduto = tp.id_tipodeproduto) "
+                    + "WHERE t.dt_transacao BETWEEN ? AND ?  "
+                    + "AND tp.id_tipodeproduto = ? "
+                    + "GROUP BY t.transacao, "
+                    + "month(t.dt_transacao), "
+                    + "tp.id_tipodeproduto "
+                    + "ORDER BY month(t.dt_transacao),"
+                    + "tp.id_tipodeproduto desc;	";
+        } else {
+            sql = "SELECT  transacao, "
+                    + "sum(quantidade) AS 'quantidade', "
+                    + "ADDDATE(LAST_DAY(SUBDATE(dt_transacao, INTERVAL 1 MONTH)),1) AS 'mes' "
+                    + "FROM tb_transacao  "
+                    + "WHERE dt_transacao BETWEEN ? AND ? "
+                    + "GROUP BY transacao, "
+                    + "month(dt_transacao) "
+                    + "ORDER BY month(dt_transacao)";
+        }
+        try {
+            openConnection();
+            pst = connection.prepareStatement(sql);
+
+            pst.setDate(1, new java.sql.Date(relTransPeriodo.getDtInicial().getTime()));
+            pst.setDate(2, new java.sql.Date(relTransPeriodo.getDtFinal().getTime()));
+            if (relTransPeriodo.getTransacao().getProduto().getTipoDeProduto().getId() != null) {
+                pst.setInt(3, relTransPeriodo.getTransacao().getProduto().getTipoDeProduto().getId());
+            }
             ResultSet rs = pst.executeQuery();
             List<EntidadeDominio> relatorio = new ArrayList<EntidadeDominio>();
             while (rs.next()) {
@@ -205,12 +264,12 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
         sql = "SELECT "
                 + "(SELECT count(p.id_produto) FROM tb_produto p WHERE  p.quantidade = 0) zerado, "
                 + "(SELECT count(p.id_produto) FROM tb_produto p "
-                    + "JOIN tb_tipodeproduto tp USING(id_tipodeproduto)  "
-                    + "WHERE  p.quantidade <= tp.qtdeMin  and p.quantidade != 0) critico,"
+                + "JOIN tb_tipodeproduto tp USING(id_tipodeproduto)  "
+                + "WHERE  p.quantidade <= tp.qtdeMin  and p.quantidade != 0) critico,"
                 + "(SELECT count(p.id_produto) FROM tb_produto p "
                 + "JOIN tb_tipodeproduto tp USING(id_tipodeproduto) "
                 + "WHERE p.quantidade > tp.qtdeMin  )  demais "
-              + "FROM dual";
+                + "FROM dual";
 
         try {
             openConnection();
@@ -233,8 +292,6 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
 
     }
 
-    
-    
     private List<EntidadeDominio> relatorioSituacaoEstoque(EntidadeDominio entidade) {
         PreparedStatement pst = null;
 
@@ -297,6 +354,4 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
 }

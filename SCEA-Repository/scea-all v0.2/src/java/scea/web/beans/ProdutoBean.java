@@ -28,16 +28,11 @@ public class ProdutoBean extends EntidadeDominioBean{
     private String nome = null;
     private int idTipo;
     private List<Produto> todosProdutos;
-    //private List<Produto> produtosCriticos;
     private int idFornecedor;
     private Produto produtoSelecionado;
-    /*private List<TipoDeProduto> tipos;
-    private TipoDeProduto tipo = new TipoDeProduto();
     private List<SelectItem> itens;
-    */
-    /**
-     * @return the nomeTipo
-     */
+    
+    
     public Produto createProduto()
     {
         Produto p = new Produto();
@@ -48,38 +43,38 @@ public class ProdutoBean extends EntidadeDominioBean{
         p.getTipoDeProduto().setId(getIdTipo());
         p.getFornecedor().setId(getIdFornecedor());
         
-        //idTipo = tipo.getId();
+        
         return p;
     }
     
     
     
-   /* public void init() {  
+    public void init() {  
         r = new Resultado();
         List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
-        TipoDeProduto tipodproduto = new TipoDeProduto();
-        tipodproduto.setId(0);
-        r = fachada.consultar(tipodproduto);
+        Produto produto = new Produto();
+        produto.setId(0);
+        r = fachada.consultar(produto);
         entidades = r.getEntidades();
-        List<TipoDeProduto> produtos = new ArrayList<TipoDeProduto>();
+        List<Produto> produtos = new ArrayList<Produto>();
         for(EntidadeDominio e: entidades)
         {
-            TipoDeProduto f = (TipoDeProduto)e;
+            Produto f = (Produto)e;
             produtos.add(f);
         }
-        setTipos(produtos);
+        setTodosProdutos(produtos);
         //return getTipos();
         
         setItens(new ArrayList<SelectItem>(produtos.size()));
         
-         for(TipoDeProduto p : produtos){
-            getItens().add(new SelectItem(p.getId(), p.getTipo()));
+         for(Produto p : produtos){
+            getItens().add(new SelectItem(p.getId(), p.getNome()));
         }
    
          
          consultar();
     }  
-*/
+
     public List<Produto> consultar()
     {
         Resultado r = new Resultado();
@@ -274,24 +269,7 @@ public class ProdutoBean extends EntidadeDominioBean{
         this.produtoSelecionado = produtoSelecionado;
     }
 
-  /* 
-    public List<TipoDeProduto> getTipos() {
-        return tipos;
-    }
 
-   
-    public void setTipos(List<TipoDeProduto> tipos) {
-        this.tipos = tipos;
-    }
-
- 
-    public TipoDeProduto getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoDeProduto tipo) {
-        this.tipo = tipo;
-    }
 
     public List<SelectItem> getItens() {
         return itens;
@@ -301,5 +279,5 @@ public class ProdutoBean extends EntidadeDominioBean{
         this.itens = itens;
     }
 
-*/
+
 }

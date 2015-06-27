@@ -17,18 +17,18 @@ import scea.dominio.modelo.Transacao;
  *
  * @author Felipe
  */
-public class EntidadeRelatorio extends EntidadeDominio{
+public class RelatorioTransacao extends EntidadeDominio{
     private Date dtInicial;           // Operação
     private Date dtFinal;             // Qde
     private String mes;
     private Transacao transacao;
-   // private String TituloEixoX;
-   // private String TituloEixoY;
+    private String TituloEixoX;
+    private String TituloEixoY;
     private String TituloRelatorio;
     private Date dataRetornada;
     private String nome;
     
-    public EntidadeRelatorio(){
+    public RelatorioTransacao(){
         transacao = new Transacao();
     }
 
@@ -113,7 +113,34 @@ public class EntidadeRelatorio extends EntidadeDominio{
         this.transacao = transacao;
     }
 
-    
+    /**
+     * @return the TituloEixoX
+     */
+    public String getTituloEixoX() {
+        return TituloEixoX;
+    }
+
+    /**
+     * @param TituloEixoX the TituloEixoX to set
+     */
+    public void setTituloEixoX(String TituloEixoX) {
+        this.TituloEixoX = TituloEixoX;
+    }
+
+    /**
+     * @return the TituloEixoY
+     */
+    public String getTituloEixoY() {
+        return TituloEixoY;
+    }
+
+    /**
+     * @param TituloEixoY the TituloEixoY to set
+     */
+    public void setTituloEixoY(String TituloEixoY) {
+        this.TituloEixoY = TituloEixoY;
+    }
+
     /**
      * @return the TituloRelatorio
      */
