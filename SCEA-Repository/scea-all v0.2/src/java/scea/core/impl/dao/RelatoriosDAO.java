@@ -28,7 +28,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
 
     @Override
     public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
-        EntidadeRelatorio relatorio = (EntidadeRelatorio) entidade;
+   /*     EntidadeRelatorio relatorio = (EntidadeRelatorio) entidade;
 
         if (relatorio.getNome().toUpperCase().equals("RELATORIOTRANSACOES")) {
             return relatorioTransacoes(entidade);
@@ -46,7 +46,9 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
         }
 
         return null;
-    }
+*/
+        return null;
+        }
 
     public List<EntidadeDominio> relatorioTransacoes(EntidadeDominio entidade) {
         PreparedStatement pst = null;
