@@ -50,6 +50,12 @@ public class LoginBean extends EntidadeDominioBean{
         if(UsuarioRetornado.isLoginCorreto)
         {
             String msg = redirecionar(UsuarioRetornado.isAdmin);
+            
+            
+            HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true ); 
+            session.setAttribute("acesso", UsuarioRetornado);
+            //session.setAttribute("id_user", this.id);
+            
             return msg;
         }
             FacesContext context = FacesContext.getCurrentInstance();

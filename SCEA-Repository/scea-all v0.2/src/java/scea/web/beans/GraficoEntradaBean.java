@@ -40,19 +40,12 @@ public class GraficoEntradaBean {
     private boolean renderizar = false;
     private Date dtInicial, dtFinal;
     private Integer idTipo;
-    private Integer idProduto;
+    //private Integer idProduto;
  
     public boolean initGrafico()
     {
         EntidadeRelatorio rel = new EntidadeRelatorio();
         resultado = new Resultado();
-        //rel.setDtInicial("01/01/2015");
-        //rel.setDtFinal(("31/07/2015"));
-        
-        //setDtInicial("01/01/2015");
-        //setDtFinal(("31/07/2015"));
-        //rel.setDtInicial("01/01/2015");
-        //rel.setDtFinal(("31/06/2016"));
         if(getDtInicial() == null)
             return false;
         rel.setDtInicial(getDtInicial());
@@ -66,8 +59,16 @@ public class GraficoEntradaBean {
         resultado = fachada.consultar(rel);
         
         if(resultado.getEntidades() != null){
-            setGraficoRetornado(gerarGrafico(resultado.getEntidades()));
-            setRenderizar(true);
+            //setGraficoRetornado(gerarGrafico(resultado.getEntidades()));
+             GraficoLinhaBuilder grafico = new GraficoLinhaBuilder()
+                .initModelo(resultado.getEntidades())
+                .informacoesGrafico(resultado.getEntidades(), formatar(dtInicial), formatar(dtFinal))
+                .alocarEixos(resultado.getEntidades());
+        setGraficoRetornado(grafico.getGraficoLinha());
+       setRenderizar(true);
+       // return true;
+            
+            //setRenderizar(true);
         }else{
             setRenderizar(false);
         }
@@ -82,7 +83,7 @@ public class GraficoEntradaBean {
     }
     
     
-    
+  /*  
     public LineChartModel gerarGrafico(List<EntidadeDominio> entidades){
         List<EntidadeRelatorio> listRelatorios = new ArrayList<EntidadeRelatorio>();
          LineChartModel graficoLinha = new LineChartModel();
@@ -132,7 +133,7 @@ public class GraficoEntradaBean {
         
         return graficoLinha;
     }
-    
+    */
     
     public String formatar(Date data)
     {

@@ -25,8 +25,10 @@ public class EntidadeRelatorio extends EntidadeDominio{
    // private String TituloEixoX;
    // private String TituloEixoY;
     private String TituloRelatorio;
-    private Date dataRetornada;
+    //private Date dataRetornada;
     private String nome;
+    private boolean quantidade;
+    private boolean valor;
     
     public EntidadeRelatorio(){
         transacao = new Transacao();
@@ -131,16 +133,16 @@ public class EntidadeRelatorio extends EntidadeDominio{
     /**
      * @return the dataRetornada
      */
-    public Date getDataRetornada() {
-        return dataRetornada;
-    }
+   // public Date getDataRetornada() {
+   //     return dataRetornada;
+   // }
 
     /**
      * @param dataRetornada the dataRetornada to set
      */
-    public void setDataRetornada(Date dataRetornada) {
-        this.dataRetornada = dataRetornada;
-    }
+   // public void setDataRetornada(Date dataRetornada) {
+   //     this.dataRetornada = dataRetornada;
+    //}
 
     /**
      * @return the nome

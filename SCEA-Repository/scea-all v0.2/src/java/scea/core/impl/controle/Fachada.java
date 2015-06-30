@@ -12,6 +12,11 @@ import scea.core.aplicacao.*;
 import scea.core.aplicacao.relatorio.*;
 import scea.core.factories.dao.*;
 import scea.core.impl.dao.*;
+import scea.core.impl.handlers.RelatorioDetalheInicialHandler;
+import scea.core.impl.handlers.RelatorioSituacaoEstoqueHandler;
+import scea.core.impl.handlers.RelatorioTransacoesHandler;
+import scea.core.impl.handlers.RelatorioTransacoesProdutoHandler;
+import scea.core.impl.handlers.TelaInicialHandler;
 import scea.core.impl.negocio.*;
 import scea.core.impl.negocio.validadores.*;
 import scea.core.interfaces.Factories.*;
@@ -29,7 +34,8 @@ private Map<String, IDAO> daos;
 	private Resultado resultado = new Resultado();
         IEntidadeFactory entidadeFactory;
         IEntidadeDAOFactory entidadeDAOFactory;
-	
+	RelatorioDetalheInicialHandler handlerRelDetalheInicial;
+        
         public Fachada(){
 		daos = new HashMap<String, IDAO>();
 		/*
@@ -143,7 +149,17 @@ private Map<String, IDAO> daos;
                 rnsSalvarTransacao.put(Saida.class.getName(), RegrasSaida);
                 rns.put("SALVAR", rnsSalvarTransacao);
                 
-			
+
+                handlerRelDetalheInicial = new RelatorioDetalheInicialHandler();
+                RelatorioSituacaoEstoqueHandler handlerRelSituacaoEstoque = new RelatorioSituacaoEstoqueHandler();
+                RelatorioTransacoesHandler handlerRelTransacoes = new RelatorioTransacoesHandler();
+                RelatorioTransacoesProdutoHandler handlerRelTransacoesProduto = new RelatorioTransacoesProdutoHandler();
+                TelaInicialHandler handlerTelaInicial = new TelaInicialHandler();
+                
+                handlerRelDetalheInicial.setSucessor(handlerRelSituacaoEstoque);
+                handlerRelSituacaoEstoque.setSucessor(handlerRelTransacoes);
+                handlerRelTransacoes.setSucessor(handlerRelTransacoesProduto);
+                handlerRelTransacoesProduto.setSucessor(handlerTelaInicial);
 	}//Fachada
 	
 	public Resultado salvar(EntidadeDominio entidade) {
@@ -243,8 +259,10 @@ private Map<String, IDAO> daos;
 			if(msg.length() == 0){
 			IDAO dao = daos.get(nmClasse);
 			try {
-				
-				resultado.setEntidades(dao.consultar(entidade));
+				if(dao.getClass().getName() == RelatoriosDAO.class.getName())
+                                    resultado.setEntidades(handlerRelDetalheInicial.processarRequisicao(entidade));
+                                else
+                                    resultado.setEntidades(dao.consultar(entidade));
 			} catch (SQLException e) {
 				e.printStackTrace();
 				resultado.setMsg("Nao foi possivel realizar  a consulta!");

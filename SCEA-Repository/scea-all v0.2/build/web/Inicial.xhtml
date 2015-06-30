@@ -18,16 +18,11 @@
                      background-color: #feff68
                 }
             </style>
-            <h:body onload="#{estoquePizzaBean.inicializarGrafico()}">
+            <h:body >
                 <h:form id="form">
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
-                    <center>
-                        <p:panelGrid columns="2">
-                            <p:chart type="pie" model="#{relatorioInicialBean.graficoPizza}" style="width:500px;height:400px" />
-                            <p:chart type="pie" model="#{estoquePizzaBean.graficoPizza}" style="width:500px;height:400px" />  
-                        </p:panelGrid>
-                     </center>
+                    
                     <p:dataTable value="#{relatorioInicialBean.produtosCriticos}" id="table" var="f" rows="10" paginator="true"
                                  rowStyleClass="#{f.quantidade eq 0 ? 'zerado' : 'naozerado'}"
                                  selectionMode="single" selection="#{relatorioInicialBean.produtoSelecionado}" rowKey="#{f.id}">
