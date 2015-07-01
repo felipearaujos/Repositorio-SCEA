@@ -363,8 +363,8 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
                 + "t.dt_transacao AS 'Mes', "
                 + "t.dt_transacao "
                 + "FROM tb_transacao t  JOIN tb_produto p ON(p.id_produto = t.id_produto) "
-                + "GROUP BY t.transacao, "
-                + "		 month(t.dt_transacao) "
+                + "GROUP BY t.transacao "
+                
                 + "ORDER BY month(t.dt_transacao)desc";
         try {
             openConnection();
@@ -392,6 +392,9 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
                 r.getTransacao().getProduto().setValor(rs.getInt("Valor"));
                 //  } else if (rel.isAvgValor()) {
                 r.getAvgTransacao().getProduto().setValor(rs.getInt("avgvalor"));
+                
+                
+                r.getTransacao().setTipoDeTransacao(rs.getString("Transacao"));
                 //}
                 relatorio.add(r);
             }

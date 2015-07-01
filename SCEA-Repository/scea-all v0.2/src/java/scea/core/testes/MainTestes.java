@@ -81,6 +81,11 @@ public class MainTestes {
         
         testeRelatorioDinamico();
         
+        RelatorioDinamico r= new RelatorioDinamico()
+                ;
+        
+        System.out.println(r.isAvgQuantidade());
+        
     }//MAIN
     
 
@@ -109,7 +114,7 @@ public class MainTestes {
         
         for (EntidadeDominio e : resultado.getEntidades()) {
             RelatorioDinamico s = (RelatorioDinamico) e;
-            System.out.print( s.getMaxTransacao().getQtdeDoTipo()
+            System.out.print( s.getMinTransacao().getQtdeDoTipo()
 
             );
             System.out.println();
