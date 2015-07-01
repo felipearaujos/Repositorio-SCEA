@@ -18,17 +18,17 @@ import scea.dominio.modelo.Transacao;
  * @author Felipe
  */
 public class EntidadeRelatorio extends EntidadeDominio{
-    private Date dtInicial;           // Operação
-    private Date dtFinal;             // Qde
-    private String mes;
-    private Transacao transacao;
+    protected Date dtInicial;           // Operação
+    protected Date dtFinal;             // Qde
+    protected String mes;
+    protected Transacao transacao;
    // private String TituloEixoX;
    // private String TituloEixoY;
-    private String TituloRelatorio;
+    protected String TituloRelatorio;
     //private Date dataRetornada;
-    private String nome;
-    private boolean quantidade;
-    private boolean valor;
+    protected String nome;
+    protected boolean quantidade;
+    protected boolean valor;
     
     public EntidadeRelatorio(){
         transacao = new Transacao();

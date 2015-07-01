@@ -14,6 +14,7 @@ import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 import scea.core.aplicacao.relatorio.RelatorioDetalheEstoque;
+import scea.core.aplicacao.relatorio.RelatorioDinamico;
 import scea.core.aplicacao.relatorio.RelatorioEstoque;
 import scea.core.impl.controle.Fachada;
 import scea.core.impl.dao.RelatoriosDAO;
@@ -76,11 +77,44 @@ public class MainTestes {
         //testeNewTransacao();
         //testedia();
         //testeSalvarFachada();
-        testeConsultaTodosOsFornecedores();
+        //testeConsultaTodosOsFornecedores();
+        
+        testeRelatorioDinamico();
         
     }//MAIN
     
 
+    
+    public static void testeRelatorioDinamico() {
+        fachada = new Fachada();
+        RelatorioDinamico rel = new RelatorioDinamico();
+        resultado = new Resultado();
+
+        rel.setMinQuantidade(true);
+        rel.setMinQuantidade(true);
+        
+        rel.setAvgQuantidade(true);
+        rel.setAvgValor(true);
+        
+        rel.setMaxQuantidade(true);
+        rel.setMaxValor(true);
+        
+        
+                
+        rel.setNome("RELATORIODINAMICO");
+        RelatoriosDAO ras = new RelatoriosDAO();
+        
+            resultado = fachada.consultar(rel);
+        
+        
+        for (EntidadeDominio e : resultado.getEntidades()) {
+            RelatorioDinamico s = (RelatorioDinamico) e;
+            System.out.print( s.getMaxTransacao().getQtdeDoTipo()
+
+            );
+            System.out.println();
+        }
+    }
     public static void testeRelatorioEstoqueFachada() {
         
         System.out.println("testeRelatorioEstoqueFachada");

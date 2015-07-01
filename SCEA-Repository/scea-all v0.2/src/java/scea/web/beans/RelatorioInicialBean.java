@@ -37,7 +37,7 @@ public class RelatorioInicialBean extends EntidadeDominioBean {
         
                private PieChartModel graficoPizza;
         
-      /*  public void inicializarGrafico()
+        public void inicializarGrafico()
         {
         EntidadeRelatorio rel = new EntidadeRelatorio();
         rel.setNome("RELATORIODETALHEINICIAL");
@@ -50,7 +50,7 @@ public class RelatorioInicialBean extends EntidadeDominioBean {
                     .informacoesGrafico();
             setGraficoPizza(builder.getGraficoPizza());
         }
-*/
+
         
 
  /*   public List<Produto> relatorioInicial() {
@@ -90,7 +90,7 @@ public class RelatorioInicialBean extends EntidadeDominioBean {
     
         
         
-        //inicializarGrafico();
+        inicializarGrafico();
     }
     
     

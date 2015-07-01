@@ -13,6 +13,7 @@ import scea.core.aplicacao.relatorio.*;
 import scea.core.factories.dao.*;
 import scea.core.impl.dao.*;
 import scea.core.impl.handlers.RelatorioDetalheInicialHandler;
+import scea.core.impl.handlers.RelatorioDinamicoHandler;
 import scea.core.impl.handlers.RelatorioSituacaoEstoqueHandler;
 import scea.core.impl.handlers.RelatorioTransacoesHandler;
 import scea.core.impl.handlers.RelatorioTransacoesProdutoHandler;
@@ -67,6 +68,7 @@ private Map<String, IDAO> daos;
                 
                 entidadeDAOFactory = new RelatorioDAOFactory();
                 daos.put(EntidadeRelatorio.class.getName(), entidadeDAOFactory.createDAO());
+                daos.put(RelatorioDinamico.class.getName(), entidadeDAOFactory.createDAO());
                 
 
                 rns = new HashMap<String, Map<String, List<IStrategy>>>();
@@ -150,16 +152,20 @@ private Map<String, IDAO> daos;
                 rns.put("SALVAR", rnsSalvarTransacao);
                 
 
+                /*
                 handlerRelDetalheInicial = new RelatorioDetalheInicialHandler();
                 RelatorioSituacaoEstoqueHandler handlerRelSituacaoEstoque = new RelatorioSituacaoEstoqueHandler();
                 RelatorioTransacoesHandler handlerRelTransacoes = new RelatorioTransacoesHandler();
                 RelatorioTransacoesProdutoHandler handlerRelTransacoesProduto = new RelatorioTransacoesProdutoHandler();
                 TelaInicialHandler handlerTelaInicial = new TelaInicialHandler();
+                RelatorioDinamicoHandler handlerRelatorioDinamico = new RelatorioDinamicoHandler();
                 
                 handlerRelDetalheInicial.setSucessor(handlerRelSituacaoEstoque);
                 handlerRelSituacaoEstoque.setSucessor(handlerRelTransacoes);
                 handlerRelTransacoes.setSucessor(handlerRelTransacoesProduto);
                 handlerRelTransacoesProduto.setSucessor(handlerTelaInicial);
+                handlerTelaInicial.setSucessor(handlerRelatorioDinamico);
+                */
 	}//Fachada
 	
 	public Resultado salvar(EntidadeDominio entidade) {
@@ -259,9 +265,9 @@ private Map<String, IDAO> daos;
 			if(msg.length() == 0){
 			IDAO dao = daos.get(nmClasse);
 			try {
-				if(dao.getClass().getName() == RelatoriosDAO.class.getName())
-                                    resultado.setEntidades(handlerRelDetalheInicial.processarRequisicao(entidade));
-                                else
+				//if(dao.getClass().getName() == RelatoriosDAO.class.getName())
+                                //    resultado.setEntidades(handlerRelDetalheInicial.processarRequisicao(entidade));
+                                //else
                                     resultado.setEntidades(dao.consultar(entidade));
 			} catch (SQLException e) {
 				e.printStackTrace();
