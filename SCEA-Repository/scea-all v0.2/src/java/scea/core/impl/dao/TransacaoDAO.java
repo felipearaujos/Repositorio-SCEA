@@ -46,10 +46,10 @@ public class TransacaoDAO extends AbstractJdbcDAO /*implements ITransacao*/{
 		try {
 			connection.setAutoCommit(false);
 					
-                        ProdutoDAO prodDAO = new ProdutoDAO();
-			prodDAO.connection = connection;
-			prodDAO.ctrlTransaction = false;
-			prodDAO.alterar(transacao.getProduto());		
+                        //ProdutoDAO prodDAO = new ProdutoDAO();
+			//prodDAO.connection = connection;
+			//prodDAO.ctrlTransaction = false;
+			//prodDAO.alterar(transacao.getProduto());		
 			
                         pst = connection.prepareStatement(sql.toString());
                         

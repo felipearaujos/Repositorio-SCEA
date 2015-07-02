@@ -6,7 +6,7 @@ import java.util.List;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
 import scea.core.impl.dao.ProdutoDAO;
-
+import scea.core.impl.negocio.RealizarEntrada;
 import scea.core.interfaces.IStrategy;
 import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Produto;
@@ -33,23 +33,28 @@ public class ValidarLimiteEntrada implements IStrategy {
                 break;
             }
         }
+        
         if (!flgExiste) {
             resultado.setMsg("PRODUTO NÃO CADASTRADO");
             return resultado;
         }
+        
         //Verifica os valores da quantidade
-        if (transacao.getQtdeDoTipo() <= 0) {
+        else if (transacao.getQtdeDoTipo() <= 0) {
             resultado.setMsg("TRANSACAO NÃO RESPEITA OS VALORES PERMITIDOS");
 
-        } else if ((transacao.getQtdeDoTipo() + produtoBuscado.getQuantidade()) > produtoBuscado.getTipoDeProduto().getQtdeMax()) {
+        } 
+        
+        else if ((transacao.getQtdeDoTipo() + produtoBuscado.getQuantidade()) > produtoBuscado.getTipoDeProduto().getQtdeMax()) {
             resultado.setMsg("TENTATIVA DE ENTRADA NÃO RESPEITA OS LIMITES PERMITIDOS");
-        } else {
+        } 
+        else{
 
-            //RealizarEntrada rel = new RealizarEntrada();
-            //resultado = rel.processar(transacao);
-            Produto produtoBanco = (Produto) produtoDAO.consultar(transacao.getProduto()).get(0);
-            produtoBanco.setQuantidade(produtoBanco.getQuantidade() + transacao.getQtdeDoTipo());
-            
+            RealizarEntrada rel = new RealizarEntrada();
+            resultado = rel.processar(transacao);
+            //Produto produtoBanco = (Produto) produtoDAO.consultar(transacao.getProduto()).get(0);
+            //produtoBanco.setQuantidade(produtoBanco.getQuantidade() + transacao.getQtdeDoTipo());
+
             resultado.setMsg(null);
         }
 

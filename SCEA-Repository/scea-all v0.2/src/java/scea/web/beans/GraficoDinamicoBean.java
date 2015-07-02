@@ -54,6 +54,7 @@ public class GraficoDinamicoBean extends GraficoBean {
     public boolean initGrafico() {
         RelatorioDinamico rel = new RelatorioDinamico();
         resultado = new Resultado();
+        
         if(getDtInicial() != null && getDtFinal() != null){
             rel.setDtInicial(getDtInicial());
             rel.setDtFinal((getDtFinal()));
@@ -67,6 +68,7 @@ public class GraficoDinamicoBean extends GraficoBean {
         rel.setMinQuantidade(isMinQtd());
         rel.getTransacao().getProduto().getFornecedor().setId(getIdFornecedor());
         rel.getTransacao().getProduto().getTipoDeProduto().setId(getIdTipo());
+        rel.getTransacao().getProduto().setId(getIdProduto());
         
 
         resultado = fachada.consultar(rel);

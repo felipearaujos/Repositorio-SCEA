@@ -3,20 +3,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <title>SCEA WEB - INICIAL</title>
-    </h:head>
-<h:body>
-    <h:form>
-        <p:menubar style="margin-top: -20px; margin-bottom: 20px; font-size: 50px">
-                <p:menuitem value="Fornecedor" action="Fornecedor?faces-redirect=true" />
-                <p:menuitem value="Produto" action="Produto?faces-redirect=true" />
-                <p:menuitem value="Entrada Estoque" action="Entrada?faces-redirect=true" />
-                <p:menuitem value="Saída Estoque" action="Saida?faces-redirect=true" />
-                <p:menuitem value="Simulações" action="Simulacao?faces-redirect=true" />
-                <p:menuitem value="Sair" />
-        </p:menubar>
-    </h:form>
-</h:body></html>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="Layout.xhtml" >
+        <ui:define name="corpo">
+            <h:head>
+                <title>SCEA WEB - INICIAL</title>
+            </h:head>
+            <style>
+                .zerado{
+                    background-color: #eecdd1
+                }
+                .naozerado{
+                     background-color: #feff68
+                }
+            </style>
+            <h:body >
+          
+            </h:body>
+        </ui:define>
+     </ui:composition>
+</html>
 

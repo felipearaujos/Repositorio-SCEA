@@ -3,24 +3,10 @@ package scea.core.impl.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import javax.swing.text.html.parser.DTD;
-import scea.core.aplicacao.relatorio.EntidadeRelatorio;
-import scea.core.aplicacao.relatorio.RelatorioDetalheEstoque;
-import scea.core.aplicacao.relatorio.RelatorioDinamico;
-import scea.core.aplicacao.relatorio.RelatorioEstoque;
-
-import scea.core.impl.dao.AbstractJdbcDAO;
-import scea.core.interfaces.IStrategy;
-import scea.dominio.modelo.EntidadeDominio;
-import scea.dominio.modelo.Fornecedor;
-import scea.dominio.modelo.Produto;
-import scea.dominio.modelo.TipoDeProduto;
-import scea.dominio.modelo.Transacao;
+import scea.core.aplicacao.relatorio.*;
+import scea.dominio.modelo.*;
 
 public class RelatoriosDAO extends AbstractJdbcDAO {
 
@@ -96,7 +82,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
                     + "JOIN tb_produto p on(p.id_produto = t.id_produto) "
                     + "JOIN tb_tipodeproduto tp ON(p.id_tipodeproduto = tp.id_tipodeproduto) "
                     + "WHERE t.dt_transacao BETWEEN ? AND ?  "
-                    + "AND p.id_fornecedor = ?"
+                    + "AND p.id_fornecedor = ? "
                     + "AND tp.id_tipodeproduto = ? "
                     + "GROUP BY t.transacao, "
                     + "month(t.dt_transacao), "
@@ -377,8 +363,9 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
         if (rel.getDtFinal() == null && rel.getDtFinal() == null) {
             // Tem Data
             if (rel.getTransacao().getProduto().getFornecedor().getId() == null
-                    && rel.getTransacao().getProduto().getTipoDeProduto().getId() == null) {
-                // Nao tem Tipo nem Fornecedor
+             && rel.getTransacao().getProduto().getTipoDeProduto().getId() == null
+             && rel.getTransacao().getProduto().getId() == null) {
+                // Nao tem Tipo nem Fornecedor, nem produto
                 sql = "SELECT  t.transacao,"
                         + "min(t.quantidade) AS 'minQuantidade',"
                         + "max(t.quantidade) AS 'maxQuantidade', "
@@ -389,7 +376,24 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
                         + "FROM tb_transacao t   "
                         + "GROUP BY t.transacao "
                         + "ORDER BY month(t.dt_transacao)desc";
-            } else if (rel.getTransacao().getProduto().getFornecedor().getId() != null
+            } 
+            else if (rel.getTransacao().getProduto().getId() != null) {
+                //  Tem Tipo, Tem Fornecedor
+                sql = "SELECT  t.transacao,"
+                        + "min(t.quantidade) AS 'minQuantidade',"
+                        + "max(t.quantidade) AS 'maxQuantidade', "
+                        + "sum(t.quantidade) AS 'Quantidade', "
+                        + "avg(t.quantidade) AS 'avgQuantidade', "
+                        + "t.dt_transacao AS 'Mes', "
+                        + "t.dt_transacao "
+                        + "FROM tb_transacao t  JOIN tb_produto p ON(p.id_produto = t.id_produto) "
+                        + "WHERE p.id_fornecedor = ? AND "
+                        + "p.id_tipodeproduto = ? "
+                        + "GROUP BY t.transacao "
+                        + "ORDER BY month(t.dt_transacao)desc";
+            }            
+            
+            else if (rel.getTransacao().getProduto().getFornecedor().getId() != null
                     && rel.getTransacao().getProduto().getTipoDeProduto().getId() != null) {
                 //  Tem Tipo, Tem Fornecedor
                 sql = "SELECT  t.transacao,"
@@ -504,8 +508,12 @@ public class RelatoriosDAO extends AbstractJdbcDAO {
             openConnection();
             pst = connection.prepareStatement(sql);
             if (rel.getDtFinal() == null && rel.getDtFinal() == null) {
-
-                if (rel.getTransacao().getProduto().getFornecedor().getId() != null
+                if (rel.getTransacao().getProduto().getId() != null) {
+                    //Tem produto
+                    pst.setInt(1, rel.getTransacao().getProduto().getFornecedor().getId());
+                    pst.setInt(2, rel.getTransacao().getProduto().getTipoDeProduto().getId());
+                }
+                else if (rel.getTransacao().getProduto().getFornecedor().getId() != null
                         && rel.getTransacao().getProduto().getTipoDeProduto().getId() != null) {
                     //Tem tipo, Tem fornecedor
                     pst.setInt(1, rel.getTransacao().getProduto().getFornecedor().getId());

@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CartesianChartModel;
@@ -71,10 +73,11 @@ public class GraficoEntradaBean extends GraficoBean {
     }
 
     public void att() {
+        FacesContext context = FacesContext.getCurrentInstance();
 
-        //ira att os campos
-       // setIdFornecedor(3);
-        // setIdTipo(2);
+        if (getIdProduto() != null) {
+            context.addMessage(null, new FacesMessage("Aviso", "Campos: FORNECEDOR e TIPO serão desconsiderados"));
+        }
     }
 
     /*

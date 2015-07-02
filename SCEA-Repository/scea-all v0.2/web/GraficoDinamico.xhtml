@@ -32,6 +32,16 @@
                                 <f:selectItems value="#{tipoDeprodutoBean.itens}" />
                             </p:selectOneMenu>
 
+                            
+                            <h:outputText value="Produto"/> 
+                            <p:selectOneMenu id="prod" value="#{graficoEntradaSaidaBean.idProduto}" >
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{produtoBean.itens}" />
+                            </p:selectOneMenu>
+                            </h:panelGrid>    
+                        
+                        
+                            <h:panelGrid columns="4">
                             <h:outputText value="Quantidade Máxima " />
                             <p:selectBooleanCheckbox value="#{graficoDinamicoBean.maxQtd}"/>
 

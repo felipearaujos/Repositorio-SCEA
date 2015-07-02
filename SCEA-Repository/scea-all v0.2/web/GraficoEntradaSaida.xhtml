@@ -36,13 +36,15 @@
                             
                             <h:outputText value="Produto"/> 
                             <p:selectOneMenu id="prod" value="#{graficoEntradaSaidaBean.idProduto}" >
-                                 <p:ajax event="change" update=":form:forn, :form:tipo" listener="#{graficoEntradaSaidaBean.att()}" /> 
+                                 <p:ajax event="change" update="avisos" listener="#{graficoEntradaSaidaBean.att()}" /> 
                                 <f:selectItem itemLabel="Select One" itemValue="" />
                                 <f:selectItems value="#{produtoBean.itens}" />
                             </p:selectOneMenu>
-                        
+                       
+                            
                         </h:panelGrid>
                     </p:fieldset>
+                     <p:growl id="avisos" showDetail="true" life="3000" />
 
                    
                     <p:commandButton action="#{graficoEntradaSaidaBean.teste()}" icon="ui-icon-check"
