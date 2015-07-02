@@ -10,16 +10,17 @@
     <h:body>
         <h:form>
 
-            
-                <div id="imgInicial">
-                    <img src="images/IMGSCEA.png" />
-                </div>
+            <center>
+                <div id="imgInicial" style="margin-top: 100px; ">
+                    <img src="images/IMGSCEAcut.png" />
+                
                 <p:panelGrid columns="2">
                     Login <h:inputText value="#{loginBean.usuarioLogado}"/>
                     Senha <h:inputSecret value="#{loginBean.senha}"/>
                 </p:panelGrid>
-                <p:commandButton  style="width: 285px; height: 40px" value="Entrar" action="#{loginBean.verificarLogin()}" update="avisos,mensagens"/>
-            
+                <p:commandButton  style="width: 289px; height: 40px" value="Entrar" action="#{loginBean.verificarLogin()}" update="avisos,mensagens"/>
+            </div>
+            </center>
             <p:messages id="mensagens" showDetail="true" />
             <p:growl id="avisos" showDetail="true" life="3000" />
         </h:form>

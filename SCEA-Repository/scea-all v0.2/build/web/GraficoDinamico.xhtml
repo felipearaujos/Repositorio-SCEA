@@ -48,16 +48,16 @@
                     </p:fieldset>
 
                     <p:commandButton action="#{graficoDinamicoBean.teste()}" 
-                                     update=":form:grafico"       value="Criar Gráfico" />
+                                     update=":form:grafico" value="Criar Gráfico"  icon="ui-icon-check"/>
+                    
+                    <p:commandButton  type="button" value="Limpar Zoom" icon="ui-icon-cancel" 
+                                                 onclick="PF('grafico').resetZoom()"/>
 
                     <h:panelGrid columns="2">
                         <p:outputPanel id="grafico">
                             <p:chart type="bar" model="#{graficoDinamicoBean.graficoQuantidade}" rendered="#{graficoDinamicoBean.initGrafico()}"
-                                     style="height:500px;width: 900px;" widgetVar="chart"/>
-                            <center>
-                                <p:commandButton  type="button" value="Limpar Zoom" icon="ui-icon-cancel" 
-                                                 onclick="PF('chart').resetZoom()"/>
-                            </center>
+                                     style="height:500px;width: 900px;" widgetVar="grafico"/>
+                            
                         </p:outputPanel>
 
 

@@ -51,6 +51,12 @@ public class GraficoLinhaBuilder implements Serializable{
             entradas.setLabel("Total de Entradas");
             saidas.setLabel("Total de Saídas");    
             graficoLinha.setLegendPosition("se");
+            
+            
+            
+            
+            
+            
             for(int i=0; i < listRelatorios.size(); i++)
             {
                 
@@ -82,8 +88,6 @@ public class GraficoLinhaBuilder implements Serializable{
         
         if(listRelatorios.size() != 0)
         {
-            graficoLinha.setTitle(listRelatorios.get(0).getTituloRelatorio());
-            graficoLinha.setAnimate(true);
             graficoLinha.setTitle("Total de Entradas e Saídas entre " + dtInicial
             + " á " + dtFinal);
         }
@@ -102,12 +106,21 @@ public class GraficoLinhaBuilder implements Serializable{
         
         if(listRelatorios.size() != 0)
         {
-            DateAxis axis = new DateAxis("Meses entre o período");
-            DateAxis axis2 = new DateAxis("Quantidade de Entradas e Saídas");
-            axis.setTickAngle(-50);
-            axis.setTickFormat("%#d / %b / %y");
-            graficoLinha.getAxes().put(AxisType.X, axis);
-            graficoLinha.getAxis(AxisType.Y).setLabel("Meses entre o período");
+            
+            graficoLinha.setAnimate(true);
+            graficoLinha.setZoom(true);
+            
+         
+            DateAxis xAxis = new DateAxis("Meses entre o período");
+            xAxis.setTickAngle(-50);
+            xAxis.setTickFormat("%#d.%b.%y");
+            graficoLinha.getAxes().put(AxisType.X, xAxis);
+            //graficoLinha.getAxis(AxisType.Y).setLabel("Quantidade de Entradas e Saídas");
+            
+            
+            Axis yAxis = graficoLinha.getAxis(AxisType.Y);
+            yAxis.setLabel("Quantidade de Entradas e Saídas");
+            yAxis.setMin(0);
         }
             return this;
     }

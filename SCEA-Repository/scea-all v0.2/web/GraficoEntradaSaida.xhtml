@@ -13,24 +13,47 @@
             <h:body>
                 <h:form id="form">
                     <p:fieldset legend="Período a ser Selecionado" id="fieldsetG">
-                        <h:panelGrid columns="2">
-                            Data Inicial:  
+                        <h:panelGrid columns="4">
+                            <h:outputText value="Data Inicial: "/>  
                             <p:calendar  value="#{graficoEntradaSaidaBean.dtInicial}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
-                            Data Final: 
+                            
+                            <h:outputText value="Data Final: "/>
                             <p:calendar  value="#{graficoEntradaSaidaBean.dtFinal}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
-                            Tipo:        
+                            
+                            <h:outputText value="Tipo: "/>         
                             <p:selectOneMenu id="tipo" value="#{graficoEntradaSaidaBean.idTipo}" onchange="#{produtoBean.consultar()}" >
                                 <f:selectItem itemLabel="Select One" itemValue="" />
                                 <f:selectItems value="#{tipoDeprodutoBean.itens}" />
                             </p:selectOneMenu>
+                            
+                            
+                            <h:outputText value="Fornecedor:"/> 
+                            <p:selectOneMenu id="forn" value="#{graficoEntradaSaidaBean.idFornecedor}" widgetVar="vForn"  >
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{fornecedorBean.itens}" />
+                            </p:selectOneMenu>
+                            
+                            
+                            <h:outputText value="Produto"/> 
+                            <p:selectOneMenu id="prod" value="#{graficoEntradaSaidaBean.idProduto}" >
+                                 <p:ajax event="change" update=":form:forn, :form:tipo" listener="#{graficoEntradaSaidaBean.att()}" /> 
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{produtoBean.itens}" />
+                            </p:selectOneMenu>
+                        
                         </h:panelGrid>
                     </p:fieldset>
 
-                    <p:commandButton action="#{graficoEntradaSaidaBean.teste()}" 
-                                     update=":form:grafico"       value="Criar Gráfico" />
+                   
+                    <p:commandButton action="#{graficoEntradaSaidaBean.teste()}" icon="ui-icon-check"
+                                     update=":form:grafico" value="Criar Gráfico" />
+                    
+                    <p:commandButton  type="button" value="Limpar Zoom" icon="ui-icon-cancel" 
+                                      onclick="PF('grafico').resetZoom()"/>
+                     
                     <p:outputPanel id="grafico">
                         <p:chart type="line" model="#{graficoEntradaSaidaBean.graficoRetornado}" rendered="#{graficoEntradaSaidaBean.initGrafico()}"
-                                 style="height:500px;width: 900px;" />
+                                 style="height:500px;width: 900px;" widgetVar="grafico" />
                     </p:outputPanel>
                 </h:form>
             </h:body>

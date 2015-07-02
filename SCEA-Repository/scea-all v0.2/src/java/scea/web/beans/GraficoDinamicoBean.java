@@ -34,21 +34,20 @@ import scea.web.beans.Builder.GraficoLinhaBuilder;
  * @author Main User
  */
 @ManagedBean(name = "graficoDinamicoBean")
-public class GraficoDinamicoBean {
+public class GraficoDinamicoBean extends GraficoBean {
 
-    private EntidadeRelatorio relatorio;
     private BarChartModel graficoQuantidade;
 
-    private boolean renderizar = false;
+    //private boolean renderizar = false;
     private boolean avgQtd = false;
     private boolean minQtd = false;
     private boolean maxQtd = false;
     private boolean sumQtd = false;
-    private RelatorioDinamico relD = new RelatorioDinamico();
-    private Integer idTipo;
-    private Integer idFornecedor;
+    
+    //private Integer idTipo;
+    //private Integer idFornecedor;
 
-    private Date dtInicial, dtFinal;
+    //private Date dtInicial, dtFinal;
     //private Integer idTipo;
     //private Integer idProduto;
 
@@ -66,8 +65,8 @@ public class GraficoDinamicoBean {
         rel.setMaxQuantidade(isMaxQtd());
         rel.setSumQuantidade(isSumQtd());
         rel.setMinQuantidade(isMinQtd());
-        rel.getTransacao().getProduto().getFornecedor().setId(idFornecedor);
-        rel.getTransacao().getProduto().getTipoDeProduto().setId(idTipo);
+        rel.getTransacao().getProduto().getFornecedor().setId(getIdFornecedor());
+        rel.getTransacao().getProduto().getTipoDeProduto().setId(getIdTipo());
         
 
         resultado = fachada.consultar(rel);
@@ -78,15 +77,11 @@ public class GraficoDinamicoBean {
         } else {
             setRenderizar(false);
         }
-
-      
+        
         return true;
     }
 
-    public void teste() {
-        initGrafico();
-
-    }
+   
 
     public BarChartModel gerarGraficoQuantidade(List<EntidadeDominio> entidades) {
         List<RelatorioDinamico> listRelatorios = new ArrayList<RelatorioDinamico>();
@@ -101,7 +96,7 @@ public class GraficoDinamicoBean {
         ChartSeries saida = new ChartSeries();
         saida.setLabel("Saida");
 
-        graficoLinha.setLegendPosition("se");
+        
         
         if((!isAvgQtd() && !isSumQtd() && !isMinQtd() && !isMaxQtd()) || listRelatorios.isEmpty()){
             entrada.set("Media", 0);
@@ -140,7 +135,7 @@ public class GraficoDinamicoBean {
             }
         } //For
 
-    
+        graficoLinha.setLegendPosition("ne");
         graficoLinha.addSeries(entrada);
         graficoLinha.addSeries(saida);
         graficoLinha.setTitle("Relatorio Visão Quantidade");
@@ -156,26 +151,9 @@ public class GraficoDinamicoBean {
     
     
 
-    public String formatar(Date data) {
-        Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String dataFormatada = formatter.format(data);
-        return dataFormatada;
-    }
 
-    /**
-     * @return the relatorio
-     */
-    public EntidadeRelatorio getRelatorio() {
-        return relatorio;
-    }
 
-    /**
-     * @param relatorio the relatorio to set
-     */
-    public void setRelatorio(EntidadeRelatorio relatorio) {
-        this.relatorio = relatorio;
-    }
-
+ 
     /**
      * @return the graficoRetornado
      */
@@ -190,89 +168,9 @@ public class GraficoDinamicoBean {
         this.graficoQuantidade = graficoRetornado;
     }
 
-    /**
-     * @return the renderizar
-     */
-    public boolean isRenderizar() {
-        return renderizar;
-    }
+   
+   
 
-    /**
-     * @param renderizar the renderizar to set
-     */
-    public void setRenderizar(boolean renderizar) {
-        this.renderizar = renderizar;
-    }
-
-    /**
-     * @return the dtInicial
-     */
-    public Date getDtInicial() {
-        return dtInicial;
-    }
-
-    /**
-     * @param dtInicial the dtInicial to set
-     */
-    public void setDtInicial(Date dtInicial) {
-        this.dtInicial = dtInicial;
-    }
-
-    /**
-     * @return the dtFinal
-     */
-    public Date getDtFinal() {
-        return dtFinal;
-    }
-
-    /**
-     * @param dtFinal the dtFinal to set
-     */
-    public void setDtFinal(Date dtFinal) {
-        this.dtFinal = dtFinal;
-    }
-
-    /**
-     * @return the grafico
-     */
-    public void setDtInicial(String dtInicial) {
-        //this.dtInicial = dtInicial;
-        Date dt;
-        try {
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            dt = df.parse(dtInicial);
-            //return dt;
-            this.setDtInicial(dt);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setDtFinal(String dtFinal) {
-        Date dt;
-        try {
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            dt = df.parse(dtFinal);
-            //return dt;
-            this.setDtFinal(dt);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @return the relD
-     */
-    public RelatorioDinamico getRelD() {
-        return relD;
-    }
-
-    /**
-     * @param relD the relD to set
-     */
-    public void setRelD(RelatorioDinamico relD) {
-        this.relD = relD;
-    }
 
     /**
      * @return the avg
@@ -328,31 +226,6 @@ public class GraficoDinamicoBean {
      */
     public void setSumQtd(boolean sum) {
         this.sumQtd = sum;
-    }
-
-public Integer getIdTipo() {
-        return idTipo;
-    }
-
-    /**
-     * @param idTipo the idTipo to set
-     */
-    public void setIdTipo(Integer idTipo) {
-        this.idTipo = idTipo;
-    }
-
-    /**
-     * @return the idFornecedor
-     */
-    public Integer getIdFornecedor() {
-        return idFornecedor;
-    }
-
-    /**
-     * @param idFornecedor the idFornecedor to set
-     */
-    public void setIdFornecedor(Integer idFornecedor) {
-        this.idFornecedor = idFornecedor;
     }
 
 }

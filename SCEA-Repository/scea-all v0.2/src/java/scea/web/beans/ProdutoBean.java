@@ -48,7 +48,7 @@ public class ProdutoBean extends EntidadeDominioBean{
     }
     
     
-    
+    @PostConstruct
     public void init() {  
         r = new Resultado();
         List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
