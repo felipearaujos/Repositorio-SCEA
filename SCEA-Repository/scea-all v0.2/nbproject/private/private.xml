@@ -5,7 +5,9 @@
         <group>
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/dao/RelatoriosDAO.java</file>
             <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/testes/MainTestes.java</file>
-            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/core/impl/controle/Fachada.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/src/java/scea/web/beans/GraficoDinamicoBean.java</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/GraficoDinamico.xhtml</file>
+            <file>file:/C:/Users/Felipe/Documents/GitHub/Repositorio-SCEA/SCEA-Repository/scea-all%20v0.2/web/GraficoEstoque.xhtml</file>
         </group>
     </open-files>
 </project-private>

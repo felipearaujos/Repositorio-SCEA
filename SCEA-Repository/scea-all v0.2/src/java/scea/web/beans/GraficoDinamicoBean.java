@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package scea.web.beans;
 
 import java.text.DateFormat;
@@ -34,196 +33,130 @@ import scea.web.beans.Builder.GraficoLinhaBuilder;
  *
  * @author Main User
  */
-
-@ManagedBean ( name = "graficoDinamicoBean")
+@ManagedBean(name = "graficoDinamicoBean")
 public class GraficoDinamicoBean {
+
     private EntidadeRelatorio relatorio;
-    private BarChartModel graficoRetornado;
+    private BarChartModel graficoQuantidade;
+
     private boolean renderizar = false;
-    private boolean avg = true;
-    private boolean min = true; 
-    private boolean max = true;
-    private boolean sum = true;
+    private boolean avgQtd = false;
+    private boolean minQtd = false;
+    private boolean maxQtd = false;
+    private boolean sumQtd = false;
     private RelatorioDinamico relD = new RelatorioDinamico();
-    
-    
+    private Integer idTipo;
+    private Integer idFornecedor;
+
     private Date dtInicial, dtFinal;
     //private Integer idTipo;
     //private Integer idProduto;
- 
-    public boolean initGrafico()
-    {
+
+    public boolean initGrafico() {
         RelatorioDinamico rel = new RelatorioDinamico();
         resultado = new Resultado();
-       // if(getDtInicial() == null)
-       //     return false;
-       // rel.setDtInicial(getDtInicial());
-       // rel.setDtFinal((getDtFinal()));
-        //rel.getTransacao().getProduto().getTipoDeProduto().setId(getIdTipo());
+        if(getDtInicial() != null && getDtFinal() != null){
+            rel.setDtInicial(getDtInicial());
+            rel.setDtFinal((getDtFinal()));
+        }
         fachada = new Fachada();
-      
-        
+
         rel.setNome("RELATORIODINAMICO");
-        rel.setAvgQuantidade(avg);
-        rel.setMaxQuantidade(max);
-        rel.setSumQuantidade(sum);
-        rel.setMinQuantidade(min);
+        rel.setAvgQuantidade(isAvgQtd());
+        rel.setMaxQuantidade(isMaxQtd());
+        rel.setSumQuantidade(isSumQtd());
+        rel.setMinQuantidade(isMinQtd());
+        rel.getTransacao().getProduto().getFornecedor().setId(idFornecedor);
+        rel.getTransacao().getProduto().getTipoDeProduto().setId(idTipo);
         
+
         resultado = fachada.consultar(rel);
-        
-        if(resultado.getEntidades() != null){
-            //setGraficoRetornado(gerarGrafico(resultado.getEntidades()));
-             /*GraficoLinhaBuilder grafico = new GraficoLinhaBuilder()
-                .initModelo(resultado.getEntidades())
-                .informacoesGrafico(resultado.getEntidades(), formatar(getDtInicial()), formatar(getDtFinal()))
-                .alocarEixos(resultado.getEntidades());
-        setGraficoRetornado(grafico.getGraficoLinha());
-       
-            */
-            setGraficoRetornado(gerarGrafico(resultado.getEntidades()));
-            
-            setRenderizar(true);
-       // return true;
-            
-            //setRenderizar(true);
-        }else{
+
+        if (resultado.getEntidades() != null) {
+            setGraficoQuantidade(gerarGraficoQuantidade(resultado.getEntidades()));
+            setRenderizar(true);       
+        } else {
             setRenderizar(false);
         }
-        
-        
-  //      }
+
+      
         return true;
     }
-    public void teste(){
+
+    public void teste() {
         initGrafico();
-        
+
     }
-    
-    
-    
-    public BarChartModel gerarGrafico(List<EntidadeDominio> entidades){
+
+    public BarChartModel gerarGraficoQuantidade(List<EntidadeDominio> entidades) {
         List<RelatorioDinamico> listRelatorios = new ArrayList<RelatorioDinamico>();
-         BarChartModel graficoLinha = new BarChartModel();
-         for(EntidadeDominio e: entidades)
-         {
-             RelatorioDinamico relatorio = (RelatorioDinamico)e;
-             listRelatorios.add(relatorio);
-         }
+        BarChartModel graficoLinha = new BarChartModel();
+        for (EntidadeDominio e : entidades) {
+            RelatorioDinamico relatorio = (RelatorioDinamico) e;
+            listRelatorios.add(relatorio);
+        }
+        ChartSeries entrada = new ChartSeries();
+        entrada.setLabel("Entrada");
+
+        ChartSeries saida = new ChartSeries();
+        saida.setLabel("Saida");
+
+        graficoLinha.setLegendPosition("se");
         
-        if(listRelatorios.size() != 0)
-        {
-           ChartSeries entrada = new ChartSeries();
-            entrada.setLabel("Entrada");
-            
-            ChartSeries saida = new ChartSeries();
-            saida.setLabel("Saida");
-            
-            
-            
-          
-            
-            
-            
-           
-            graficoLinha.setLegendPosition("se");
-            for(int i=0; i < listRelatorios.size(); i++)
-            {
-                
-               if(listRelatorios.get(i).getTransacao().getTipoDeTransacao().equals("ENTRADA"))
-                {
-                    if(isAvg()){
-                        entrada.set("Media", listRelatorios.get(i).getAvgTransacao().getQtdeDoTipo());
-                    }
-                    
-                    if(isMax()){
-                        entrada.set("Max", listRelatorios.get(i).getMaxTransacao().getQtdeDoTipo());
-                    }
-                    
-                    if(isMax()){
-                        entrada.set("Min", listRelatorios.get(i).getMinTransacao().getQtdeDoTipo());
-                    }
-                    
-                    if(isSum()){
-                        entrada.set("Total", listRelatorios.get(i).getTransacao().getQtdeDoTipo());
-                    }
-                }
-               else if(listRelatorios.get(i).getTransacao().getTipoDeTransacao().equals("SAIDA"))
-                {   
-                    if(isAvg()){
-                        saida.set("Media", listRelatorios.get(i).getAvgTransacao().getQtdeDoTipo());
-                    }
-                    
-                    if(isMax()){
-                        saida.set("Max", listRelatorios.get(i).getMaxTransacao().getQtdeDoTipo());
-                    }
-                    
-                    if(isMin()){
-                        saida.set("Min", listRelatorios.get(i).getMinTransacao().getQtdeDoTipo());
-                    }
-                    if(isSum()){
-                        saida.set("Total", listRelatorios.get(i).getTransacao().getQtdeDoTipo());
-                    }
-                }
-               
-               
-            }
-            
-        
- /*           
-            ChartSeries boys = new ChartSeries();
-        boys.setLabel("Boys");
-        boys.set("a", 120);
-        boys.set("b", 100);
-        boys.set("c", 44);
-        boys.set("d", 150);
-        boys.set("e", 25);
- 
-        ChartSeries girls = new ChartSeries();
-        girls.setLabel("Girls");
-        girls.set("a", 52);
-        girls.set("b", 60);
-        girls.set("c", 110);
-        girls.set("d", 135);
-        girls.set("e", 120);
- 
-        graficoLinha.addSeries(boys);
-        graficoLinha.addSeries(girls);
-        
- 
-               ChartSeries girls2 = new ChartSeries();
-        girls2.setLabel("Girls");
-        girls2.set("a", 52);
-        girls2.set("b", 60);
-        girls2.set("c", 110);
-        girls2.set("d", 135);
-        girls2.set("e", 120);
- 
-       
-        graficoLinha.addSeries(girls2);
- */
-        
-        
-           // graficoLinha.addSeries(maxEntradas);
-            //graficoLinha.addSeries(maxSaidas);
-           // graficoLinha.addSeries(avgEntradas);
-            //graficoLinha.addSeries(avgSaidas);
-             
-             graficoLinha.addSeries(entrada);
-             graficoLinha.addSeries(saida);
-             graficoLinha.setTitle(listRelatorios.get(0).getTituloRelatorio());
-            graficoLinha.setAnimate(true);
-           
-            
-                  
-        
+        if((!isAvgQtd() && !isSumQtd() && !isMinQtd() && !isMaxQtd()) || listRelatorios.isEmpty()){
+            entrada.set("Media", 0);
+            entrada.set("Max",0);
+            entrada.set("Min", 0);
+            entrada.set("Total", 0);
         }
         
+        for (RelatorioDinamico listRelatorio : listRelatorios) {
+            if (listRelatorio.getTransacao().getTipoDeTransacao().equals("ENTRADA")) {
+                if (isAvgQtd()) {
+                    entrada.set("Media", listRelatorio.getAvgTransacao().getQtdeDoTipo());
+                }
+                if (isMaxQtd()) {
+                    entrada.set("Max", listRelatorio.getMaxTransacao().getQtdeDoTipo());
+                }
+                if (isMinQtd()) {
+                    entrada.set("Min", listRelatorio.getMinTransacao().getQtdeDoTipo());
+                }
+                if (isSumQtd()) {
+                    entrada.set("Total", listRelatorio.getTransacao().getQtdeDoTipo());
+                }
+            } else if (listRelatorio.getTransacao().getTipoDeTransacao().equals("SAIDA")) {
+                if (isAvgQtd()) {
+                    saida.set("Media", listRelatorio.getAvgTransacao().getQtdeDoTipo());
+                }
+                if (isMaxQtd()) {
+                    saida.set("Max", listRelatorio.getMaxTransacao().getQtdeDoTipo());
+                }
+                if (isMinQtd()) {
+                    saida.set("Min", listRelatorio.getMinTransacao().getQtdeDoTipo());
+                }
+                if (isSumQtd()) {
+                    saida.set("Total", listRelatorio.getTransacao().getQtdeDoTipo());
+                }
+            }
+        } //For
+
+    
+        graficoLinha.addSeries(entrada);
+        graficoLinha.addSeries(saida);
+        graficoLinha.setTitle("Relatorio Visão Quantidade");
+        graficoLinha.setAnimate(true);
+        graficoLinha.setZoom(true);
         return graficoLinha;
     }
     
     
-    public String formatar(Date data)
-    {
+    
+    
+    
+    
+    
+
+    public String formatar(Date data) {
         Format formatter = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = formatter.format(data);
         return dataFormatada;
@@ -246,15 +179,15 @@ public class GraficoDinamicoBean {
     /**
      * @return the graficoRetornado
      */
-    public BarChartModel getGraficoRetornado() {
-        return graficoRetornado;
+    public BarChartModel getGraficoQuantidade() {
+        return graficoQuantidade;
     }
 
     /**
      * @param graficoRetornado the graficoRetornado to set
      */
-    public void setGraficoRetornado(BarChartModel graficoRetornado) {
-        this.graficoRetornado = graficoRetornado;
+    public void setGraficoQuantidade(BarChartModel graficoRetornado) {
+        this.graficoQuantidade = graficoRetornado;
     }
 
     /**
@@ -302,9 +235,7 @@ public class GraficoDinamicoBean {
     /**
      * @return the grafico
      */
-
-    
-        public void setDtInicial(String dtInicial) {
+    public void setDtInicial(String dtInicial) {
         //this.dtInicial = dtInicial;
         Date dt;
         try {
@@ -316,10 +247,9 @@ public class GraficoDinamicoBean {
             e.printStackTrace();
         }
     }
-        
-        
-            public void setDtFinal(String dtFinal){
-     Date dt;
+
+    public void setDtFinal(String dtFinal) {
+        Date dt;
         try {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             dt = df.parse(dtFinal);
@@ -347,60 +277,82 @@ public class GraficoDinamicoBean {
     /**
      * @return the avg
      */
-    public boolean isAvg() {
-        return avg;
+    public boolean isAvgQtd() {
+        return avgQtd;
     }
 
     /**
      * @param avg the avg to set
      */
-    public void setAvg(boolean avg) {
-        this.avg = avg;
+    public void setAvgQtd(boolean avg) {
+        this.avgQtd = avg;
     }
 
     /**
      * @return the min
      */
-    public boolean isMin() {
-        return min;
+    public boolean isMinQtd() {
+        return minQtd;
     }
 
     /**
      * @param min the min to set
      */
-    public void setMin(boolean min) {
-        this.min = min;
+    public void setMinQtd(boolean min) {
+        this.minQtd = min;
     }
 
     /**
      * @return the max
      */
-    public boolean isMax() {
-        return max;
+    public boolean isMaxQtd() {
+        return maxQtd;
     }
 
     /**
      * @param max the max to set
      */
-    public void setMax(boolean max) {
-        this.max = max;
+    public void setMaxQtd(boolean max) {
+        this.maxQtd = max;
     }
 
     /**
      * @return the sum
      */
-    public boolean isSum() {
-        return sum;
+    public boolean isSumQtd() {
+        return sumQtd;
     }
 
     /**
      * @param sum the sum to set
      */
-    public void setSum(boolean sum) {
-        this.sum = sum;
+    public void setSumQtd(boolean sum) {
+        this.sumQtd = sum;
     }
 
-   
+public Integer getIdTipo() {
+        return idTipo;
+    }
 
-    
+    /**
+     * @param idTipo the idTipo to set
+     */
+    public void setIdTipo(Integer idTipo) {
+        this.idTipo = idTipo;
+    }
+
+    /**
+     * @return the idFornecedor
+     */
+    public Integer getIdFornecedor() {
+        return idFornecedor;
+    }
+
+    /**
+     * @param idFornecedor the idFornecedor to set
+     */
+    public void setIdFornecedor(Integer idFornecedor) {
+        this.idFornecedor = idFornecedor;
+    }
+
 }

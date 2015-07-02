@@ -13,43 +13,56 @@
             <h:body>
                 <h:form id="form">
                     <p:fieldset legend="Período a ser Selecionado" id="fieldsetG">
-                        <h:panelGrid columns="2">
-                            Data Inicial:  
+                        <h:panelGrid columns="4" >
+                            <h:outputText value="Data Inicial: "/> 
                             <p:calendar  value="#{graficoDinamicoBean.dtInicial}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
-                            Data Final: 
+
+                            <h:outputText value="Data Final: "/>
                             <p:calendar  value="#{graficoDinamicoBean.dtFinal}"  navigator="true" pattern="dd/MM/yyyy"  mask="true" />
-                                    
-                             
-                        </h:panelGrid> 
-                        <h:panelGrid columns="8">
-                             
-                            
-                            
-                       
-                         <h:outputText value="Quantidade Máxima " />
-                             <p:selectBooleanCheckbox value="#{graficoDinamicoBean.max}"/>
-                            
-                             <h:outputText value="Quantidade Minima " />
-                             <p:selectBooleanCheckbox value="#{graficoDinamicoBean.min}"/>   
-                             
-                             <h:outputText value="Quantidade Média " />
-                             <p:selectBooleanCheckbox value="#{graficoDinamicoBean.avg}"/>
-                             
-                             <h:outputText value="Quantidade Total " />
-                             <p:selectBooleanCheckbox value="#{graficoDinamicoBean.sum}"/>
-                             
-                             
-                           
-                            
+
+                            <h:outputText value="Fornecedor:"/> 
+                            <p:selectOneMenu id="forn" value="#{graficoDinamicoBean.idFornecedor}" onchange="#{produtoBean.consultar()}" >
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{fornecedorBean.itens}" />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Tipo " />
+                            <p:selectOneMenu id="tipo" value="#{graficoDinamicoBean.idTipo}" >
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{tipoDeprodutoBean.itens}" />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Quantidade Máxima " />
+                            <p:selectBooleanCheckbox value="#{graficoDinamicoBean.maxQtd}"/>
+
+                            <h:outputText value="Quantidade Minima " />
+                            <p:selectBooleanCheckbox value="#{graficoDinamicoBean.minQtd}"/>   
+
+                            <h:outputText value="Quantidade Média " />
+                            <p:selectBooleanCheckbox value="#{graficoDinamicoBean.avgQtd}"/>
+
+                            <h:outputText value="Quantidade Total " />
+                            <p:selectBooleanCheckbox value="#{graficoDinamicoBean.sumQtd}"/>
+
                         </h:panelGrid>
                     </p:fieldset>
 
                     <p:commandButton action="#{graficoDinamicoBean.teste()}" 
                                      update=":form:grafico"       value="Criar Gráfico" />
-                    <p:outputPanel id="grafico">
-                        <p:chart type="bar" model="#{graficoDinamicoBean.graficoRetornado}" rendered="#{graficoDinamicoBean.initGrafico()}"
-                                 style="height:500px;width: 900px;" />
-                    </p:outputPanel>
+
+                    <h:panelGrid columns="2">
+                        <p:outputPanel id="grafico">
+                            <p:chart type="bar" model="#{graficoDinamicoBean.graficoQuantidade}" rendered="#{graficoDinamicoBean.initGrafico()}"
+                                     style="height:500px;width: 900px;" widgetVar="chart"/>
+                            <center>
+                                <p:commandButton  type="button" value="Limpar Zoom" icon="ui-icon-cancel" 
+                                                 onclick="PF('chart').resetZoom()"/>
+                            </center>
+                        </p:outputPanel>
+
+
+
+                    </h:panelGrid>
                 </h:form>
             </h:body>
         </ui:define>
